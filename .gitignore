@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+review/*.md
+.env
+.DS_Store
