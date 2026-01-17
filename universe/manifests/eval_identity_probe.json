@@ -1,0 +1,26 @@
+{
+  "id": "eval.identity_probe",
+  "name": "Identity Probe Runner",
+  "type": "evaluator",
+  "description": "Run identity probe evaluations against the prompt suite.",
+  "entrypoint": "python tools/universe_router.py --capability eval.identity_probe",
+  "inputs": [
+    {
+      "name": "probe_path",
+      "type": "str",
+      "required": false,
+      "description": "Optional probe JSONL file. Defaults to eval/identity_probes.jsonl"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "status",
+      "type": "string",
+      "description": "Pass/fail summary of probe routing."
+    }
+  ],
+  "pillars": ["Unity", "Right Action", "Risk"],
+  "owner": "blux-ca",
+  "version": "0.1",
+  "tags": ["eval", "identity"]
+}
