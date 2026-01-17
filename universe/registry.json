@@ -1,0 +1,34 @@
+{
+  "version": "0.1",
+  "description": "BLUX Big-Bang capability registry.",
+  "capabilities": [
+    {
+      "id": "dataset.validate",
+      "name": "Dataset Validator",
+      "type": "tool",
+      "manifest": "manifests/dataset_validate.json",
+      "status": "stable"
+    },
+    {
+      "id": "dataset.summarize",
+      "name": "Dataset Summarizer",
+      "type": "tool",
+      "manifest": "manifests/dataset_summarize.json",
+      "status": "stable"
+    },
+    {
+      "id": "dataset.sample_review",
+      "name": "Sample Review Generator",
+      "type": "tool",
+      "manifest": "manifests/dataset_sample_review.json",
+      "status": "stable"
+    },
+    {
+      "id": "eval.identity_probe",
+      "name": "Identity Probe Runner",
+      "type": "evaluator",
+      "manifest": "manifests/eval_identity_probe.json",
+      "status": "experimental"
+    }
+  ]
+}
