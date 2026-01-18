@@ -14,9 +14,24 @@ BLUX-cA is a model-agnostic dataset containing prompts, responses, and evaluatio
 - Not a training pipeline; no fine-tuning scripts are provided.
 
 ## Data Structure
-- Domain JSONL files (500 examples each) under `data/` with `messages` arrays and a fixed system placeholder `<SYSTEM_PROMPT_FROM_BLUX_CA>`.
+- Domain JSONL files under `data/` with `messages` arrays and a fixed system placeholder `<SYSTEM_PROMPT_FROM_BLUX_CA>`.
+- Line counts:
+  | File | Lines |
+  | --- | ---: |
+  | data/coding.jsonl | 500 |
+  | data/conversation.jsonl | 500 |
+  | data/core.jsonl | 500 |
+  | data/creation.jsonl | 501 |
+  | data/efficiency.jsonl | 500 |
+  | data/governance.jsonl | 500 |
+  | data/reasoning.jsonl | 500 |
+  | data/relationships.jsonl | 500 |
+  | data/safety.jsonl | 500 |
+  | eval/capability_probes.jsonl | 10 |
+  | eval/identity_probes.jsonl | 10 |
+  | eval/red_team.jsonl | 10 |
 - Audit Notes appear on ethically loaded samples, capturing classification, applied reasoning chain, risks, and next steps.
-- Evaluation probes in `eval/` are for gating, not training.
+- Evaluation probes in `eval/` are for gating, not training, and remain separate from the `data/` files.
 
 ## Safety
 - Harmful and manipulative user requests are met with refusals and redirection.
