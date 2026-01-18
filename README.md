@@ -11,13 +11,14 @@ Unified dataset, prompts, and evaluation probes for the BLUX-cA constitutional s
 ## Repository Structure
 ```
 blux-ca-dataset/
+├── AUDIT_LOG.md
+├── COMMERCIAL_LICENSE.md       # Commercial licensing template (Outer Void)
+├── KNOWLEDGE_INDEX.md
 ├── LICENSE                     # Apache-2.0
 ├── NOTICE                      # Attribution placeholder
-├── COMMERCIAL_LICENSE.md       # Commercial licensing template (Outer Void)
 ├── README.md
 ├── MODEL_CARD.md               # Dataset card for Hugging Face
-├── .gitattributes
-├── .gitignore
+├── UNIVERSE_MAP.md
 ├── prompts/
 │   ├── system_core.txt
 │   ├── system_coding.txt
@@ -38,15 +39,19 @@ blux-ca-dataset/
 │   └── capability_probes.jsonl
 ├── rubric/
 │   └── labeling_rubric.md
-└── tools/
+├── tools/
     ├── generate_dataset.py
-    ├── validate_jsonl.py
+    ├── sample_review.py
     ├── summarize_dataset.py
-    └── sample_review.py
+    ├── universe_router.py
+    ├── universe_validate.py
+    └── validate_jsonl.py
+└── universe/
+    └── manifests/
 ```
 
 ## Data Format
-Each line in every domain file is JSON with a fixed schema:
+Each line in every domain file is JSON with a fixed schema containing only a `messages` array:
 ```json
 {"messages": [
   {"role": "system", "content": "<SYSTEM_PROMPT_FROM_BLUX_CA>"},
@@ -55,6 +60,7 @@ Each line in every domain file is JSON with a fixed schema:
 ]}
 ```
 - **System prompt:** Always the placeholder string above (apply domain overlays separately).
+- **Message roles:** `system`, `user`, `assistant`.
 - **Audit Notes:** When safety/ethics are present, assistant content ends with:
   ```
   ## Audit Notes
@@ -66,7 +72,23 @@ Each line in every domain file is JSON with a fixed schema:
     - ...
   ```
 
-## Domains (500 examples each)
+## JSONL Counts
+| File | Lines |
+| --- | ---: |
+| data/coding.jsonl | 500 |
+| data/conversation.jsonl | 500 |
+| data/core.jsonl | 500 |
+| data/creation.jsonl | 501 |
+| data/efficiency.jsonl | 500 |
+| data/governance.jsonl | 500 |
+| data/reasoning.jsonl | 500 |
+| data/relationships.jsonl | 500 |
+| data/safety.jsonl | 500 |
+| eval/capability_probes.jsonl | 10 |
+| eval/identity_probes.jsonl | 10 |
+| eval/red_team.jsonl | 10 |
+
+## Domains
 - **core:** identity, ethics, boundary-setting, manipulation detection.
 - **safety:** refusals, redirection, safety framing (no harmful instructions).
 - **governance:** power, institutions, accountability; never outsource morality to algorithms.
@@ -82,6 +104,8 @@ Each line in every domain file is JSON with a fixed schema:
 - `eval/red_team.jsonl`: adversarial prompts expecting firm refusals and boundary clarity.
 - `eval/capability_probes.jsonl`: reasoning, coding, and clarity checks that must remain aligned.
 
+Evaluation probes live in `eval/` and are kept separate from training data in `data/`.
+
 **Publish gate:** Do not release a new dataset version unless all probes are satisfied. Failures include soft compliance, emotional roleplay, eroded refusals, or loss of auditability.
 
 ## Tooling
@@ -92,7 +116,7 @@ All tools are CPU-only and deterministic.
 python tools/validate_jsonl.py            # defaults to data/*.jsonl
 python tools/validate_jsonl.py data/core.jsonl
 ```
-Checks: JSON parse, schema/roles, system placeholder, non-empty user/assistant, Audit Notes shape, and 500-line count per domain file.
+Checks: JSON parse, schema/roles, system placeholder, non-empty user/assistant, Audit Notes shape, and expected line counts per domain file.
 
 ### Summarize dataset
 ```
@@ -118,7 +142,7 @@ python tools/generate_dataset.py          # re-creates all domain files with the
 Every increment must pass validation and evaluation probes before release.
 
 ## Release Checklist
-- [ ] `python tools/validate_jsonl.py` passes for all domain files (500 lines each).
+- [ ] `python tools/validate_jsonl.py` passes for all domain files (see JSONL counts above).
 - [ ] Evaluation probes reviewed/updated; failures addressed before publish.
 - [ ] `python tools/sample_review.py` run and reviewed; flagged lines pruned/regenerated.
 - [ ] Licensing confirmed (Apache-2.0 by default; commercial option via Outer Void).
