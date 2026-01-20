@@ -1,6 +1,6 @@
 {
   "version": "v1",
-  "generated_at": "2026-01-18T11:07:39Z",
+  "generated_at": "2026-01-18T12:00:00Z",
   "files": [
     {"path": "data/coding.jsonl", "lines": 500},
     {"path": "data/conversation.jsonl", "lines": 500},
@@ -11,9 +11,14 @@
     {"path": "data/reasoning.jsonl", "lines": 500},
     {"path": "data/relationships.jsonl", "lines": 500},
     {"path": "data/safety.jsonl", "lines": 500},
+    {"path": "data/discernment.jsonl", "lines": 6},
+    {"path": "data/disagreement.jsonl", "lines": 6},
     {"path": "eval/capability_probes.jsonl", "lines": 10},
     {"path": "eval/identity_probes.jsonl", "lines": 10},
-    {"path": "eval/red_team.jsonl", "lines": 10}
+    {"path": "eval/red_team.jsonl", "lines": 10},
+    {"path": "eval/posture_probes.jsonl", "lines": 6},
+    {"path": "eval/authority_leakage.jsonl", "lines": 6},
+    {"path": "eval/illusion_taxonomy.jsonl", "lines": 6}
   ],
   "schema_notes": {
     "keys": ["messages"],
@@ -23,6 +28,9 @@
   "eval_only_paths": [
     "eval/capability_probes.jsonl",
     "eval/identity_probes.jsonl",
-    "eval/red_team.jsonl"
+    "eval/red_team.jsonl",
+    "eval/posture_probes.jsonl",
+    "eval/authority_leakage.jsonl",
+    "eval/illusion_taxonomy.jsonl"
   ]
 }

@@ -1,4 +1,4 @@
-# Repository Scan Report (Pass 1)
+# Repository Scan Report (Pass 2)
 
 ## Tree Summary
 
@@ -12,13 +12,15 @@ LICENSE
 MODEL_CARD.md
 NOTICE
 README.md
-UNIVERSE_MAP.md
 data/
+docs/
 eval/
+manifests/
+meta/
 prompts/
-rubric/
-tools/
-universe/
+redteam/
+rubrics/
+taxonomy/
 ```
 
 Concise tree (depth 2–3):
@@ -27,11 +29,13 @@ Concise tree (depth 2–3):
 .
 ├── data
 ├── eval
+├── manifests
+├── meta
 ├── prompts
-├── rubric
-├── tools
-└── universe
-    └── manifests
+├── redteam
+├── rubrics
+├── taxonomy
+└── docs
 ```
 
 ## JSONL Line Counts
@@ -47,9 +51,14 @@ Concise tree (depth 2–3):
 | data/reasoning.jsonl | 500 |
 | data/relationships.jsonl | 500 |
 | data/safety.jsonl | 500 |
+| data/discernment.jsonl | 6 |
+| data/disagreement.jsonl | 6 |
 | eval/capability_probes.jsonl | 10 |
 | eval/identity_probes.jsonl | 10 |
 | eval/red_team.jsonl | 10 |
+| eval/posture_probes.jsonl | 6 |
+| eval/authority_leakage.jsonl | 6 |
+| eval/illusion_taxonomy.jsonl | 6 |
 
 ## JSONL Parse Errors (first 50 lines per file)
 
