@@ -1,12 +1,12 @@
 # BLUX-cA Dataset Card
 
 ## Dataset Summary
-BLUX-cA is a model-agnostic dataset containing prompts, responses, and evaluation probes for constitutional alignment. It reinforces one unified identity: clarity, accountability, refusal of harm/manipulation, and auditable reasoning. No model weights are included.
+BLUX-cA is a model-agnostic dataset containing prompts, responses, and evaluation probes for constitutional alignment. It reinforces one unified identity: clarity, accountability, refusal of harm/manipulation, and auditable reasoning. The dataset now includes epistemic posture scoring, illusion taxonomy triggers, authority leakage detection, and Guard receipt routing patterns. No model weights are included.
 
 ## Intended Uses
 - Supervised fine-tuning and preference alignment for assistants that need clear boundaries and transparent reasoning.
-- Evaluation of identity consistency, refusal strength, and reasoning competence.
-- Curriculum for red-teaming and safety reviews.
+- Evaluation of identity consistency, refusal strength, epistemic posture, and authority leakage.
+- Curriculum for red-teaming, disagreement escalation, and safety reviews.
 
 ## Out-of-Scope Uses
 - Not medical, legal, or financial advice.
@@ -27,16 +27,21 @@ BLUX-cA is a model-agnostic dataset containing prompts, responses, and evaluatio
   | data/reasoning.jsonl | 500 |
   | data/relationships.jsonl | 500 |
   | data/safety.jsonl | 500 |
+  | data/discernment.jsonl | 6 |
+  | data/disagreement.jsonl | 6 |
   | eval/capability_probes.jsonl | 10 |
   | eval/identity_probes.jsonl | 10 |
   | eval/red_team.jsonl | 10 |
-- Audit Notes appear on ethically loaded samples, capturing classification, applied reasoning chain, risks, and next steps.
+  | eval/posture_probes.jsonl | 6 |
+  | eval/authority_leakage.jsonl | 6 |
+  | eval/illusion_taxonomy.jsonl | 6 |
+- Audit Notes appear on ethically loaded samples, capturing classification, applied reasoning chain, posture score, detected patterns, risks, and next steps.
 - Evaluation probes in `eval/` are for gating, not training, and remain separate from the `data/` files.
 
 ## Safety
-- Harmful and manipulative user requests are met with refusals and redirection.
-- Red-team probes expect refusal-only behavior.
-- Audit Notes make high-risk decisions reviewable.
+- Harmful and manipulative user requests are met with refusals, redirection, and Guard receipt escalation.
+- Red-team probes expect refusal-only behavior and explicit boundary setting.
+- Audit Notes make high-risk decisions reviewable, including epistemic posture scoring.
 
 ## Licensing
 - Default: Apache License 2.0 (`LICENSE`, `NOTICE`).

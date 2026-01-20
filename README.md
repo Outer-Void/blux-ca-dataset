@@ -5,7 +5,9 @@ Unified dataset, prompts, and evaluation probes for the BLUX-cA constitutional s
 ## Overview
 - **Identity lock:** BLUX-cA stays clear, accountable, audit-friendly, and refuses manipulation or harm.
 - **Discernment compass:** Struggler vs Indulger/Justifier vs Unclear, with refusals for harmful or manipulative requests.
-- **Auditability:** Safety/ethics-loaded responses include structured Audit Notes for transparent review.
+- **Epistemic posture scoring:** Every annotated example can carry calibrated certainty and detectable pattern flags.
+- **Illusion taxonomy support:** Examples and probes label authority misplacement, certainty inflation, and related failure modes.
+- **Guard receipt dependency:** cA never blocks; it reports and routes disagreements to Guard receipts.
 - **Deterministic assets:** JSONL files use a fixed system placeholder (`<SYSTEM_PROMPT_FROM_BLUX_CA>`) so prompts remain separable from data.
 
 ## Repository Structure
@@ -32,20 +34,27 @@ blux-ca-dataset/
 │   ├── creation.jsonl
 │   ├── conversation.jsonl
 │   ├── efficiency.jsonl
-│   └── relationships.jsonl
+│   ├── relationships.jsonl
+│   ├── discernment.jsonl
+│   └── disagreement.jsonl
 ├── eval/
 │   ├── identity_probes.jsonl
 │   ├── red_team.jsonl
-│   └── capability_probes.jsonl
+│   ├── capability_probes.jsonl
+│   ├── posture_probes.jsonl
+│   ├── authority_leakage.jsonl
+│   └── illusion_taxonomy.jsonl
 ├── rubric/
-│   └── labeling_rubric.md
+│   ├── labeling_rubric.md
+│   └── epistemic_posture.md
 ├── tools/
     ├── generate_dataset.py
     ├── sample_review.py
     ├── summarize_dataset.py
     ├── universe_router.py
     ├── universe_validate.py
-    └── validate_jsonl.py
+    ├── validate_jsonl.py
+    └── validate_audit_notes.py
 └── universe/
     └── manifests/
 ```
@@ -66,11 +75,15 @@ Each line in every domain file is JSON with a fixed schema containing only a `me
   ## Audit Notes
   - classification: Struggler | Indulger | Unclear
   - applied: Law | Strategy | Tactic (or chain)
+  - posture_score: 0-100
+  - detected_patterns:
+    - none | authority_leakage | false_certainty | missing_uncertainty_bounds | coercion | manipulation | safety_bypass_attempt
   - risks:
     - ...
   - next_step:
     - ...
   ```
+  Optional: `- illusion_tags:` and `- guard_receipt:` when applicable.
 
 ## JSONL Counts
 | File | Lines |
@@ -84,9 +97,14 @@ Each line in every domain file is JSON with a fixed schema containing only a `me
 | data/reasoning.jsonl | 500 |
 | data/relationships.jsonl | 500 |
 | data/safety.jsonl | 500 |
+| data/discernment.jsonl | 6 |
+| data/disagreement.jsonl | 6 |
 | eval/capability_probes.jsonl | 10 |
 | eval/identity_probes.jsonl | 10 |
 | eval/red_team.jsonl | 10 |
+| eval/posture_probes.jsonl | 6 |
+| eval/authority_leakage.jsonl | 6 |
+| eval/illusion_taxonomy.jsonl | 6 |
 
 ## Domains
 - **core:** identity, ethics, boundary-setting, manipulation detection.
@@ -103,6 +121,9 @@ Each line in every domain file is JSON with a fixed schema containing only a `me
 - `eval/identity_probes.jsonl`: stress-tests the BLUX-cA spine, audit rules, and refusal stance.
 - `eval/red_team.jsonl`: adversarial prompts expecting firm refusals and boundary clarity.
 - `eval/capability_probes.jsonl`: reasoning, coding, and clarity checks that must remain aligned.
+- `eval/posture_probes.jsonl`: calibrated uncertainty and epistemic posture checks.
+- `eval/authority_leakage.jsonl`: prevents false authority claims or responsibility laundering.
+- `eval/illusion_taxonomy.jsonl`: validates illusion taxonomy triggers (authority misplacement, certainty inflation, etc.).
 
 Evaluation probes live in `eval/` and are kept separate from training data in `data/`.
 
@@ -117,6 +138,13 @@ python tools/validate_jsonl.py            # defaults to data/*.jsonl
 python tools/validate_jsonl.py data/core.jsonl
 ```
 Checks: JSON parse, schema/roles, system placeholder, non-empty user/assistant, Audit Notes shape, and expected line counts per domain file.
+
+### Validate Audit Notes (posture + patterns)
+```
+python tools/validate_audit_notes.py      # defaults to data/*.jsonl
+python tools/validate_audit_notes.py data/discernment.jsonl
+```
+Checks: presence of Audit Notes, posture score (0-100), and detected pattern list fields.
 
 ### Summarize dataset
 ```
