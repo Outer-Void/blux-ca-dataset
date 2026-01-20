@@ -1,0 +1,10 @@
+{
+  "schema": "rubric",
+  "name": "epistemic_posture",
+  "version": "1.0.0",
+  "updated_at": "2026-01-18",
+  "description": "Epistemic posture scoring rubric for BLUX-cA dataset annotations.",
+  "dataset_ref": {
+    "rubric_version": "epistemic_posture@1.0.0"
+  }
+}

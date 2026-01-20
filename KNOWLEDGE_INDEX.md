@@ -1,20 +1,19 @@
-# Knowledge Index (BLUX Big-Bang)
+# Knowledge Index (Dataset Spine)
 
 ## Key Decisions & Invariants
-- The capability universe is driven by `universe/registry.json` plus per-capability manifests.
-- Every manifest must map to at least one pillar: Unity, Responsibility, Right Action, Risk, Worth.
-- Registry + manifest schema drift is blocked by `python tools/universe_validate.py`.
-- Router/controller/evaluator loop is centralized in `tools/universe_router.py`.
+- Dataset spine only: schemas, taxonomy, rubrics, eval/redteam metadata, and manifests.
+- No runtime agent, inference, or execution tooling lives in this repository.
+- Versioned taxonomy and rubric files drive dataset references and auditability.
 
 ## Where to Find Things
-- Registry: `universe/registry.json`
-- Manifests: `universe/manifests/*.json`
-- Router/controller/evaluator: `tools/universe_router.py`
-- Validator guardrail: `tools/universe_validate.py`
-- Universe documentation + demo commands: `UNIVERSE_MAP.md`
+- Taxonomy: `taxonomy/`
+- Rubrics: `rubrics/`
+- Evaluation metadata: `eval/metadata.json`
+- Red team metadata: `redteam/metadata.json`
+- Manifests (checksums placeholders): `manifests/`
+- Dataset items: `data/*.jsonl`
 
-## Safe Extension Guide
-1. Add a manifest in `universe/manifests/` (include pillars + entrypoint).
-2. Register the capability in `universe/registry.json`.
-3. If it’s an evaluator, extend `evaluate_job` in `tools/universe_router.py`.
-4. Run `python tools/universe_validate.py` before release.
+## Extension Guide (Data Only)
+1. Add or update taxonomy/rubrics versions.
+2. Add eval/redteam metadata entries.
+3. Update manifests with release checksums.

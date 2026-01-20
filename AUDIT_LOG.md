@@ -20,3 +20,4 @@
 - 2026-01-17T18:35:07Z | intent: finalize commit | change: created commit 5f7abc5 | verification: git log confirms
 - 2026-01-17T18:35:14Z | intent: sync audit log with commit | change: amend commit to include latest audit entries | verification: pending
 - 2026-01-17T18:35:28Z | intent: finalize audit log after amend | change: update audit log and amend commit | verification: pending
+- 2026-01-18T12:00:00Z | intent: enforce dataset-only spine | change: removed runtime tooling and universe manifests; added taxonomy/rubrics/eval/redteam/manifests structure | verification: not run

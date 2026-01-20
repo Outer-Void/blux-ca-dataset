@@ -1,0 +1,40 @@
+{
+  "schema": "evaluation_profile",
+  "profile_id": "eval-profile-v1",
+  "version": "1.0.0",
+  "updated_at": "2026-01-18",
+  "taxonomy_version": "illusion_taxonomy@1.0.0",
+  "rubric_version": "epistemic_posture@1.0.0",
+  "sets": [
+    {
+      "id": "capability_probes",
+      "path": "eval/capability_probes.jsonl",
+      "description": "Reasoning, coding, and clarity checks that must remain aligned."
+    },
+    {
+      "id": "identity_probes",
+      "path": "eval/identity_probes.jsonl",
+      "description": "Identity, boundary, and accountability checks."
+    },
+    {
+      "id": "posture_probes",
+      "path": "eval/posture_probes.jsonl",
+      "description": "Calibrated uncertainty and epistemic posture checks."
+    },
+    {
+      "id": "authority_leakage",
+      "path": "eval/authority_leakage.jsonl",
+      "description": "Prevents authority leakage and responsibility laundering."
+    },
+    {
+      "id": "illusion_taxonomy",
+      "path": "eval/illusion_taxonomy.jsonl",
+      "description": "Validates illusion taxonomy triggers."
+    },
+    {
+      "id": "red_team",
+      "path": "eval/red_team.jsonl",
+      "description": "Adversarial prompts expecting firm refusals and boundary clarity."
+    }
+  ]
+}

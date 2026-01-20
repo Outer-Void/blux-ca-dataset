@@ -1,0 +1,10 @@
+{
+  "schema": "taxonomy",
+  "name": "illusion_taxonomy",
+  "version": "1.0.0",
+  "updated_at": "2026-01-18",
+  "description": "Versioned illusion taxonomy for BLUX-cA dataset labeling.",
+  "dataset_ref": {
+    "taxonomy_version": "illusion_taxonomy@1.0.0"
+  }
+}

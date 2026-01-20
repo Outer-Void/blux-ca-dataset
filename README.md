@@ -1,62 +1,37 @@
-# BLUX-cA Dataset
+# BLUX-cA Dataset Spine
 
-Unified dataset, prompts, and evaluation probes for the BLUX-cA constitutional spine. This repository is model-agnostic and ships a ready-to-publish dataset (no training pipeline) with validation tooling, release gating, and dual licensing.
+## What this repository is
+A dataset spine for BLUX-cA: schemas, versioned taxonomy and rubrics, evaluation/redteam metadata, and manifests. It is model-agnostic and intended for dataset publication and auditability.
 
-## Overview
-- **Identity lock:** BLUX-cA stays clear, accountable, audit-friendly, and refuses manipulation or harm.
-- **Discernment compass:** Struggler vs Indulger/Justifier vs Unclear, with refusals for harmful or manipulative requests.
-- **Epistemic posture scoring:** Every annotated example can carry calibrated certainty and detectable pattern flags.
-- **Illusion taxonomy support:** Examples and probes label authority misplacement, certainty inflation, and related failure modes.
-- **Guard receipt dependency:** cA never blocks; it reports and routes disagreements to Guard receipts.
-- **Deterministic assets:** JSONL files use a fixed system placeholder (`<SYSTEM_PROMPT_FROM_BLUX_CA>`) so prompts remain separable from data.
+## What this repository is NOT
+- **No profiling** or user targeting.
+- **No runtime agent**, inference, or execution environment.
+- **No enforcement** or policy engine; this repo only defines data and metadata.
+
+## Provenance & Privacy Policy
+- **Data minimization:** Only the fields required for dataset items and annotations are retained.
+- **Sanitization:** Entries are curated to avoid personal data exposure.
+- **No PII by default:** The dataset is designed to exclude personally identifying information.
+- **Traceability:** Versioned taxonomy, rubrics, and eval profiles provide auditability without runtime logic.
+
+## Version Mapping (discernment_report schema)
+When referencing this dataset from a `discernment_report` schema, use:
+- `taxonomy_version`: from `taxonomy/version.json` (`illusion_taxonomy@1.0.0`).
+- `rubric_version`: from `rubrics/version.json` (`epistemic_posture@1.0.0`).
+- `eval_profile`: from `eval/metadata.json` (`eval-profile-v1`).
 
 ## Repository Structure
 ```
 blux-ca-dataset/
-├── AUDIT_LOG.md
-├── COMMERCIAL_LICENSE.md       # Commercial licensing template (Outer Void)
-├── KNOWLEDGE_INDEX.md
-├── LICENSE                     # Apache-2.0
-├── NOTICE                      # Attribution placeholder
-├── README.md
-├── MODEL_CARD.md               # Dataset card for Hugging Face
-├── UNIVERSE_MAP.md
-├── prompts/
-│   ├── system_core.txt
-│   ├── system_coding.txt
-│   └── system_governance.txt
-├── data/
-│   ├── core.jsonl
-│   ├── coding.jsonl
-│   ├── governance.jsonl
-│   ├── safety.jsonl
-│   ├── reasoning.jsonl
-│   ├── creation.jsonl
-│   ├── conversation.jsonl
-│   ├── efficiency.jsonl
-│   ├── relationships.jsonl
-│   ├── discernment.jsonl
-│   └── disagreement.jsonl
-├── eval/
-│   ├── identity_probes.jsonl
-│   ├── red_team.jsonl
-│   ├── capability_probes.jsonl
-│   ├── posture_probes.jsonl
-│   ├── authority_leakage.jsonl
-│   └── illusion_taxonomy.jsonl
-├── rubric/
-│   ├── labeling_rubric.md
-│   └── epistemic_posture.md
-├── tools/
-    ├── generate_dataset.py
-    ├── sample_review.py
-    ├── summarize_dataset.py
-    ├── universe_router.py
-    ├── universe_validate.py
-    ├── validate_jsonl.py
-    └── validate_audit_notes.py
-└── universe/
-    └── manifests/
+├── taxonomy/                 # illusion taxonomy + version file
+├── rubrics/                  # epistemic posture rubric + version file
+├── eval/                     # evaluation sets + metadata
+├── redteam/                  # redteam metadata
+├── manifests/                # dataset manifests with checksum placeholders
+├── data/                     # dataset JSONL
+├── prompts/                  # system prompt placeholders
+├── docs/                     # documentation
+└── meta/                     # supplemental metadata
 ```
 
 ## Data Format
@@ -68,121 +43,7 @@ Each line in every domain file is JSON with a fixed schema containing only a `me
   {"role": "assistant", "content": "..."}
 ]}
 ```
-- **System prompt:** Always the placeholder string above (apply domain overlays separately).
-- **Message roles:** `system`, `user`, `assistant`.
-- **Audit Notes:** When safety/ethics are present, assistant content ends with:
-  ```
-  ## Audit Notes
-  - classification: Struggler | Indulger | Unclear
-  - applied: Law | Strategy | Tactic (or chain)
-  - posture_score: 0-100
-  - detected_patterns:
-    - none | authority_leakage | false_certainty | missing_uncertainty_bounds | coercion | manipulation | safety_bypass_attempt
-  - risks:
-    - ...
-  - next_step:
-    - ...
-  ```
-  Optional: `- illusion_tags:` and `- guard_receipt:` when applicable.
 
-## JSONL Counts
-| File | Lines |
-| --- | ---: |
-| data/coding.jsonl | 500 |
-| data/conversation.jsonl | 500 |
-| data/core.jsonl | 500 |
-| data/creation.jsonl | 501 |
-| data/efficiency.jsonl | 500 |
-| data/governance.jsonl | 500 |
-| data/reasoning.jsonl | 500 |
-| data/relationships.jsonl | 500 |
-| data/safety.jsonl | 500 |
-| data/discernment.jsonl | 6 |
-| data/disagreement.jsonl | 6 |
-| eval/capability_probes.jsonl | 10 |
-| eval/identity_probes.jsonl | 10 |
-| eval/red_team.jsonl | 10 |
-| eval/posture_probes.jsonl | 6 |
-| eval/authority_leakage.jsonl | 6 |
-| eval/illusion_taxonomy.jsonl | 6 |
-
-## Domains
-- **core:** identity, ethics, boundary-setting, manipulation detection.
-- **safety:** refusals, redirection, safety framing (no harmful instructions).
-- **governance:** power, institutions, accountability; never outsource morality to algorithms.
-- **coding:** debugging discipline, secure patterns, refusing exploit requests.
-- **reasoning:** structured thinking, assumption checks, tradeoffs.
-- **creation:** proposals, plans, documents, structured outputs without fluff.
-- **conversation:** concise, grounded dialogue; no emotional roleplay.
-- **efficiency:** compression, bullet summaries, minimal questions, clarity.
-- **relationships:** boundaries, conflict de-escalation, accountability, anti-manipulation.
-
-## Evaluation Harness (never for training)
-- `eval/identity_probes.jsonl`: stress-tests the BLUX-cA spine, audit rules, and refusal stance.
-- `eval/red_team.jsonl`: adversarial prompts expecting firm refusals and boundary clarity.
-- `eval/capability_probes.jsonl`: reasoning, coding, and clarity checks that must remain aligned.
-- `eval/posture_probes.jsonl`: calibrated uncertainty and epistemic posture checks.
-- `eval/authority_leakage.jsonl`: prevents false authority claims or responsibility laundering.
-- `eval/illusion_taxonomy.jsonl`: validates illusion taxonomy triggers (authority misplacement, certainty inflation, etc.).
-
-Evaluation probes live in `eval/` and are kept separate from training data in `data/`.
-
-**Publish gate:** Do not release a new dataset version unless all probes are satisfied. Failures include soft compliance, emotional roleplay, eroded refusals, or loss of auditability.
-
-## Tooling
-All tools are CPU-only and deterministic.
-
-### Validate JSONL
-```
-python tools/validate_jsonl.py            # defaults to data/*.jsonl
-python tools/validate_jsonl.py data/core.jsonl
-```
-Checks: JSON parse, schema/roles, system placeholder, non-empty user/assistant, Audit Notes shape, and expected line counts per domain file.
-
-### Validate Audit Notes (posture + patterns)
-```
-python tools/validate_audit_notes.py      # defaults to data/*.jsonl
-python tools/validate_audit_notes.py data/discernment.jsonl
-```
-Checks: presence of Audit Notes, posture score (0-100), and detected pattern list fields.
-
-### Summarize dataset
-```
-python tools/summarize_dataset.py         # per-file counts, classifications, Audit Notes, top prompts
-python tools/summarize_dataset.py data/core.jsonl --top 10
-```
-
-### Sample for review
-```
-python tools/sample_review.py             # deterministic samples -> review/sample_<date>.md
-python tools/sample_review.py data/core.jsonl --n 5 --seed 7
-```
-
-### Regenerate deterministically (optional)
-```
-python tools/generate_dataset.py          # re-creates all domain files with the fixed seed
-```
-
-## Versioning Strategy
-- **v0.1:** lock the core identity pack.
-- **v0.2:** add capability packs (reasoning, coding, governance, relationships).
-- **v0.3:** add efficiency/compression refinements.
-Every increment must pass validation and evaluation probes before release.
-
-## Release Checklist
-- [ ] `python tools/validate_jsonl.py` passes for all domain files (see JSONL counts above).
-- [ ] Evaluation probes reviewed/updated; failures addressed before publish.
-- [ ] `python tools/sample_review.py` run and reviewed; flagged lines pruned/regenerated.
-- [ ] Licensing confirmed (Apache-2.0 by default; commercial option via Outer Void).
-- [ ] Hugging Face dataset card (`MODEL_CARD.md`) updated and pushed/tagged.
-
-## Licensing
-- Default license: **Apache License 2.0** (see `LICENSE` and `NOTICE`).
-- **Commercial license** available for proprietary/closed-source usage via Outer Void (`COMMERCIAL_LICENSE.md`, contact: theoutervoid@outlook.com).
-- Contributions are accepted under Apache-2.0 unless otherwise agreed in writing. This repository does not provide legal advice.
-
-## Hugging Face Publishing
-1. Validate and sample-review the dataset.
-2. Copy `MODEL_CARD.md` to the HF dataset repo README.
-3. Upload `data/`, `eval/`, `prompts/`, `rubric/`, and tooling scripts.
-4. Tag the release (e.g., `v0.2`) and document probe status in the card.
+## Notes
+- Evaluation probes live in `eval/` and are kept separate from dataset items in `data/`.
+- Versioned taxonomy and rubric files live in `taxonomy/` and `rubrics/` respectively.
