@@ -210,7 +210,7 @@ CONTENT:
 
 **Provider:** Outer Void
 
-**Contact:** theoutervoid@outlook.com
+**Contact:** theoutervoid [at] outlook.com
 
 ## Scope
 This commercial license governs proprietary use of the BLUX-cA dataset, including all prompts, evaluation assets, and accompanying documentation contained in this repository. Commercial usage covers any internal or external deployment where the dataset is incorporated into closed-source products, services, or model fine-tuning pipelines that are not distributed under the Apache License 2.0.
@@ -529,7 +529,7 @@ BLUX-cA is a model-agnostic dataset containing prompts, responses, and evaluatio
 
 ## Licensing
 - Default: Apache License 2.0 (`LICENSE`, `NOTICE`).
-- Commercial option available for proprietary/closed-source usage (`COMMERCIAL_LICENSE.md`, contact theoutervoid@outlook.com).
+- Commercial option available for proprietary/closed-source usage (`COMMERCIAL_LICENSE.md`, contact theoutervoid [at] outlook.com).
 - Contributions default to Apache-2.0 unless otherwise agreed.
 
 ## Limitations and Known Gaps

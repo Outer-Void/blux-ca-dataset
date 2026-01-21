@@ -45,7 +45,7 @@ BLUX-cA is a model-agnostic dataset containing prompts, responses, and evaluatio
 
 ## Licensing
 - Default: Apache License 2.0 (`LICENSE`, `NOTICE`).
-- Commercial option available for proprietary/closed-source usage (`COMMERCIAL_LICENSE.md`, contact theoutervoid@outlook.com).
+- Commercial option available for proprietary/closed-source usage (`COMMERCIAL_LICENSE.md`, contact theoutervoid [at] outlook.com).
 - Contributions default to Apache-2.0 unless otherwise agreed.
 
 ## Limitations and Known Gaps

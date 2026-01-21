@@ -3,11 +3,14 @@
 ## What this repository is
 A dataset spine for BLUX-cA: discernment-report training samples, eval probes, taxonomy/rubric versions, and manifests. It is model-agnostic and intended for dataset publication and auditability.
 
+This dataset trains **discernment_report** shape + posture scoring + illusion taxonomy references. Outputs are **contract-shaped artifacts** (discernment_report fields), not assistant prose.
+
 ## What this repository is NOT
 - **No profiling** or user targeting.
 - **No runtime agent**, inference, or execution environment.
-- **No enforcement** or policy engine; this repo only defines data and metadata.
+- **No enforcement**, receipt issuance, or policy engine; this repo only defines data and metadata.
 - **No prescriptive advice or execution suggestions**; outputs are discernment reports only.
+- **No orchestration** or authority posture; no "allow/deny/block" decisions live here.
 
 ## Provenance & Privacy Policy
 - **Data minimization:** Only the fields required for dataset items and annotations are retained.
@@ -44,6 +47,11 @@ blux-ca-dataset/
 ├── manifests/                # legacy manifests (non-canonical)
 └── prompts/                  # system prompt placeholders
 ```
+
+### Separation of concerns
+- `data/` contains **training samples only** (discernment_report outputs).
+- `eval/` contains **red-team probes and evaluation sets**, including legacy quarantine data.
+- Training content must **never** include enforcement, receipt issuance, execution, or orchestration language.
 
 ## Data Format
 Each training sample is JSONL with:
