@@ -1,0 +1,102 @@
+{
+  "schema": "blux-ca-dataset-manifest",
+  "version": "1.0.0",
+  "updated_at": "2026-01-20",
+  "taxonomy_version": "illusion_taxonomy@1.0.0",
+  "rubric_version": "epistemic_posture@1.0.0",
+  "training_files": [
+    {
+      "path": "data/discernment_samples.jsonl",
+      "sha256": "ded83fd76de2cd0336b9aec615041e2d295bddd34341c028f39cf9056f5722b4"
+    }
+  ],
+  "eval_files": [
+    {
+      "path": "eval/README.md",
+      "sha256": "f5eda550bf90cafa842b27ff7cc9cfd923a71542ff3a668dd4c5db51c8943020"
+    },
+    {
+      "path": "eval/metadata.json",
+      "sha256": "751c3d2f2ca688e4cb548fa38f13b9416a8e0fb2fd70e8026d0e77afd9c26151"
+    },
+    {
+      "path": "eval/authority_leakage.jsonl",
+      "sha256": "9b645917e7072211d1cbdf59f97cc7f29501c0f4cf833d828503617db1ad00a4"
+    },
+    {
+      "path": "eval/capability_probes.jsonl",
+      "sha256": "48fb7f3df0993b60b1308849273c3e1bbd2865f3cafaeec75712390bc39ec8a0"
+    },
+    {
+      "path": "eval/identity_probes.jsonl",
+      "sha256": "3ffdf0036b5929b78569b99ad72746bb8cf060389ef393df948ce274c99fd153"
+    },
+    {
+      "path": "eval/illusion_taxonomy.jsonl",
+      "sha256": "cbea5f65723a939b3b0fe7dd58e79a5ed0aa6bf42afcde79ff3ee199a30c310c"
+    },
+    {
+      "path": "eval/posture_probes.jsonl",
+      "sha256": "d9d7fd00a624551da1fffcf9ffab1902478517e8560e9ba8c2fd461acf92984a"
+    },
+    {
+      "path": "eval/red_team.jsonl",
+      "sha256": "140d8d71ad7c10af810ae3967e91be38682dd3a93dca4f43f99d814c2b91ffb9"
+    },
+    {
+      "path": "eval/legacy_quarantine/coding.jsonl",
+      "sha256": "b1b44480fc8a1fad53273beb065de25d841206da7d5c43e62ab264407fcf894e",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/conversation.jsonl",
+      "sha256": "880b37dcf0cc86621afd745e2cf83dd0a8148bec741f64bf7c89d5dc430a66a5",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/core.jsonl",
+      "sha256": "9b4f7b7f5080e24e1d5f68982a33cc967459cb26d6ff4a3dfdce433fcace2ab4",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/creation.jsonl",
+      "sha256": "2f2a1f199773febb27a02a9c9ce5268f3f0e11459a1b0a899f114107dcfb5d38",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/disagreement.jsonl",
+      "sha256": "e6e5e6aa3ee1f4f8fffdc9dbdcdc3375338b2388dce2eda47b3c18502f38457d",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/discernment.jsonl",
+      "sha256": "7ee4d8216917da743098ad8e7f99e094f00e9ce61da22a3f06e4bf20d3db5eb8",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/efficiency.jsonl",
+      "sha256": "ae2ee80804079cf7f1e04de430a07f3ce9fd48395c1303c865c08538cc0f3d84",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/governance.jsonl",
+      "sha256": "7aff96e70fcb09ff12d74d0bbc4d30ea9d070884466959a8a446d65c87df867b",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/reasoning.jsonl",
+      "sha256": "5e9ffd0168c5de04ff152bc9500df25daf0927546411737cee8321cd47a4b0d4",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/relationships.jsonl",
+      "sha256": "ef69afb5d875a3636e3babb4094059ee5e64ce93d827067342847e110a318260",
+      "status": "not_for_training"
+    },
+    {
+      "path": "eval/legacy_quarantine/safety.jsonl",
+      "sha256": "3de3a95f3fae5d335df42bfaee2ac1ef9d2dff82394ec99b9b515365ddd451f6",
+      "status": "not_for_training"
+    }
+  ]
+}

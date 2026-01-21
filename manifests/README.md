@@ -1,3 +1,3 @@
 # Dataset Manifests
 
-This directory holds dataset manifests with checksum placeholders. Populate checksum fields when producing a release artifact.
+This directory holds legacy manifests. The canonical index for this repository is `meta/manifest.json`.

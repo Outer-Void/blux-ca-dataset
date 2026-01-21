@@ -1,18 +1,29 @@
 # BLUX-cA Dataset Spine
 
 ## What this repository is
-A dataset spine for BLUX-cA: schemas, versioned taxonomy and rubrics, evaluation/redteam metadata, and manifests. It is model-agnostic and intended for dataset publication and auditability.
+A dataset spine for BLUX-cA: discernment-report training samples, eval probes, taxonomy/rubric versions, and manifests. It is model-agnostic and intended for dataset publication and auditability.
 
 ## What this repository is NOT
 - **No profiling** or user targeting.
 - **No runtime agent**, inference, or execution environment.
 - **No enforcement** or policy engine; this repo only defines data and metadata.
+- **No prescriptive advice or execution suggestions**; outputs are discernment reports only.
 
 ## Provenance & Privacy Policy
 - **Data minimization:** Only the fields required for dataset items and annotations are retained.
 - **Sanitization:** Entries are curated to avoid personal data exposure.
 - **No PII by default:** The dataset is designed to exclude personally identifying information.
+- **No raw logs:** Only curated user text snippets or summaries are allowed.
 - **Traceability:** Versioned taxonomy, rubrics, and eval profiles provide auditability without runtime logic.
+
+## Discernment Report Framing
+- Outputs are **DISCERNMENT_REPORT** artifacts (posture, signals, uncertainty, handoff).
+- The dataset **never** includes policy enforcement or operational instructions.
+- Separation of concerns:
+  - **Guard** enforces.
+  - **Lite** executes.
+  - **Quantum** routes.
+  - **Reg** handles trust.
 
 ## Version Mapping (discernment_report schema)
 When referencing this dataset from a `discernment_report` schema, use:
@@ -23,27 +34,27 @@ When referencing this dataset from a `discernment_report` schema, use:
 ## Repository Structure
 ```
 blux-ca-dataset/
+├── data/                     # training-ready discernment report samples
+├── eval/                     # eval probes + legacy quarantine (not for training)
+├── meta/                     # canonical manifest, checksums
+├── docs/                     # dataset spec + governance
 ├── taxonomy/                 # illusion taxonomy + version file
 ├── rubrics/                  # epistemic posture rubric + version file
-├── eval/                     # evaluation sets + metadata
 ├── redteam/                  # redteam metadata
-├── manifests/                # dataset manifests with checksum placeholders
-├── data/                     # dataset JSONL
-├── prompts/                  # system prompt placeholders
-├── docs/                     # documentation
-└── meta/                     # supplemental metadata
+├── manifests/                # legacy manifests (non-canonical)
+└── prompts/                  # system prompt placeholders
 ```
 
 ## Data Format
-Each line in every domain file is JSON with a fixed schema containing only a `messages` array:
-```json
-{"messages": [
-  {"role": "system", "content": "<SYSTEM_PROMPT_FROM_BLUX_CA>"},
-  {"role": "user", "content": "..."},
-  {"role": "assistant", "content": "..."}
-]}
-```
+Each training sample is JSONL with:
+- `input.user_text` (optional `client_provided_memory` references only).
+- `output.discernment_report` shaped to `blux://contracts/discernment_report.schema.json`.
+- `dataset_refs` (taxonomy/rubric versions, optional eval profile).
+- `notes` (non-sensitive labeling notes).
+
+See `docs/DATASET_SPEC.md` for the canonical sample spec.
 
 ## Notes
 - Evaluation probes live in `eval/` and are kept separate from dataset items in `data/`.
 - Versioned taxonomy and rubric files live in `taxonomy/` and `rubrics/` respectively.
+- The canonical manifest is `meta/manifest.json`.

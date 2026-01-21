@@ -10,27 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Enforce dataset-only boundaries
-        shell: bash
-        run: |
-          set -euo pipefail
-          prohibited=(src app server inference runtime tools)
-          hits=$(find . -type d \( -name src -o -name app -o -name server -o -name inference -o -name runtime -o -name tools \) -not -path "./.git/*")
-          if [ -n "$hits" ]; then
-            echo "Prohibited runtime paths detected:"
-            echo "$hits"
-            exit 1
-          fi
-
-      - name: Secret pattern scan
-        shell: bash
-        run: |
-          set -euo pipefail
-          patterns='(BEGIN( RSA| OPENSSH)? PRIVATE KEY|AWS_SECRET_ACCESS_KEY|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36,}|xox[baprs]-[0-9A-Za-z-]{10,48})'
-          if git grep -n -I -E "$patterns"; then
-            echo "Potential secrets detected. Remove before commit."
-            exit 1
-          fi
+      - name: Dataset physics checks
+        run: python meta/physics_test.py
 
       - name: Parse JSON/YAML (best effort)
         shell: bash
