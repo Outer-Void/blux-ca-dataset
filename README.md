@@ -24,10 +24,18 @@ fixtures/
     goal.json
     expected/
       <model_version>/
-        <policy_pack_id>/
+        <policy_pack_id>/        # default expectations
           expected_artifact.json
           expected_verdict.json
           report.json            # optional
+        <profile_id>/            # profile-specific expectations (optional)
+          expected_artifact.json
+          expected_verdict.json
+          report.json            # optional
+          <policy_pack_id>/      # optional policy-pack subfolder
+            expected_artifact.json
+            expected_verdict.json
+            report.json          # optional
     archives/                   # optional
       <legacy_version>/
         <policy_pack_id>/
@@ -52,6 +60,13 @@ and compare it to the fixture's `report.json` if present.
 ## Policy pack coverage (Phase 5)
 Fixtures can be run under different policy packs. Store expectations per pack at:
 `fixtures/<case>/expected/<model_version>/<policy_pack_id>/`.
+
+## Profile-aware expectations (Option A)
+When fixture behavior varies by profile, add a profile-specific expectation bundle
+under `fixtures/<case>/expected/<model_version>/<profile_id>/` and keep the default
+expectations untouched. Use `goal.json` metadata fields such as `required_profile_id`,
+`required_profile_version`, and `device` to describe required runtime context. Avoid
+duplicating outputs unless the profile changes behavior.
 
 ## Compatibility coverage (Phase 7)
 Legacy outputs live under `fixtures/<case>/archives/<legacy_version>/<policy_pack_id>/`
@@ -78,6 +93,10 @@ and are compared when validating older outputs.
 2) Compare canonical JSON bytes against expectations:
    ```bash
    ./scripts/verify_fixtures.py --actual-root runs --policy-pack default
+   ```
+   To compare profile-aware expectations, add `--profile`:
+   ```bash
+   ./scripts/verify_fixtures.py --actual-root runs --policy-pack default --profile <profile_id>
    ```
 3) Validate fixture layout + dataset versioning:
    ```bash
