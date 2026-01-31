@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cA Expected Verdict",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pass", "fail", "infeasible"]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "drift": {
+      "type": "string"
+    }
+  }
+}
