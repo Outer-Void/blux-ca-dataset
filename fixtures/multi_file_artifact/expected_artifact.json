@@ -1,0 +1,23 @@
+{
+  "version": "cA-0.3",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "kind": "multi-file",
+      "files": [
+        {
+          "path": "README.md",
+          "content": "# Multi-file Fixture\n"
+        },
+        {
+          "path": "src/app.py",
+          "content": "print(\"hello\")\n"
+        },
+        {
+          "path": "src/utils/helpers.py",
+          "content": "def add(a, b):\n    return a + b\n"
+        }
+      ]
+    }
+  }
+}

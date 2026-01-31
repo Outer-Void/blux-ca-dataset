@@ -1,0 +1,7 @@
+{
+  "id": "goal_unsorted_output",
+  "summary": "Return a bundle with files in unsorted order.",
+  "prompt": "Return a JSON artifact with format json. The content must be {\"kind\": \"multi-file\", \"files\": [...]}. Include two entries in the listed order: src/zeta.txt with content \"zeta\\n\" followed by src/alpha.txt with content \"alpha\\n\". Do not include extra fields.",
+  "version": "cA-0.3",
+  "tags": ["phase3", "structural", "failure", "unsorted"]
+}
