@@ -1,0 +1,19 @@
+{
+  "version": "cA-0.3",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "kind": "multi-file",
+      "files": [
+        {
+          "path": "src/dup.txt",
+          "content": "first\n"
+        },
+        {
+          "path": "src/dup.txt",
+          "content": "second\n"
+        }
+      ]
+    }
+  }
+}

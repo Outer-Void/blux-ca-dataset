@@ -1,0 +1,7 @@
+{
+  "id": "goal_multi_file_artifact",
+  "summary": "Return a deterministic multi-file artifact bundle.",
+  "prompt": "Return a JSON artifact with format json. The content must be an object with fields {\"kind\": \"multi-file\", \"files\": [...]} and exactly three files sorted lexicographically by path. Use these exact file entries: README.md with content \"# Multi-file Fixture\\n\", src/app.py with content \"print(\\\"hello\\\")\\n\", and src/utils/helpers.py with content \"def add(a, b):\\n    return a + b\\n\". Do not include extra fields.",
+  "version": "cA-0.3",
+  "tags": ["phase3", "structural", "multi_file"]
+}

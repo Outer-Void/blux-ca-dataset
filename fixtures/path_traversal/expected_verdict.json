@@ -1,0 +1,5 @@
+{
+  "version": "cA-0.3",
+  "status": "fail",
+  "notes": "Bundle includes a path traversal entry and must be rejected."
+}

@@ -1,0 +1,13 @@
+{
+  "version": "cA-0.3",
+  "mode": "acceptance",
+  "fixture": "duplicate_paths",
+  "status": "fail",
+  "checks": [
+    {
+      "id": "artifact.paths",
+      "status": "fail",
+      "notes": "Detected duplicate path src/dup.txt."
+    }
+  ]
+}

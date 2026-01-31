@@ -1,0 +1,19 @@
+{
+  "version": "cA-0.3",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "kind": "multi-file",
+      "files": [
+        {
+          "path": "../secrets.txt",
+          "content": "do not allow\n"
+        },
+        {
+          "path": "safe/ok.txt",
+          "content": "ok\n"
+        }
+      ]
+    }
+  }
+}
