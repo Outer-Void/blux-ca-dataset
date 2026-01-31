@@ -43,9 +43,21 @@ def validate_fixture(fixture_dir: pathlib.Path, dataset_version: str) -> list[st
         errors.append(f"Missing expected outputs for {fixture_dir.name}: {expected_root}")
         return errors
 
-    policy_packs = [p for p in expected_root.iterdir() if p.is_dir()]
+    policy_packs: list[pathlib.Path] = []
+    for entry in expected_root.iterdir():
+        if not entry.is_dir():
+            continue
+        if (entry / "expected_artifact.json").exists() or (entry / "expected_verdict.json").exists():
+            policy_packs.append(entry)
+        else:
+            for pack_dir in entry.iterdir():
+                if pack_dir.is_dir():
+                    policy_packs.append(pack_dir)
+
     if not policy_packs:
-        errors.append(f"No policy pack directories found in {expected_root}")
+        errors.append(
+            f"No policy pack directories found in {expected_root} (including profile-specific expectations)."
+        )
         return errors
 
     for pack_dir in policy_packs:

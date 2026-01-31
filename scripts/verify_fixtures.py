@@ -36,11 +36,17 @@ def expected_dir(
     model_version: str,
     policy_pack: str,
     *,
+    profile_id: str | None = None,
     archive_version: str | None = None,
 ) -> pathlib.Path:
     if archive_version:
         return expected_root / fixture / "archives" / archive_version / policy_pack
-    return expected_root / fixture / "expected" / model_version / policy_pack
+    base = expected_root / fixture / "expected" / model_version
+    if profile_id:
+        profile_root = base / profile_id
+        policy_pack_dir = profile_root / policy_pack
+        return policy_pack_dir if policy_pack_dir.exists() else profile_root
+    return base / policy_pack
 
 
 def legacy_expected_paths(expected_root: pathlib.Path, fixture: str) -> dict[str, pathlib.Path]:
@@ -68,9 +74,15 @@ def compare_fixture(
     actual_root: pathlib.Path,
     model_version: str,
     policy_pack: str,
+    profile_id: str | None,
 ) -> list[str]:
     errors: list[str] = []
-    expected_base = expected_dir(expected_root, name, model_version, policy_pack)
+    expected_base = expected_dir(
+        expected_root, name, model_version, policy_pack, profile_id=profile_id
+    )
+
+    if profile_id and not expected_base.exists():
+        expected_base = expected_dir(expected_root, name, model_version, policy_pack)
 
     if expected_base.exists():
         expected_paths = {
@@ -193,6 +205,11 @@ def main() -> int:
         help="Policy pack identifier for expected outputs.",
     )
     parser.add_argument(
+        "--profile",
+        default=None,
+        help="Optional profile identifier for profile-specific expectations.",
+    )
+    parser.add_argument(
         "--include-archives",
         action="store_true",
         help="Also compare archived outputs stored under fixtures/<case>/archives.",
@@ -213,6 +230,7 @@ def main() -> int:
     actual_root = pathlib.Path(args.actual_root)
     model_version = args.model_version or read_dataset_version() or "cA-1.0"
     policy_pack = args.policy_pack
+    profile_id = args.profile
     archive_versions = [v.strip() for v in args.archive_versions.split(",") if v.strip()]
     archive_actual_root = pathlib.Path(args.archive_actual_root) if args.archive_actual_root else None
 
@@ -226,7 +244,14 @@ def main() -> int:
     failures: list[str] = []
     for name in fixture_dirs:
         failures.extend(
-            compare_fixture(name, expected_root, actual_root, model_version=model_version, policy_pack=policy_pack)
+            compare_fixture(
+                name,
+                expected_root,
+                actual_root,
+                model_version=model_version,
+                policy_pack=policy_pack,
+                profile_id=profile_id,
+            )
         )
         if args.include_archives:
             archive_root = archive_actual_root or actual_root / "archives"
