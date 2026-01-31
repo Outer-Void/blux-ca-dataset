@@ -1,0 +1,7 @@
+{
+  "id": "goal_minimal_delta",
+  "summary": "Select the smallest deterministic patch.",
+  "prompt": "Update the file by changing only the word 'blue' to 'red'.",
+  "version": "cA-1.0",
+  "tags": ["minimal-delta", "patch"]
+}

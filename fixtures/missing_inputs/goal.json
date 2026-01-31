@@ -1,0 +1,7 @@
+{
+  "id": "goal_missing_inputs",
+  "summary": "Handle a request with missing required inputs.",
+  "prompt": "Generate a report but treat missing inputs as infeasible.",
+  "version": "cA-1.0",
+  "tags": ["feasibility", "missing-inputs"]
+}

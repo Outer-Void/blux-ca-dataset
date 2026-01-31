@@ -2,6 +2,11 @@
   "id": "goal_duplicate_paths",
   "summary": "Return a bundle containing duplicate file paths.",
   "prompt": "Return a JSON artifact with format json. The content must be {\"kind\": \"multi-file\", \"files\": [...]}. Include two entries with the same path src/dup.txt in the listed order, with contents \"first\\n\" and \"second\\n\". Do not include extra fields.",
-  "version": "cA-0.3",
-  "tags": ["phase3", "structural", "failure", "duplicate_paths"]
+  "version": "cA-1.0",
+  "tags": [
+    "phase3",
+    "structural",
+    "failure",
+    "duplicate_paths"
+  ]
 }

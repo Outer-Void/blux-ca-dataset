@@ -1,0 +1,13 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "conflict_detection",
+  "status": "fail",
+  "checks": [
+    {
+      "id": "patch.conflict",
+      "status": "fail",
+      "notes": "Two edits targeted the same line with different content."
+    }
+  ]
+}

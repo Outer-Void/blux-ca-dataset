@@ -1,0 +1,7 @@
+{
+  "id": "goal_conflict_detection",
+  "summary": "Detect conflicting patch instructions.",
+  "prompt": "Apply two incompatible edits to the same line and report conflict.",
+  "version": "cA-1.0",
+  "tags": ["conflict", "feasibility"]
+}

@@ -1,0 +1,13 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "missing_inputs",
+  "status": "infeasible",
+  "checks": [
+    {
+      "id": "inputs.required",
+      "status": "fail",
+      "notes": "Required inputs were not provided."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "minimal_delta",
+  "status": "pass",
+  "checks": [
+    {
+      "id": "delta.minimal",
+      "status": "pass",
+      "notes": "Single-line replacement chosen as minimal change."
+    }
+  ]
+}

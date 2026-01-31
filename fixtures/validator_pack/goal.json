@@ -1,0 +1,7 @@
+{
+  "id": "goal_validator_pack",
+  "summary": "Run validator pack checks against an artifact.",
+  "prompt": "Return the string 'validated' after running validator pack checks.",
+  "version": "cA-1.0",
+  "tags": ["validator-pack", "acceptance"]
+}

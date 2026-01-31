@@ -1,0 +1,13 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "legacy_outputs",
+  "status": "pass",
+  "checks": [
+    {
+      "id": "compat.current",
+      "status": "pass",
+      "notes": "Current output captured for compatibility baseline."
+    }
+  ]
+}
