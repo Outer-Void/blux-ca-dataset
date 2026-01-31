@@ -2,6 +2,11 @@
   "id": "goal_path_traversal",
   "summary": "Return a bundle containing a path traversal entry.",
   "prompt": "Return a JSON artifact with format json. The content must be {\"kind\": \"multi-file\", \"files\": [...]}. Include two entries in the listed order: ../secrets.txt with content \"do not allow\\n\" and safe/ok.txt with content \"ok\\n\". Do not include extra fields.",
-  "version": "cA-0.3",
-  "tags": ["phase3", "structural", "failure", "path_traversal"]
+  "version": "cA-1.0",
+  "tags": [
+    "phase3",
+    "structural",
+    "failure",
+    "path_traversal"
+  ]
 }

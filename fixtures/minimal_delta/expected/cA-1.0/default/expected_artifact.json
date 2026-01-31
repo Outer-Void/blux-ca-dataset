@@ -1,0 +1,15 @@
+{
+  "version": "cA-1.0",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "kind": "patch_bundle",
+      "patches": [
+        {
+          "path": "assets/theme.txt",
+          "diff": "--- a/assets/theme.txt\n+++ b/assets/theme.txt\n@@ -1 +1 @@\n-blue\n+red\n"
+        }
+      ]
+    }
+  }
+}

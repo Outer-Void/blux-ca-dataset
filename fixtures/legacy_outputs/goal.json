@@ -1,0 +1,7 @@
+{
+  "id": "goal_legacy_outputs",
+  "summary": "Provide a baseline output for compatibility comparisons.",
+  "prompt": "Return a stable legacy marker string.",
+  "version": "cA-1.0",
+  "tags": ["compatibility", "archives"]
+}

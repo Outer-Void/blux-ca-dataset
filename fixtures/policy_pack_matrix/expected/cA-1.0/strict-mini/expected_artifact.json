@@ -1,0 +1,11 @@
+{
+  "version": "cA-1.0",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "pack_id": "strict-mini",
+      "decision": "deny",
+      "rationale": "Strict pack blocks the risky request."
+    }
+  }
+}

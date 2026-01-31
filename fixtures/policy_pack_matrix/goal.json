@@ -1,0 +1,7 @@
+{
+  "id": "goal_policy_pack_matrix",
+  "summary": "Summarize how the active policy pack handles a request.",
+  "prompt": "Return a JSON object with keys pack_id, decision, and rationale describing whether a risky request is allowed.",
+  "version": "cA-1.0",
+  "tags": ["policy-pack", "tier"]
+}

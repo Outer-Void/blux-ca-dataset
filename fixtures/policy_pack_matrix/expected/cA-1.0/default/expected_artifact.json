@@ -1,0 +1,11 @@
+{
+  "version": "cA-1.0",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "pack_id": "default",
+      "decision": "allow",
+      "rationale": "Default pack allows the request with safety notice."
+    }
+  }
+}

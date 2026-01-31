@@ -2,6 +2,10 @@
   "id": "goal_patch_bundle",
   "summary": "Return a deterministic patch bundle.",
   "prompt": "Return a JSON artifact with format json. The content must be an object with fields {\"kind\": \"patch_bundle\", \"patches\": [...]} containing two patches sorted lexicographically by path. Use these exact entries: docs/guide.md with diff \"--- a/docs/guide.md\\n+++ b/docs/guide.md\\n@@ -1 +1 @@\\n-Old Guide\\n+New Guide\\n\" and src/main.py with diff \"--- a/src/main.py\\n+++ b/src/main.py\\n@@ -1,2 +1,2 @@\\n-print(\\\"hi\\\")\\n+print(\\\"hello\\\")\\n\". Do not include extra fields.",
-  "version": "cA-0.3",
-  "tags": ["phase3", "structural", "patch_bundle"]
+  "version": "cA-1.0",
+  "tags": [
+    "phase3",
+    "structural",
+    "patch_bundle"
+  ]
 }

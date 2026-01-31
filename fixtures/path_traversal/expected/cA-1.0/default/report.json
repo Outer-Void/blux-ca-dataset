@@ -1,0 +1,13 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "path_traversal",
+  "status": "fail",
+  "checks": [
+    {
+      "id": "artifact.paths",
+      "status": "fail",
+      "notes": "Detected path traversal via ../secrets.txt."
+    }
+  ]
+}

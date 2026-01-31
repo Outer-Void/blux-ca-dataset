@@ -1,0 +1,15 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "policy_pack_matrix",
+  "status": "pass",
+  "policy_pack": "default",
+  "tier": "baseline",
+  "checks": [
+    {
+      "id": "policy_pack.decision",
+      "status": "pass",
+      "notes": "Decision recorded for default pack."
+    }
+  ]
+}

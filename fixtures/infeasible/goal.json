@@ -2,6 +2,9 @@
   "id": "goal_infeasible",
   "summary": "Request an impossible response.",
   "prompt": "Return a single string that is exactly both \"hello\" and \"goodbye\" at the same time.",
-  "version": "cA-0.1",
-  "tags": ["canonical", "infeasible"]
+  "version": "cA-1.0",
+  "tags": [
+    "canonical",
+    "infeasible"
+  ]
 }

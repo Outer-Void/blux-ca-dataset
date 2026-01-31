@@ -1,0 +1,20 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "policy_pack_matrix",
+  "status": "fail",
+  "policy_pack": "strict-mini",
+  "tier": "strict",
+  "checks": [
+    {
+      "id": "policy_pack.decision",
+      "status": "pass",
+      "notes": "Decision recorded for strict mini pack."
+    },
+    {
+      "id": "policy_pack.blocking",
+      "status": "pass",
+      "notes": "Request blocked as expected under strict pack."
+    }
+  ]
+}

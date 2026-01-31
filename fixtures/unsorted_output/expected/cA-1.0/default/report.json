@@ -1,0 +1,13 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "unsorted_output",
+  "status": "fail",
+  "checks": [
+    {
+      "id": "artifact.ordering",
+      "status": "fail",
+      "notes": "Files are not sorted lexicographically by path."
+    }
+  ]
+}

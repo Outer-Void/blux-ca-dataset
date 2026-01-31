@@ -1,0 +1,19 @@
+{
+  "version": "cA-1.0",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "kind": "multi-file",
+      "files": [
+        {
+          "path": "src/zeta.txt",
+          "content": "zeta\n"
+        },
+        {
+          "path": "src/alpha.txt",
+          "content": "alpha\n"
+        }
+      ]
+    }
+  }
+}

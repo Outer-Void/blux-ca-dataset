@@ -1,0 +1,19 @@
+{
+  "version": "cA-1.0",
+  "mode": "acceptance",
+  "fixture": "validator_pack",
+  "status": "pass",
+  "validator_pack": "core",
+  "checks": [
+    {
+      "id": "validator.schema",
+      "status": "pass",
+      "notes": "Schema validator pack passed."
+    },
+    {
+      "id": "validator.determinism",
+      "status": "pass",
+      "notes": "Determinism check passed."
+    }
+  ]
+}
