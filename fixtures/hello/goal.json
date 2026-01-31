@@ -1,0 +1,7 @@
+{
+  "id": "goal_hello",
+  "summary": "Return a greeting.",
+  "prompt": "Return exactly the string \"hello\".",
+  "version": "cA-0.1",
+  "tags": ["canonical"]
+}
