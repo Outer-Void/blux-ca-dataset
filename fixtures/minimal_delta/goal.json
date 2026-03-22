@@ -2,6 +2,21 @@
   "id": "goal_minimal_delta",
   "summary": "Select the smallest deterministic patch.",
   "prompt": "Update the file by changing only the word 'blue' to 'red'.",
-  "version": "cA-1.0",
-  "tags": ["minimal-delta", "patch"]
+  "version": "cA-1.0-pro",
+  "tags": [
+    "minimal-delta",
+    "patch"
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "minimal_delta",
+    "scenario_type": "minimal_delta_patch",
+    "expected_outcome": "pass"
+  }
 }

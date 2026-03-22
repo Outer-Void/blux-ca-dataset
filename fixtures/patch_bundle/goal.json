@@ -2,10 +2,22 @@
   "id": "goal_patch_bundle",
   "summary": "Return a deterministic patch bundle.",
   "prompt": "Return a JSON artifact with format json. The content must be an object with fields {\"kind\": \"patch_bundle\", \"patches\": [...]} containing two patches sorted lexicographically by path. Use these exact entries: docs/guide.md with diff \"--- a/docs/guide.md\\n+++ b/docs/guide.md\\n@@ -1 +1 @@\\n-Old Guide\\n+New Guide\\n\" and src/main.py with diff \"--- a/src/main.py\\n+++ b/src/main.py\\n@@ -1,2 +1,2 @@\\n-print(\\\"hi\\\")\\n+print(\\\"hello\\\")\\n\". Do not include extra fields.",
-  "version": "cA-1.0",
+  "version": "cA-1.0-pro",
   "tags": [
     "phase3",
     "structural",
     "patch_bundle"
-  ]
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "patch_bundle",
+    "scenario_type": "patch_bundle",
+    "expected_outcome": "pass"
+  }
 }

@@ -1,0 +1,11 @@
+{
+  "version": "cA-1.0-pro",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "profile_id": "cpu",
+      "profile_version": "1.0",
+      "device": "cpu"
+    }
+  }
+}

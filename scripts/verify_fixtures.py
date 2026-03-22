@@ -83,6 +83,10 @@ def compare_fixture(
 
     if profile_id and not expected_base.exists():
         expected_base = expected_dir(expected_root, name, model_version, policy_pack)
+    if not expected_base.exists() and policy_pack != "cA-pro":
+        expected_base = expected_dir(expected_root, name, model_version, "cA-pro", profile_id=profile_id)
+        if profile_id and not expected_base.exists():
+            expected_base = expected_dir(expected_root, name, model_version, "cA-pro")
 
     if expected_base.exists():
         expected_paths = {
@@ -132,6 +136,10 @@ def compare_archives(
         expected_base = expected_dir(
             expected_root, fixture, model_version=version, policy_pack=policy_pack, archive_version=version
         )
+        if not expected_base.exists() and policy_pack != "cA-pro":
+            expected_base = expected_dir(
+                expected_root, fixture, model_version=version, policy_pack="cA-pro", archive_version=version
+            )
         if not expected_base.exists():
             continue
         actual_base = archive_root / version / policy_pack / fixture
@@ -201,7 +209,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--policy-pack",
-        default="default",
+        default="cA-pro",
         help="Policy pack identifier for expected outputs.",
     )
     parser.add_argument(
@@ -216,7 +224,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--archive-versions",
-        default="cA-0.4,cA-0.5,cA-0.6,cA-0.7,cA-0.8,cA-0.9,cA-1.0-pro",
+        default="cA-0.4,cA-0.5,cA-0.6,cA-0.7,cA-0.8,cA-0.9,cA-1.0",
         help="Comma-separated archived versions to compare when --include-archives is set.",
     )
     parser.add_argument(
@@ -228,7 +236,7 @@ def main() -> int:
 
     expected_root = pathlib.Path(args.expected_root)
     actual_root = pathlib.Path(args.actual_root)
-    model_version = args.model_version or read_dataset_version() or "cA-1.0"
+    model_version = args.model_version or read_dataset_version() or "cA-1.0-pro"
     policy_pack = args.policy_pack
     profile_id = args.profile
     archive_versions = [v.strip() for v in args.archive_versions.split(",") if v.strip()]

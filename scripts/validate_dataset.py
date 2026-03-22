@@ -1,15 +1,45 @@
 #!/usr/bin/env python3
-"""Validate fixture layout and dataset versions."""
+"""Validate fixture layout, metadata completeness, coverage, and export derivation."""
 from __future__ import annotations
 
 import json
 import pathlib
 import sys
+from collections import Counter
+from typing import Any
 
 DATASET_VERSION_PATH = pathlib.Path("DATASET_VERSION")
+REQUIRED_METADATA_FIELDS = (
+    "fixture_id",
+    "model_version",
+    "contract_version",
+    "policy_pack_id",
+    "policy_pack_version",
+    "profile_id",
+    "profile_version",
+    "device",
+    "scenario_type",
+    "expected_outcome",
+)
+REQUIRED_SCENARIO_TYPES = {
+    "baseline_pass",
+    "drift_guard",
+    "infeasible_request",
+    "missing_inputs",
+    "minimal_delta_patch",
+    "multi_file_artifact",
+    "patch_bundle",
+    "patch_conflict",
+    "validator_failure",
+    "validator_pack",
+    "policy_pack_aware",
+    "profile_aware",
+    "compatibility_legacy",
+}
+REQUIRED_OUTCOMES = {"pass", "fail", "infeasible"}
 
 
-def load_json(path: pathlib.Path) -> dict:
+def load_json(path: pathlib.Path) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
@@ -22,62 +52,148 @@ def get_dataset_version() -> str:
     return DATASET_VERSION_PATH.read_text(encoding="utf-8").strip()
 
 
-def expect_version(path: pathlib.Path, expected: str, errors: list[str]) -> None:
+def expect_version(path: pathlib.Path, expected: str, errors: list[str]) -> Any:
     data = load_json(path)
     version = data.get("version")
     if version != expected:
         errors.append(f"Version mismatch in {path}: expected {expected}, got {version}")
+    return data
 
 
-def validate_fixture(fixture_dir: pathlib.Path, dataset_version: str) -> list[str]:
+def validate_goal_metadata(goal_path: pathlib.Path, dataset_version: str, errors: list[str]) -> dict[str, Any]:
+    goal = expect_version(goal_path, dataset_version, errors)
+    metadata = goal.get("metadata")
+    if not isinstance(metadata, dict):
+        errors.append(f"Missing metadata object in {goal_path}")
+        return {}
+
+    missing = [field for field in REQUIRED_METADATA_FIELDS if field not in metadata]
+    if missing:
+        errors.append(f"Missing metadata fields in {goal_path}: {', '.join(missing)}")
+
+    if metadata.get("fixture_id") != goal_path.parent.name:
+        errors.append(
+            f"fixture_id mismatch in {goal_path}: expected {goal_path.parent.name}, got {metadata.get('fixture_id')}"
+        )
+    if metadata.get("model_version") != dataset_version:
+        errors.append(
+            f"model_version mismatch in {goal_path}: expected {dataset_version}, got {metadata.get('model_version')}"
+        )
+    if metadata.get("expected_outcome") not in REQUIRED_OUTCOMES:
+        errors.append(f"Invalid expected_outcome in {goal_path}: {metadata.get('expected_outcome')}")
+    if not metadata.get("scenario_type"):
+        errors.append(f"Missing scenario_type in {goal_path}")
+
+    return metadata
+
+
+def enumerate_expected_dirs(expected_root: pathlib.Path) -> list[tuple[pathlib.Path, str, str | None]]:
+    bundles: list[tuple[pathlib.Path, str, str | None]] = []
+    for entry in sorted(expected_root.iterdir()):
+        if not entry.is_dir():
+            continue
+        if (entry / "expected_artifact.json").exists() or (entry / "expected_verdict.json").exists():
+            bundles.append((entry, entry.name, None))
+            continue
+        for pack_dir in sorted(entry.iterdir()):
+            if pack_dir.is_dir():
+                bundles.append((pack_dir, pack_dir.name, entry.name))
+    return bundles
+
+
+def derive_export_row(
+    fixture_dir: pathlib.Path,
+    bundle_dir: pathlib.Path,
+    goal_metadata: dict[str, Any],
+    dataset_version: str,
+    *,
+    policy_pack_id: str,
+    profile_id: str | None,
+    archive_version: str | None = None,
+) -> dict[str, Any]:
+    metadata = dict(goal_metadata)
+    metadata["model_version"] = archive_version or dataset_version
+    metadata["policy_pack_id"] = policy_pack_id
+    metadata["profile_id"] = profile_id or goal_metadata.get("profile_id")
+    metadata["archive_version"] = archive_version
+    return {
+        "input": {"path": str((fixture_dir / 'goal.json').as_posix())},
+        "artifact": {"path": str((bundle_dir / 'expected_artifact.json').as_posix())},
+        "verdict": {"path": str((bundle_dir / 'expected_verdict.json').as_posix())},
+        "metadata": metadata,
+    }
+
+
+def validate_fixture(fixture_dir: pathlib.Path, dataset_version: str, coverage: Counter[str]) -> list[str]:
     errors: list[str] = []
     goal = fixture_dir / "goal.json"
     if not goal.exists():
         errors.append(f"Missing {goal}")
         return errors
 
-    expect_version(goal, dataset_version, errors)
+    goal_metadata = validate_goal_metadata(goal, dataset_version, errors)
+    scenario_type = goal_metadata.get("scenario_type")
+    if scenario_type:
+        coverage[scenario_type] += 1
+    outcome = goal_metadata.get("expected_outcome")
+    if outcome:
+        coverage[f"outcome:{outcome}"] += 1
 
     expected_root = fixture_dir / "expected" / dataset_version
     if not expected_root.exists():
         errors.append(f"Missing expected outputs for {fixture_dir.name}: {expected_root}")
         return errors
 
-    policy_packs: list[pathlib.Path] = []
-    for entry in expected_root.iterdir():
-        if not entry.is_dir():
-            continue
-        if (entry / "expected_artifact.json").exists() or (entry / "expected_verdict.json").exists():
-            policy_packs.append(entry)
-        else:
-            for pack_dir in entry.iterdir():
-                if pack_dir.is_dir():
-                    policy_packs.append(pack_dir)
-
-    if not policy_packs:
-        errors.append(
-            f"No policy pack directories found in {expected_root} (including profile-specific expectations)."
-        )
+    bundles = enumerate_expected_dirs(expected_root)
+    if not bundles:
+        errors.append(f"No expectation bundles found in {expected_root}.")
         return errors
 
-    for pack_dir in policy_packs:
-        for name in ("expected_artifact.json", "expected_verdict.json"):
-            path = pack_dir / name
+    for bundle_dir, policy_pack_id, profile_id in bundles:
+        artifact_path = bundle_dir / "expected_artifact.json"
+        verdict_path = bundle_dir / "expected_verdict.json"
+        for path in (artifact_path, verdict_path):
             if not path.exists():
                 errors.append(f"Missing {path}")
-                continue
-            expect_version(path, dataset_version, errors)
+        if not artifact_path.exists() or not verdict_path.exists():
+            continue
 
-        report = pack_dir / "report.json"
+        expect_version(artifact_path, dataset_version, errors)
+        verdict = expect_version(verdict_path, dataset_version, errors)
+        report = bundle_dir / "report.json"
         if report.exists():
             expect_version(report, dataset_version, errors)
+            coverage["report_harness"] += 1
+
+        row = derive_export_row(
+            fixture_dir,
+            bundle_dir,
+            goal_metadata,
+            dataset_version,
+            policy_pack_id=policy_pack_id,
+            profile_id=profile_id,
+        )
+        for section in ("input", "artifact", "verdict"):
+            path = pathlib.Path(row[section]["path"])
+            if not path.exists():
+                errors.append(f"Export row points to missing path: {path}")
+        if verdict.get("status") != row["metadata"]["expected_outcome"] and fixture_dir.name != "policy_pack_matrix":
+            errors.append(
+                f"Expected outcome mismatch for {fixture_dir.name} bundle {bundle_dir}: "
+                f"goal metadata says {row['metadata']['expected_outcome']}, verdict says {verdict.get('status')}"
+            )
+        if profile_id is not None:
+            coverage["profile_aware"] += 1
+        if policy_pack_id != "default":
+            coverage["policy_pack_variant"] += 1
 
     archive_root = fixture_dir / "archives"
     if archive_root.exists():
-        for version_dir in archive_root.iterdir():
+        coverage["compatibility_legacy"] += 1
+        for version_dir in sorted(archive_root.iterdir()):
             if not version_dir.is_dir():
                 continue
-            for pack_dir in version_dir.iterdir():
+            for pack_dir in sorted(version_dir.iterdir()):
                 if not pack_dir.is_dir():
                     continue
                 for name in ("expected_artifact.json", "expected_verdict.json"):
@@ -89,6 +205,15 @@ def validate_fixture(fixture_dir: pathlib.Path, dataset_version: str) -> list[st
                 report = pack_dir / "report.json"
                 if report.exists():
                     expect_version(report, version_dir.name, errors)
+                derive_export_row(
+                    fixture_dir,
+                    pack_dir,
+                    goal_metadata,
+                    dataset_version,
+                    policy_pack_id=pack_dir.name,
+                    profile_id=None,
+                    archive_version=version_dir.name,
+                )
 
     return errors
 
@@ -100,15 +225,23 @@ def main() -> int:
         raise SystemExit("fixtures directory missing.")
 
     failures: list[str] = []
+    coverage: Counter[str] = Counter()
     for fixture_dir in sorted(p for p in fixture_root.iterdir() if p.is_dir()):
-        failures.extend(validate_fixture(fixture_dir, dataset_version))
+        failures.extend(validate_fixture(fixture_dir, dataset_version, coverage))
+
+    for required in REQUIRED_SCENARIO_TYPES:
+        if coverage[required] == 0:
+            failures.append(f"Coverage gap: missing scenario_type '{required}'")
+    for required in REQUIRED_OUTCOMES:
+        if coverage[f"outcome:{required}"] == 0:
+            failures.append(f"Coverage gap: missing outcome '{required}'")
 
     if failures:
         for failure in failures:
             print(f"FAIL: {failure}")
         return 1
 
-    print("Fixture layout and versions validated.")
+    print("Fixture layout, metadata, coverage, and export derivation validated.")
     return 0
 
 

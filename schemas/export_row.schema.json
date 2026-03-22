@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cA Export Row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["input", "artifact", "verdict", "metadata"],
+  "properties": {
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fixture_id",
+        "model_version",
+        "contract_version",
+        "policy_pack_id",
+        "policy_pack_version",
+        "profile_id",
+        "profile_version",
+        "device",
+        "scenario_type",
+        "expected_outcome"
+      ],
+      "properties": {
+        "fixture_id": {"type": "string", "minLength": 1},
+        "model_version": {"type": "string", "minLength": 1},
+        "contract_version": {"type": "string", "minLength": 1},
+        "policy_pack_id": {"type": "string", "minLength": 1},
+        "policy_pack_version": {"type": ["string", "null"]},
+        "profile_id": {"type": ["string", "null"], "minLength": 1},
+        "profile_version": {"type": ["string", "null"]},
+        "device": {"type": ["string", "null"]},
+        "scenario_type": {"type": "string", "minLength": 1},
+        "expected_outcome": {
+          "type": "string",
+          "enum": ["pass", "fail", "infeasible"]
+        },
+        "archive_version": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

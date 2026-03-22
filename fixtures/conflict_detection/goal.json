@@ -2,6 +2,21 @@
   "id": "goal_conflict_detection",
   "summary": "Detect conflicting patch instructions.",
   "prompt": "Apply two incompatible edits to the same line and report conflict.",
-  "version": "cA-1.0",
-  "tags": ["conflict", "feasibility"]
+  "version": "cA-1.0-pro",
+  "tags": [
+    "conflict",
+    "feasibility"
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "conflict_detection",
+    "scenario_type": "patch_conflict",
+    "expected_outcome": "fail"
+  }
 }

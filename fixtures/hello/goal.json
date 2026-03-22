@@ -2,8 +2,20 @@
   "id": "goal_hello",
   "summary": "Return a greeting.",
   "prompt": "Return exactly the string \"hello\".",
-  "version": "cA-1.0",
+  "version": "cA-1.0-pro",
   "tags": [
     "canonical"
-  ]
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "hello",
+    "scenario_type": "baseline_pass",
+    "expected_outcome": "pass"
+  }
 }

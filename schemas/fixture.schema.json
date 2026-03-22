@@ -3,7 +3,7 @@
   "title": "cA Fixture Goal",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "summary", "prompt", "version"],
+  "required": ["id", "summary", "prompt", "version", "metadata"],
   "properties": {
     "id": {
       "type": "string",
@@ -28,7 +28,57 @@
     },
     "metadata": {
       "type": "object",
-      "additionalProperties": true
+      "additionalProperties": false,
+      "required": [
+        "fixture_id",
+        "model_version",
+        "contract_version",
+        "policy_pack_id",
+        "policy_pack_version",
+        "profile_id",
+        "profile_version",
+        "device",
+        "scenario_type",
+        "expected_outcome"
+      ],
+      "properties": {
+        "fixture_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contract_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_pack_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_pack_version": {
+          "type": ["string", "null"]
+        },
+        "profile_id": {
+          "type": ["string", "null"]
+        },
+        "profile_version": {
+          "type": ["string", "null"]
+        },
+        "device": {
+          "type": ["string", "null"]
+        },
+        "scenario_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_outcome": {
+          "type": "string",
+          "enum": ["pass", "fail", "infeasible"]
+        }
+      }
     },
     "required_profile_id": {
       "type": "string",

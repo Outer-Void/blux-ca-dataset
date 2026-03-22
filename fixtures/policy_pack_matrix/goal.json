@@ -2,6 +2,21 @@
   "id": "goal_policy_pack_matrix",
   "summary": "Summarize how the active policy pack handles a request.",
   "prompt": "Return a JSON object with keys pack_id, decision, and rationale describing whether a risky request is allowed.",
-  "version": "cA-1.0",
-  "tags": ["policy-pack", "tier"]
+  "version": "cA-1.0-pro",
+  "tags": [
+    "policy-pack",
+    "tier"
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "policy_pack_matrix",
+    "scenario_type": "policy_pack_aware",
+    "expected_outcome": "pass"
+  }
 }
