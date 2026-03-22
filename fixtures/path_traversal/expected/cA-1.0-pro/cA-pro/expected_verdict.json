@@ -1,5 +1,22 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-output-1.1",
+  "fixture_id": "path_traversal",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "status": "fail",
-  "notes": "Bundle includes a path traversal entry and must be rejected."
+  "outcome": "fail",
+  "summary": "Bundle includes a path traversal entry and must be rejected.",
+  "notes": "Bundle includes a path traversal entry and must be rejected.",
+  "drift_status": "clean"
 }

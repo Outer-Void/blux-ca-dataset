@@ -1,0 +1,11 @@
+{
+  "dataset_id": "cA V1.0 Dataset",
+  "dataset_repo": "blux-ca-dataset",
+  "dataset_version": "cA-1.0-pro",
+  "engine_name": "blux-ca",
+  "engine_line": "cA-1.0-pro",
+  "fixture_contract_version": "fixture-contract-1.1",
+  "output_contract_version": "blux-ca-output-1.1",
+  "report_contract_version": "blux-ca-report-1.1",
+  "notes": "This dataset is a deterministic regression corpus for the live local blux-ca engine line cA-1.0-pro. It detects drift and does not define engine behavior."
+}

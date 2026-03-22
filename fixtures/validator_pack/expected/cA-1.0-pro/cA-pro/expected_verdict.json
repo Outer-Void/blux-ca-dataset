@@ -1,5 +1,22 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-output-1.1",
+  "fixture_id": "validator_pack",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "status": "pass",
-  "notes": "Validator pack checks succeeded."
+  "outcome": "pass",
+  "summary": "Validator pack checks succeeded.",
+  "notes": "Validator pack checks succeeded.",
+  "drift_status": "clean"
 }

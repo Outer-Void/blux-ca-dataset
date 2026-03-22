@@ -1,5 +1,22 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-output-1.1",
+  "fixture_id": "legacy_outputs",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "status": "pass",
-  "notes": "Current version output for legacy comparison."
+  "outcome": "pass",
+  "summary": "Current version output for legacy comparison.",
+  "notes": "Current version output for legacy comparison.",
+  "drift_status": "clean"
 }

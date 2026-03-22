@@ -10,7 +10,7 @@
   "metadata": {
     "fixture_id": "profile_echo",
     "model_version": "cA-1.0-pro",
-    "contract_version": "fixture-contract-1.0",
+    "contract_version": "fixture-contract-1.1",
     "policy_pack_id": "cA-pro",
     "policy_pack_version": "1.0",
     "profile_id": "cpu",

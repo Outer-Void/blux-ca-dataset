@@ -1,15 +1,29 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-report-1.1",
+  "fixture_id": "policy_pack_matrix",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "mode": "acceptance",
-  "fixture": "policy_pack_matrix",
   "status": "pass",
-  "policy_pack": "cA-pro",
-  "tier": "pro",
+  "outcome": "pass",
   "checks": [
     {
       "id": "policy_pack.decision",
       "status": "pass",
       "notes": "Decision recorded for cA-pro."
     }
-  ]
+  ],
+  "policy_pack": "cA-pro",
+  "tier": "pro"
 }

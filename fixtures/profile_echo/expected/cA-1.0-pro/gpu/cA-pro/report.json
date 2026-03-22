@@ -1,14 +1,28 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-report-1.1",
+  "fixture_id": "profile_echo",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "gpu",
+    "profile_version": "1.0",
+    "device": "gpu"
+  },
   "mode": "acceptance",
-  "fixture": "profile_echo",
   "status": "pass",
-  "profile_id": "gpu",
+  "outcome": "pass",
   "checks": [
     {
       "id": "profile.context",
       "status": "pass",
       "notes": "GPU profile context recorded."
     }
-  ]
+  ],
+  "profile_id": "gpu"
 }

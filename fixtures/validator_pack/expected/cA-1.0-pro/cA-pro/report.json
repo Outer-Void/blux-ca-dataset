@@ -1,9 +1,22 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-report-1.1",
+  "fixture_id": "validator_pack",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "mode": "acceptance",
-  "fixture": "validator_pack",
   "status": "pass",
-  "validator_pack": "core",
+  "outcome": "pass",
   "checks": [
     {
       "id": "validator.schema",
@@ -15,5 +28,6 @@
       "status": "pass",
       "notes": "Determinism check passed."
     }
-  ]
+  ],
+  "validator_pack": "core"
 }
