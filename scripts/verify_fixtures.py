@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import pathlib
 import shlex
@@ -12,33 +11,8 @@ import sys
 import tempfile
 from typing import Any, Iterable
 
-DATASET_VERSION_PATH = pathlib.Path("DATASET_VERSION")
-VOLATILE_KEYS = {"generated_at", "started_at", "completed_at", "run_id", "trace_id", "duration_ms"}
+from dataset_common import canonical_dumps, fixture_dirs, load_json, normalize, read_dataset_version
 
-
-def canonical_bytes(payload: Any) -> bytes:
-    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
-
-
-def load_json(path: pathlib.Path) -> Any:
-    try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        raise SystemExit(f"Invalid JSON in {path}: {exc}") from exc
-
-
-def read_dataset_version() -> str | None:
-    if DATASET_VERSION_PATH.exists():
-        return DATASET_VERSION_PATH.read_text(encoding="utf-8").strip()
-    return None
-
-
-def normalize(payload: Any) -> Any:
-    if isinstance(payload, dict):
-        return {k: normalize(v) for k, v in sorted(payload.items()) if k not in VOLATILE_KEYS}
-    if isinstance(payload, list):
-        return [normalize(v) for v in payload]
-    return payload
 
 
 def expected_dir(
@@ -60,13 +34,6 @@ def expected_dir(
     return base / policy_pack
 
 
-def legacy_expected_paths(expected_root: pathlib.Path, fixture: str) -> dict[str, pathlib.Path]:
-    return {
-        "artifact": expected_root / fixture / "expected_artifact.json",
-        "verdict": expected_root / fixture / "expected_verdict.json",
-        "report": expected_root / fixture / "report.json",
-    }
-
 
 def payload_contains(expected: Any, actual: Any) -> bool:
     if isinstance(expected, dict):
@@ -80,14 +47,16 @@ def payload_contains(expected: Any, actual: Any) -> bool:
     return expected == actual
 
 
+
 def compare_payloads(errors: list[str], label: str, expected_path: pathlib.Path, actual_path: pathlib.Path, fixture: str) -> None:
     expected = normalize(load_json(expected_path))
     actual = normalize(load_json(actual_path))
-    if canonical_bytes(expected) == canonical_bytes(actual):
+    if canonical_dumps(expected) == canonical_dumps(actual):
         return
     if payload_contains(expected, actual):
         return
     errors.append(f"{label} mismatch for fixture '{fixture}'")
+
 
 
 def compare_fixture(name: str, expected_root: pathlib.Path, actual_root: pathlib.Path, model_version: str, policy_pack: str, profile_id: str | None) -> list[str]:
@@ -101,15 +70,11 @@ def compare_fixture(name: str, expected_root: pathlib.Path, actual_root: pathlib
         if profile_id and not expected_base.exists():
             expected_base = expected_dir(expected_root, name, model_version, "cA-pro")
 
-    if expected_base.exists():
-        expected_paths = {
-            "artifact": expected_base / "expected_artifact.json",
-            "verdict": expected_base / "expected_verdict.json",
-            "report": expected_base / "report.json",
-        }
-    else:
-        expected_paths = legacy_expected_paths(expected_root, name)
-
+    expected_paths = {
+        "artifact": expected_base / "expected_artifact.json",
+        "verdict": expected_base / "expected_verdict.json",
+        "report": expected_base / "report.json",
+    }
     actual_paths = {
         "artifact": actual_root / name / "artifact.json",
         "verdict": actual_root / name / "verdict.json",
@@ -118,9 +83,9 @@ def compare_fixture(name: str, expected_root: pathlib.Path, actual_root: pathlib
 
     for key in ("artifact", "verdict"):
         if not expected_paths[key].exists():
-            errors.append(f"Missing {expected_paths[key]}")
+            errors.append(f"Missing expected file {expected_paths[key]}")
         if not actual_paths[key].exists():
-            errors.append(f"Missing {actual_paths[key]}")
+            errors.append(f"Missing actual file {actual_paths[key]}")
 
     if errors:
         return errors
@@ -130,11 +95,12 @@ def compare_fixture(name: str, expected_root: pathlib.Path, actual_root: pathlib
 
     if expected_paths["report"].exists():
         if not actual_paths["report"].exists():
-            errors.append(f"Missing {actual_paths['report']}")
+            errors.append(f"Missing actual file {actual_paths['report']}")
         else:
             compare_payloads(errors, "Report", expected_paths["report"], actual_paths["report"], name)
 
     return errors
+
 
 
 def compare_archives(fixture: str, expected_root: pathlib.Path, archive_root: pathlib.Path, policy_pack: str, versions: Iterable[str]) -> list[str]:
@@ -159,9 +125,9 @@ def compare_archives(fixture: str, expected_root: pathlib.Path, archive_root: pa
         local_errors: list[str] = []
         for key in ("artifact", "verdict"):
             if not expected_paths[key].exists():
-                local_errors.append(f"Missing {expected_paths[key]}")
+                local_errors.append(f"Missing expected file {expected_paths[key]}")
             if not actual_paths[key].exists():
-                local_errors.append(f"Missing {actual_paths[key]}")
+                local_errors.append(f"Missing actual file {actual_paths[key]}")
         if local_errors:
             errors.extend(local_errors)
             continue
@@ -169,10 +135,11 @@ def compare_archives(fixture: str, expected_root: pathlib.Path, archive_root: pa
         compare_payloads(errors, f"Verdict ({version})", expected_paths["verdict"], actual_paths["verdict"], fixture)
         if expected_paths["report"].exists():
             if not actual_paths["report"].exists():
-                errors.append(f"Missing {actual_paths['report']}")
+                errors.append(f"Missing actual file {actual_paths['report']}")
             else:
                 compare_payloads(errors, f"Report ({version})", expected_paths["report"], actual_paths["report"], fixture)
     return errors
+
 
 
 def render_engine_command(template: str, *, fixture: str, goal: pathlib.Path, out_dir: pathlib.Path, model_version: str, policy_pack: str, profile: str | None) -> list[str]:
@@ -187,8 +154,9 @@ def render_engine_command(template: str, *, fixture: str, goal: pathlib.Path, ou
     return shlex.split(command)
 
 
-def run_engine_for_fixtures(command_template: str, fixture_root: pathlib.Path, actual_root: pathlib.Path, model_version: str, policy_pack: str, profile_id: str | None) -> None:
-    for fixture_dir in sorted(p for p in fixture_root.iterdir() if p.is_dir()):
+
+def run_engine_for_fixtures(command_template: str, expected_root: pathlib.Path, actual_root: pathlib.Path, model_version: str, policy_pack: str, profile_id: str | None) -> None:
+    for fixture_dir in fixture_dirs(expected_root):
         out_dir = actual_root / fixture_dir.name
         out_dir.mkdir(parents=True, exist_ok=True)
         cmd = render_engine_command(
@@ -201,6 +169,7 @@ def run_engine_for_fixtures(command_template: str, fixture_root: pathlib.Path, a
             profile=profile_id,
         )
         subprocess.run(cmd, check=True)
+
 
 
 def main() -> int:
@@ -224,9 +193,7 @@ def main() -> int:
 
     if not expected_root.exists():
         raise SystemExit(f"Expected fixtures directory not found: {expected_root}")
-
-    fixture_dirs = sorted(p.name for p in expected_root.iterdir() if p.is_dir())
-    if not fixture_dirs:
+    if not any(expected_root.iterdir()):
         raise SystemExit("No fixtures found to verify.")
 
     temp_dir: tempfile.TemporaryDirectory[str] | None = None
@@ -236,7 +203,10 @@ def main() -> int:
         temp_dir = tempfile.TemporaryDirectory(prefix="blux-ca-runs-")
         actual_root = pathlib.Path(temp_dir.name)
     else:
-        raise SystemExit("Either --actual-root or --engine-cmd/BLUX_CA_ENGINE_CMD is required.")
+        raise SystemExit(
+            "Either --actual-root or --engine-cmd/BLUX_CA_ENGINE_CMD is required. "
+            "For live-engine verification, pass --engine-cmd '<local blux-ca command template>'."
+        )
 
     if args.engine_cmd:
         try:
@@ -246,11 +216,11 @@ def main() -> int:
 
     archive_actual_root = pathlib.Path(args.archive_actual_root) if args.archive_actual_root else None
     failures: list[str] = []
-    for name in fixture_dirs:
-        failures.extend(compare_fixture(name, expected_root, actual_root, model_version=model_version, policy_pack=policy_pack, profile_id=profile_id))
+    for fixture_dir in fixture_dirs(expected_root):
+        failures.extend(compare_fixture(fixture_dir.name, expected_root, actual_root, model_version=model_version, policy_pack=policy_pack, profile_id=profile_id))
         if args.include_archives:
             archive_root = archive_actual_root or actual_root / "archives"
-            failures.extend(compare_archives(name, expected_root, archive_root, policy_pack=policy_pack, versions=archive_versions))
+            failures.extend(compare_archives(fixture_dir.name, expected_root, archive_root, policy_pack=policy_pack, versions=archive_versions))
 
     if temp_dir is not None:
         temp_dir.cleanup()

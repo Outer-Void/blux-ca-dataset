@@ -7,5 +7,7 @@
   "fixture_contract_version": "fixture-contract-1.1",
   "output_contract_version": "blux-ca-output-1.1",
   "report_contract_version": "blux-ca-report-1.1",
-  "notes": "This dataset is a deterministic regression corpus for the live local blux-ca engine line cA-1.0-pro. It detects drift and does not define engine behavior."
+  "export_contract_version": "blux-ca-export-row-1.2",
+  "mapping_date": "2026-03-22",
+  "notes": "This dataset is a deterministic regression corpus for the live local blux-ca engine line cA-1.0-pro. It detects drift and does not define engine behavior. Archived compatibility rows remain preserved for cA-0.4 through cA-1.0 under fixtures/legacy_outputs/archives/."
 }

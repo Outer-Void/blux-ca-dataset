@@ -1,6 +1,6 @@
 # Platforms
 
-Basic contributor setup notes for Android/Termux and a proot Debian fallback.
+Contributor setup notes for Android/Termux and a proot Debian fallback.
 
 ## Termux (native)
 ```bash
@@ -9,7 +9,7 @@ pkg install python3 git
 python -m pip install --upgrade pip
 ```
 
-## Termux + proot Debian inside Debian (optional)
+## Termux + proot Debian inside Debian shell (optional)
 ```bash
 pkg update
 pkg install proot-distro
@@ -30,6 +30,7 @@ python scripts/validate_dataset.py
 python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro
 python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-mini
 python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro --profile cpu
+python scripts/export_jsonl.py --include-archives --write-sha256
 ```
 
 ## Running directly against the local engine
@@ -42,4 +43,4 @@ python scripts/verify_fixtures.py \
   --policy-pack cA-pro
 ```
 
-Use `python -m pip`, never raw `pip`.
+Always use `python -m pip`, never raw `pip`.
