@@ -1,14 +1,46 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "cA Expected Artifact",
+  "title": "blux-ca Expected Artifact",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "artifact"],
+  "required": [
+    "version",
+    "contract_version",
+    "fixture_id",
+    "engine",
+    "request",
+    "artifact",
+    "artifact_kind",
+    "mime_type"
+  ],
   "properties": {
-    "version": {
-      "type": "string",
-      "minLength": 1
+    "version": {"type": "string", "minLength": 1},
+    "contract_version": {"type": "string", "minLength": 1},
+    "fixture_id": {"type": "string", "minLength": 1},
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "line", "dataset_version"],
+      "properties": {
+        "name": {"type": "string", "const": "blux-ca"},
+        "line": {"type": "string", "minLength": 1},
+        "dataset_version": {"type": "string", "minLength": 1}
+      }
     },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_pack_id", "policy_pack_version", "profile_id", "profile_version", "device"],
+      "properties": {
+        "policy_pack_id": {"type": "string", "minLength": 1},
+        "policy_pack_version": {"type": ["string", "null"]},
+        "profile_id": {"type": ["string", "null"]},
+        "profile_version": {"type": ["string", "null"]},
+        "device": {"type": ["string", "null"]}
+      }
+    },
+    "artifact_kind": {"type": "string", "minLength": 1},
+    "mime_type": {"type": ["string", "null"]},
     "artifact": {
       "oneOf": [
         {
@@ -16,18 +48,11 @@
           "additionalProperties": false,
           "required": ["format", "content"],
           "properties": {
-            "format": {
-              "type": "string",
-              "enum": ["text", "json"]
-            },
-            "content": {
-              "type": ["string", "object", "array", "number", "boolean", "null"]
-            }
+            "format": {"type": "string", "enum": ["text", "json"]},
+            "content": {"type": ["string", "object", "array", "number", "boolean", "null"]}
           }
         },
-        {
-          "type": "null"
-        }
+        {"type": "null"}
       ]
     }
   }

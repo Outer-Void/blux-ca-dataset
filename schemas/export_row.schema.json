@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "cA Export Row",
+  "title": "blux-ca Export Row",
   "type": "object",
   "additionalProperties": false,
   "required": ["input", "artifact", "verdict", "metadata"],
@@ -29,6 +29,14 @@
         "path": {"type": "string", "minLength": 1}
       }
     },
+    "report": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
     "metadata": {
       "type": "object",
       "additionalProperties": false,
@@ -50,14 +58,11 @@
         "contract_version": {"type": "string", "minLength": 1},
         "policy_pack_id": {"type": "string", "minLength": 1},
         "policy_pack_version": {"type": ["string", "null"]},
-        "profile_id": {"type": ["string", "null"], "minLength": 1},
+        "profile_id": {"type": ["string", "null"]},
         "profile_version": {"type": ["string", "null"]},
         "device": {"type": ["string", "null"]},
         "scenario_type": {"type": "string", "minLength": 1},
-        "expected_outcome": {
-          "type": "string",
-          "enum": ["pass", "fail", "infeasible"]
-        },
+        "expected_outcome": {"type": "string", "enum": ["pass", "fail", "infeasible"]},
         "archive_version": {"type": ["string", "null"]}
       }
     }

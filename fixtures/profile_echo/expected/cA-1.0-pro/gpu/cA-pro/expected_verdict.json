@@ -1,5 +1,22 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-output-1.1",
+  "fixture_id": "profile_echo",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "gpu",
+    "profile_version": "1.0",
+    "device": "gpu"
+  },
   "status": "pass",
-  "notes": "GPU profile metadata is reported deterministically."
+  "outcome": "pass",
+  "summary": "GPU profile metadata is reported deterministically.",
+  "notes": "GPU profile metadata is reported deterministically.",
+  "drift_status": "clean"
 }

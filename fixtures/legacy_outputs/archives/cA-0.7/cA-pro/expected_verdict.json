@@ -1,5 +1,22 @@
 {
   "version": "cA-0.7",
+  "contract_version": "blux-ca-output-1.1",
+  "fixture_id": "legacy_outputs",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-0.7",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "status": "pass",
-  "notes": "Archived output for cA-0.7."
+  "outcome": "pass",
+  "summary": "Archived output for cA-0.7.",
+  "notes": "Archived output for cA-0.7.",
+  "drift_status": "clean"
 }

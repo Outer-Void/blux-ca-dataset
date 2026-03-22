@@ -1,4 +1,20 @@
 {
   "version": "cA-1.0-pro",
-  "artifact": null
+  "contract_version": "blux-ca-output-1.1",
+  "fixture_id": "missing_inputs",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
+  "artifact": null,
+  "artifact_kind": "none",
+  "mime_type": null
 }

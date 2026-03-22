@@ -1,7 +1,23 @@
 {
   "version": "cA-0.7",
+  "contract_version": "blux-ca-output-1.1",
+  "fixture_id": "legacy_outputs",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-0.7",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "artifact": {
     "format": "text",
     "content": "legacy-output-cA-0.7"
-  }
+  },
+  "artifact_kind": "text",
+  "mime_type": "text/plain"
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "blux-ca Expected Verdict",
+  "title": "blux-ca Expected Report",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -9,11 +9,10 @@
     "fixture_id",
     "engine",
     "request",
+    "mode",
     "status",
     "outcome",
-    "summary",
-    "notes",
-    "drift_status"
+    "checks"
   ],
   "properties": {
     "version": {"type": "string", "minLength": 1},
@@ -41,11 +40,25 @@
         "device": {"type": ["string", "null"]}
       }
     },
+    "mode": {"type": "string", "minLength": 1},
     "status": {"type": "string", "enum": ["pass", "fail", "infeasible"]},
     "outcome": {"type": "string", "enum": ["pass", "fail", "infeasible"]},
-    "summary": {"type": "string"},
-    "notes": {"type": "string"},
-    "drift_status": {"type": "string", "minLength": 1},
-    "drift": {"type": "string"}
+    "policy_pack": {"type": "string"},
+    "tier": {"type": "string"},
+    "validator_pack": {"type": "string"},
+    "profile_id": {"type": "string"},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "notes"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "status": {"type": "string", "enum": ["pass", "fail", "infeasible"]},
+          "notes": {"type": "string"}
+        }
+      }
+    }
   }
 }

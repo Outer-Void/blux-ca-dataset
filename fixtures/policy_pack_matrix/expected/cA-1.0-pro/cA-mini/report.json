@@ -1,10 +1,22 @@
 {
   "version": "cA-1.0-pro",
+  "contract_version": "blux-ca-report-1.1",
+  "fixture_id": "policy_pack_matrix",
+  "engine": {
+    "name": "blux-ca",
+    "line": "cA-1.0-pro",
+    "dataset_version": "cA-1.0-pro"
+  },
+  "request": {
+    "policy_pack_id": "cA-mini",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null
+  },
   "mode": "acceptance",
-  "fixture": "policy_pack_matrix",
   "status": "fail",
-  "policy_pack": "cA-mini",
-  "tier": "mini",
+  "outcome": "fail",
   "checks": [
     {
       "id": "policy_pack.decision",
@@ -16,5 +28,7 @@
       "status": "pass",
       "notes": "Request blocked as expected under cA-mini."
     }
-  ]
+  ],
+  "policy_pack": "cA-mini",
+  "tier": "mini"
 }
