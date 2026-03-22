@@ -1,0 +1,11 @@
+{
+  "version": "cA-1.0-pro",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "pack_id": "cA-pro",
+      "decision": "allow",
+      "rationale": "cA-pro permits the request under the broader pro policy limits."
+    }
+  }
+}

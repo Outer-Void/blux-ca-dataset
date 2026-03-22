@@ -2,6 +2,21 @@
   "id": "goal_legacy_outputs",
   "summary": "Provide a baseline output for compatibility comparisons.",
   "prompt": "Return a stable legacy marker string.",
-  "version": "cA-1.0",
-  "tags": ["compatibility", "archives"]
+  "version": "cA-1.0-pro",
+  "tags": [
+    "compatibility",
+    "archives"
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "legacy_outputs",
+    "scenario_type": "compatibility_legacy",
+    "expected_outcome": "pass"
+  }
 }

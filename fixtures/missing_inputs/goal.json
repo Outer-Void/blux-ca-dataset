@@ -2,6 +2,21 @@
   "id": "goal_missing_inputs",
   "summary": "Handle a request with missing required inputs.",
   "prompt": "Generate a report but treat missing inputs as infeasible.",
-  "version": "cA-1.0",
-  "tags": ["feasibility", "missing-inputs"]
+  "version": "cA-1.0-pro",
+  "tags": [
+    "feasibility",
+    "missing-inputs"
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "missing_inputs",
+    "scenario_type": "missing_inputs",
+    "expected_outcome": "infeasible"
+  }
 }

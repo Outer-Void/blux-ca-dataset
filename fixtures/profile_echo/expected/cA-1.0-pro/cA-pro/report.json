@@ -1,0 +1,14 @@
+{
+  "version": "cA-1.0-pro",
+  "mode": "acceptance",
+  "fixture": "profile_echo",
+  "status": "pass",
+  "profile_id": "cpu",
+  "checks": [
+    {
+      "id": "profile.context",
+      "status": "pass",
+      "notes": "CPU profile context recorded."
+    }
+  ]
+}

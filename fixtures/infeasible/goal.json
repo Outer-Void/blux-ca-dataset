@@ -2,9 +2,21 @@
   "id": "goal_infeasible",
   "summary": "Request an impossible response.",
   "prompt": "Return a single string that is exactly both \"hello\" and \"goodbye\" at the same time.",
-  "version": "cA-1.0",
+  "version": "cA-1.0-pro",
   "tags": [
     "canonical",
     "infeasible"
-  ]
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "infeasible",
+    "scenario_type": "infeasible_request",
+    "expected_outcome": "infeasible"
+  }
 }

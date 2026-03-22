@@ -2,11 +2,23 @@
   "id": "goal_duplicate_paths",
   "summary": "Return a bundle containing duplicate file paths.",
   "prompt": "Return a JSON artifact with format json. The content must be {\"kind\": \"multi-file\", \"files\": [...]}. Include two entries with the same path src/dup.txt in the listed order, with contents \"first\\n\" and \"second\\n\". Do not include extra fields.",
-  "version": "cA-1.0",
+  "version": "cA-1.0-pro",
   "tags": [
     "phase3",
     "structural",
     "failure",
     "duplicate_paths"
-  ]
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "duplicate_paths",
+    "scenario_type": "validator_failure",
+    "expected_outcome": "fail"
+  }
 }

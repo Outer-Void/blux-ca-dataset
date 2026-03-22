@@ -1,0 +1,11 @@
+{
+  "version": "cA-1.0-pro",
+  "artifact": {
+    "format": "json",
+    "content": {
+      "pack_id": "cA-mini",
+      "decision": "deny",
+      "rationale": "cA-mini blocks the request under the stricter mini policy."
+    }
+  }
+}

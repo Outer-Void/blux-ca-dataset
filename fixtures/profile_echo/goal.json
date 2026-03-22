@@ -1,0 +1,22 @@
+{
+  "id": "goal_profile_echo",
+  "summary": "Return the active runtime profile metadata deterministically.",
+  "prompt": "Return a JSON object with keys profile_id, profile_version, and device that identifies the active runtime profile.",
+  "version": "cA-1.0-pro",
+  "tags": [
+    "profile-aware",
+    "runtime-context"
+  ],
+  "metadata": {
+    "fixture_id": "profile_echo",
+    "model_version": "cA-1.0-pro",
+    "contract_version": "fixture-contract-1.0",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "cpu",
+    "profile_version": "1.0",
+    "device": "cpu",
+    "scenario_type": "profile_aware",
+    "expected_outcome": "pass"
+  }
+}

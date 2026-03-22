@@ -1,0 +1,20 @@
+{
+  "version": "cA-1.0-pro",
+  "mode": "acceptance",
+  "fixture": "policy_pack_matrix",
+  "status": "fail",
+  "policy_pack": "cA-mini",
+  "tier": "mini",
+  "checks": [
+    {
+      "id": "policy_pack.decision",
+      "status": "pass",
+      "notes": "Decision recorded for cA-mini."
+    },
+    {
+      "id": "policy_pack.blocking",
+      "status": "pass",
+      "notes": "Request blocked as expected under cA-mini."
+    }
+  ]
+}

@@ -5,25 +5,29 @@ Basic contributor setup notes for Android/Termux and a proot Debian fallback.
 ## Termux (native)
 ```bash
 pkg update
-pkg install -y git python
+pkg install python3 git
+python -m pip install --upgrade pip
 ```
 
 ## Termux + proot Debian (optional)
 ```bash
 pkg update
-pkg install -y proot-distro
+pkg install proot-distro
 proot-distro install debian
 proot-distro login debian
 ```
 
 Inside Debian:
 ```bash
-apt-get update
-apt-get install -y git python3
+sudo apt update
+sudo apt install python3 git
+python -m pip install --upgrade pip
 ```
 
 ## Running checks
 ```bash
-./scripts/validate_dataset.py
-./scripts/verify_fixtures.py --actual-root runs --policy-pack default
+python scripts/validate_dataset.py
+python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro
+python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-mini
+python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro --profile cpu
 ```

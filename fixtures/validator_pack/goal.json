@@ -2,6 +2,21 @@
   "id": "goal_validator_pack",
   "summary": "Run validator pack checks against an artifact.",
   "prompt": "Return the string 'validated' after running validator pack checks.",
-  "version": "cA-1.0",
-  "tags": ["validator-pack", "acceptance"]
+  "version": "cA-1.0-pro",
+  "tags": [
+    "validator-pack",
+    "acceptance"
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "validator_pack",
+    "scenario_type": "validator_pack",
+    "expected_outcome": "pass"
+  }
 }

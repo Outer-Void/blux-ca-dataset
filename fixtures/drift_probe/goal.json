@@ -2,9 +2,21 @@
   "id": "goal_drift_probe",
   "summary": "Probe for baseline drift without producing drift text.",
   "prompt": "Return exactly the string \"hello\" with no extra whitespace or commentary.",
-  "version": "cA-1.0",
+  "version": "cA-1.0-pro",
   "tags": [
     "canonical",
     "drift_probe"
-  ]
+  ],
+  "metadata": {
+    "contract_version": "fixture-contract-1.0",
+    "model_version": "cA-1.0-pro",
+    "policy_pack_id": "cA-pro",
+    "policy_pack_version": "1.0",
+    "profile_id": "default",
+    "profile_version": null,
+    "device": null,
+    "fixture_id": "drift_probe",
+    "scenario_type": "drift_guard",
+    "expected_outcome": "pass"
+  }
 }
