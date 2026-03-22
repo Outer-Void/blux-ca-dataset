@@ -1,25 +1,38 @@
 # blux-ca-dataset
 
-Deterministic fixtures and regression cases for `blux-ca`.
+Deterministic fixtures, regression cases, and export material for `blux-ca`.
 
 ## Dataset charter
-- This repo detects engine drift; it does not define `blux-ca` behavior.
-- The active dataset line is `cA V1.0 Dataset`.
-- `cA V1.0 Dataset` maps directly to the live local `blux-ca` engine line `cA-1.0-pro`.
-- The authoritative mapping file is `DATASET_ENGINE_MAPPING.json`.
+- This repo detects drift in the real `blux-ca` engine; it does **not** define engine behavior.
+- The active frozen dataset line is `cA V1.0 Dataset`.
+- `cA V1.0 Dataset` maps directly to the `blux-ca` engine line `cA-1.0-pro`.
+- The authoritative version freeze record is `DATASET_ENGINE_MAPPING.json`.
 - `cA-1.0` and earlier lines remain archived only for compatibility checks in `fixtures/*/archives/`.
-- Fixtures are deterministic and versioned for reproducibility.
-- Update fixtures only when the real engine changes or when the stored dataset contract is incomplete or misleading.
-- Current dataset version: `cA-1.0-pro` (see `DATASET_VERSION`).
+- Fixture updates are allowed only when the live engine changes, or when stored expectations are missing real stable engine contract fields.
+- Current active dataset version: `cA-1.0-pro` from `DATASET_VERSION`.
 
 ## Structure
-- `schemas/` — JSON Schemas for fixture goals, expected artifacts, expected verdicts, expected reports, and export rows.
-- `fixtures/` — Deterministic fixture bundles aligned to the `cA-1.0-pro` engine line.
-- `scripts/verify_fixtures.py` — Verifies fixture outputs against the real local engine command or a captured run directory.
-- `scripts/validate_dataset.py` — Validates fixture layout, metadata completeness, contract mapping, coverage, and export derivation.
-- `docs/` — Policy and platform notes.
-- `DATASET_VERSION` — Current dataset version.
-- `DATASET_ENGINE_MAPPING.json` — Explicit dataset-to-engine mapping and contract versions.
+- `schemas/` — JSON Schemas for fixture goals, engine-aligned expected artifacts/verdicts/reports, and export rows.
+- `fixtures/` — deterministic fixture bundles aligned to the `cA-1.0-pro` engine line.
+- `scripts/validate_dataset.py` — validates fixture layout, metadata completeness, version mapping, and export derivation.
+- `scripts/verify_fixtures.py` — verifies expected outputs against a live local engine invocation or a captured real-engine run directory.
+- `scripts/export_jsonl.py` — emits a deterministic JSONL export for GitHub freeze and HuggingFace handoff.
+- `exports/` — generated deterministic JSONL artifacts and checksums.
+- `docs/` — policy, platform, verification, and export notes.
+
+## Dataset-to-engine version freeze
+| Dataset field | Frozen value |
+| --- | --- |
+| Dataset ID | `cA V1.0 Dataset` |
+| Dataset repo | `blux-ca-dataset` |
+| Dataset version | `cA-1.0-pro` |
+| Engine name | `blux-ca` |
+| Engine line | `cA-1.0-pro` |
+| Fixture contract | `fixture-contract-1.1` |
+| Output contract | `blux-ca-output-1.1` |
+| Report contract | `blux-ca-report-1.1` |
+| Export contract | `blux-ca-export-row-1.2` |
+| Mapping date | `2026-03-22` |
 
 ## Fixture layout
 ```text
@@ -45,8 +58,8 @@ fixtures/
           report.json
 ```
 
-## Expected contract shape
-Expected outputs now mirror the engine envelope instead of only storing abstract payload fragments.
+## Engine-aligned expected contract
+Expected outputs mirror the stable engine envelope rather than simplified placeholder fragments.
 
 ### `expected_artifact.json`
 - `version`
@@ -82,33 +95,23 @@ Expected outputs now mirror the engine envelope instead of only storing abstract
 - `checks`
 - optional pack/profile/report annotations when the engine emits them
 
-## Export-ready contract
-Each expectation bundle deterministically maps to one later export row:
-- `input` → `fixtures/<case>/goal.json`
-- `artifact` → `expected_artifact.json`
-- `verdict` → `expected_verdict.json`
-- `report` → optional `report.json`
-- `metadata` → derived from `goal.json.metadata` plus the explicit model version, policy pack, profile, and archive lineage encoded by the fixture path
-
-The row shape is defined in `schemas/export_row.schema.json`. This repo is intentionally export-ready but does not ship a fake JSONL exporter.
-
 ## Coverage in the corpus
-The current non-redundant coverage is:
-- PASS cases: `hello`, `multi_file_artifact`, `patch_bundle`, `minimal_delta`, `validator_pack`, `policy_pack_matrix` (`cA-pro`), `profile_echo`, `legacy_outputs`, `drift_probe`
-- FAIL cases: `conflict_detection`, `duplicate_paths`, `path_traversal`, `unsorted_output`, `policy_pack_matrix` (`cA-mini`)
-- INFEASIBLE cases: `infeasible`, `missing_inputs`
+The current non-redundant coverage includes:
+- PASS: `hello`, `multi_file_artifact`, `patch_bundle`, `minimal_delta`, `validator_pack`, `policy_pack_matrix` (`cA-pro`), `profile_echo`, `legacy_outputs`, `drift_probe`
+- FAIL: `conflict_detection`, `duplicate_paths`, `path_traversal`, `unsorted_output`, `policy_pack_matrix` (`cA-mini`)
+- INFEASIBLE: `infeasible`, `missing_inputs`
 - Drift guard: `drift_probe`
 - Validator failures: `duplicate_paths`, `path_traversal`, `unsorted_output`
-- Multi-file outputs: `multi_file_artifact`
+- Multi-file artifacts: `multi_file_artifact`
 - Patch bundles: `patch_bundle`, `minimal_delta`
 - Minimal delta: `minimal_delta`
 - Policy-pack aware: `policy_pack_matrix`
 - Profile-aware: `profile_echo`
 - Compatibility / legacy: `legacy_outputs`
-- Harness / report-aware: every fixture that carries `report.json`
+- Harness / report-aware: fixtures carrying `report.json`
 
-## Fixture metadata requirements
-Each `goal.json` includes `metadata` fields for export derivation:
+## Metadata requirements
+Each fixture goal includes metadata needed for verification and export:
 - `fixture_id`
 - `model_version`
 - `contract_version`
@@ -120,14 +123,31 @@ Each `goal.json` includes `metadata` fields for export derivation:
 - `scenario_type`
 - `expected_outcome`
 
-Expectation paths may override or specialize default metadata through their path components, for example `cA-mini` or `cpu/cA-pro`.
+Expectation path components may specialize `policy_pack_id`, `profile_id`, and archived `model_version` per bundle.
 
-## Updating fixtures truthfully
-1. Confirm the current local `blux-ca` engine behavior first.
-2. Refresh only the fixtures whose engine outputs changed.
-3. Update expectations, schemas, scripts, and docs in the same pass whenever the engine contract changes.
-4. Remove stale or aspirational expectations instead of preserving them as “future” behavior.
-5. Preserve old accepted outputs only in `archives/` when compatibility history matters.
-6. Run both validation and verification before merging.
+## Canonical validation, verification, and export flow
+```bash
+python scripts/validate_dataset.py
+python scripts/verify_fixtures.py --actual-root <captured-real-engine-runs> --policy-pack cA-pro
+python scripts/export_jsonl.py --include-archives --write-sha256
+```
 
-See `docs/POLICY.md` for governance details and `docs/PLATFORMS.md` for environment setup.
+For direct live-engine verification, supply a command template:
+```bash
+python scripts/verify_fixtures.py \
+  --engine-cmd 'python -m blux_ca.run --goal {goal} --out-dir {out_dir} --policy-pack {policy_pack} --profile {profile}' \
+  --policy-pack cA-pro
+```
+
+## Export contract
+Each JSONL row is stable, ordered, and reproducible. It includes:
+- `source_paths` for traceability back to the repo
+- `input` with full `goal.json` content
+- `artifact` with the full expected engine artifact envelope
+- `verdict` with the full expected engine verdict envelope
+- `report` when present
+- `metadata` with dataset freeze fields, policy/profile lineage, archive lineage, and export flags
+
+This makes the repository ready for deterministic HuggingFace dataset publication and later training-data derivation.
+
+See `docs/POLICY.md`, `docs/PLATFORMS.md`, `docs/VERIFICATION.md`, and `docs/EXPORT.md` for operational details.

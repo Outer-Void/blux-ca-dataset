@@ -3,59 +3,64 @@
   "title": "blux-ca Export Row",
   "type": "object",
   "additionalProperties": false,
-  "required": ["input", "artifact", "verdict", "metadata"],
+  "required": ["source_paths", "input", "artifact", "verdict", "metadata"],
   "properties": {
-    "input": {
+    "source_paths": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path"],
+      "required": ["goal", "artifact", "verdict", "report"],
       "properties": {
-        "path": {"type": "string", "minLength": 1}
+        "goal": {"type": "string", "minLength": 1},
+        "artifact": {"type": "string", "minLength": 1},
+        "verdict": {"type": "string", "minLength": 1},
+        "report": {"type": ["string", "null"]}
       }
     },
-    "artifact": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["path"],
-      "properties": {
-        "path": {"type": "string", "minLength": 1}
-      }
-    },
-    "verdict": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["path"],
-      "properties": {
-        "path": {"type": "string", "minLength": 1}
-      }
-    },
+    "input": {"$ref": "fixture.schema.json"},
+    "artifact": {"$ref": "expected_artifact.schema.json"},
+    "verdict": {"$ref": "expected_verdict.schema.json"},
     "report": {
-      "type": ["object", "null"],
-      "additionalProperties": false,
-      "required": ["path"],
-      "properties": {
-        "path": {"type": "string", "minLength": 1}
-      }
+      "oneOf": [
+        {"$ref": "expected_report.schema.json"},
+        {"type": "null"}
+      ]
     },
     "metadata": {
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "dataset_id",
+        "dataset_repo",
+        "dataset_version",
+        "engine_name",
+        "engine_line",
         "fixture_id",
         "model_version",
         "contract_version",
+        "output_contract_version",
+        "report_contract_version",
         "policy_pack_id",
         "policy_pack_version",
         "profile_id",
         "profile_version",
         "device",
         "scenario_type",
-        "expected_outcome"
+        "expected_outcome",
+        "archive_version",
+        "has_report",
+        "source_kind"
       ],
       "properties": {
+        "dataset_id": {"type": "string", "minLength": 1},
+        "dataset_repo": {"type": "string", "minLength": 1},
+        "dataset_version": {"type": "string", "minLength": 1},
+        "engine_name": {"type": "string", "minLength": 1},
+        "engine_line": {"type": "string", "minLength": 1},
         "fixture_id": {"type": "string", "minLength": 1},
         "model_version": {"type": "string", "minLength": 1},
         "contract_version": {"type": "string", "minLength": 1},
+        "output_contract_version": {"type": "string", "minLength": 1},
+        "report_contract_version": {"type": ["string", "null"]},
         "policy_pack_id": {"type": "string", "minLength": 1},
         "policy_pack_version": {"type": ["string", "null"]},
         "profile_id": {"type": ["string", "null"]},
@@ -63,7 +68,9 @@
         "device": {"type": ["string", "null"]},
         "scenario_type": {"type": "string", "minLength": 1},
         "expected_outcome": {"type": "string", "enum": ["pass", "fail", "infeasible"]},
-        "archive_version": {"type": ["string", "null"]}
+        "archive_version": {"type": ["string", "null"]},
+        "has_report": {"type": "boolean"},
+        "source_kind": {"type": "string", "enum": ["expected", "archive"]}
       }
     }
   }
