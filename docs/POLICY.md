@@ -27,13 +27,14 @@ Do not add aspirational behavior, speculative policy outputs, or redundant near-
 4. Preserve old accepted outputs only in `archives/` when compatibility history matters.
 5. Run until clean:
    - `python scripts/validate_dataset.py`
-   - `python scripts/verify_fixtures.py --engine-cmd '<local blux-ca command template>' --policy-pack <pack>`
+   - `python scripts/verify_fixtures.py --engine-root /path/to/blux-ca --policy-pack <pack>`
    - or `python scripts/verify_fixtures.py --actual-root <captured-runs> --policy-pack <pack>`
    - `python scripts/export_jsonl.py --include-archives --write-sha256`
 6. Re-run export and confirm byte-identical output.
 
 ## Output contract discipline
-- `expected_artifact.json`, `expected_verdict.json`, and `report.json` must retain the stable engine envelope fields emitted by the real engine: `version`, `contract_version`, `fixture_id`, `engine`, and `request`.
+- `expected_artifact.json` and `expected_verdict.json` are the frozen dataset-side bridge envelopes; live verification must map them truthfully back to the real engine's `artifact.json` / `verdict.json` outputs.
+- fixture-local `report.json` files are dataset bridge metadata; the live engine itself emits a single acceptance `report.json`, and verification must compare that real report without inventing unsupported engine files or flags.
 - Verification may normalize volatile fields such as timestamps, run IDs, trace IDs, and durations, but it must not simplify or invent stable semantics.
 - `status` and `outcome` must remain aligned.
 - Archived compatibility outputs must keep their historical `version`/`engine.line` values while still referencing the active dataset version in `engine.dataset_version`.
