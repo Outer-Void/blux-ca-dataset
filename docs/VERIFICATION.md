@@ -1,32 +1,37 @@
 # Verification
 
 ## Purpose
-Verification compares this dataset's expected envelopes against either:
-1. a live local `blux-ca` engine invocation, or
-2. a captured directory of real engine outputs.
+Verification compares this dataset's expected bundles against either:
+1. a real local `blux-ca` checkout invoked through its supported `accept` CLI, or
+2. a captured directory of dataset-format outputs that already match this repo's bridge contract.
 
 This repo detects drift. It does not prescribe behavior independent of the engine.
 
 ## Canonical verification commands
-Captured real-engine run directory:
+Captured dataset-format run directory:
 ```bash
 python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro
 python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-mini
 python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro --profile cpu
 ```
 
-Direct live-engine invocation:
+Real local `blux-ca` checkout:
 ```bash
-python scripts/verify_fixtures.py \
-  --engine-cmd 'python -m blux_ca.run --goal {goal} --out-dir {out_dir} --policy-pack {policy_pack} --profile {profile}' \
-  --policy-pack cA-pro
+python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro
+python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-mini
+python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro --profile cpu
 ```
+
+The verifier internally generates engine-compatible temporary fixture goals and runs:
+`python -m blux_ca accept --fixtures <generated-bridge-dir> --out <temp-run-dir> [--profile <id>]`.
+Unsupported engine flags are intentionally omitted; the real engine currently exposes `--out`, not `--out-dir`, and policy pack selection remains part of the goal payload rather than a CLI flag.
 
 ## Expected actual output layout
 The actual root must contain one directory per fixture with:
 - `artifact.json`
 - `verdict.json`
 - optional `report.json`
+- when verifying with `--engine-root`, the live engine writes a single top-level `report.json`; the verifier reads that report plus per-fixture `artifact.json` / `verdict.json` outputs
 
 For archive comparisons, use:
 ```text

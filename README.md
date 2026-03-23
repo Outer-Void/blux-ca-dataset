@@ -15,7 +15,7 @@ Deterministic fixtures, regression cases, and export material for `blux-ca`.
 - `schemas/` — JSON Schemas for fixture goals, engine-aligned expected artifacts/verdicts/reports, and export rows.
 - `fixtures/` — deterministic fixture bundles aligned to the `cA-1.0-pro` engine line.
 - `scripts/validate_dataset.py` — validates fixture layout, metadata completeness, version mapping, and export derivation.
-- `scripts/verify_fixtures.py` — verifies expected outputs against a live local engine invocation or a captured real-engine run directory.
+- `scripts/verify_fixtures.py` — verifies expected outputs against a captured dataset-format run directory or against a real local `blux-ca` checkout using the supported `accept` CLI.
 - `scripts/export_jsonl.py` — emits a deterministic JSONL export for GitHub freeze and HuggingFace handoff.
 - `exports/` — generated deterministic JSONL artifacts and checksums.
 - `docs/` — policy, platform, verification, and export notes.
@@ -84,16 +84,10 @@ Expected outputs mirror the stable engine envelope rather than simplified placeh
 - `drift_status`
 
 ### `report.json`
-- `version`
-- `contract_version`
-- `fixture_id`
-- `engine`
-- `request`
-- `mode`
-- `status`
-- `outcome`
-- `checks`
-- optional pack/profile/report annotations when the engine emits them
+- dataset-side verification bridge metadata stored per fixture bundle
+- retains stable dataset mapping fields: `version`, `contract_version`, `fixture_id`, `engine`, and `request`
+- records `mode`, `status`, `outcome`, and deterministic `checks` used by this repo's validation/export pipeline
+- live `blux-ca` emits a top-level acceptance `report.json`; `scripts/verify_fixtures.py` bridges that real report back to these fixture-local expectations truthfully
 
 ## Coverage in the corpus
 The current non-redundant coverage includes:
@@ -128,16 +122,20 @@ Expectation path components may specialize `policy_pack_id`, `profile_id`, and a
 ## Canonical validation, verification, and export flow
 ```bash
 python scripts/validate_dataset.py
-python scripts/verify_fixtures.py --actual-root <captured-real-engine-runs> --policy-pack cA-pro
+python scripts/verify_fixtures.py --actual-root <captured-dataset-format-runs> --policy-pack cA-pro
 python scripts/export_jsonl.py --include-archives --write-sha256
 ```
 
-For direct live-engine verification, supply a command template:
+For direct verification against a real local `blux-ca` checkout, point the verifier at the repo root:
 ```bash
-python scripts/verify_fixtures.py \
-  --engine-cmd 'python -m blux_ca.run --goal {goal} --out-dir {out_dir} --policy-pack {policy_pack} --profile {profile}' \
-  --policy-pack cA-pro
+python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro
+python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-mini
+python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro --profile cpu
 ```
+
+`verify_fixtures.py` generates engine-compatible temporary fixture goals and invokes the real supported CLI:
+`python -m blux_ca accept --fixtures <generated-bridge-dir> --out <temp-run-dir> [--profile <id>]`.
+It does **not** assume unsupported engine flags such as `--policy-pack` or `--out-dir`.
 
 ## Export contract
 Each JSONL row is stable, ordered, and reproducible. It includes:
