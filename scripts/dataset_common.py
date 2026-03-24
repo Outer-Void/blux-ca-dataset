@@ -125,9 +125,11 @@ def build_export_row(bundle: BundleRef, mapping: dict[str, Any]) -> dict[str, An
     metadata = {
         "dataset_id": mapping["dataset_id"],
         "dataset_repo": mapping["dataset_repo"],
+        "dataset_semver": mapping["dataset_semver"],
         "dataset_version": mapping["dataset_version"],
         "engine_name": mapping["engine_name"],
         "engine_line": mapping["engine_line"],
+        "dataset_engine_mapping": mapping["dataset_engine_mapping"],
         "fixture_id": goal_metadata.get("fixture_id", bundle.fixture_dir.name),
         "model_version": bundle.model_version,
         "contract_version": goal_metadata.get("contract_version"),

@@ -26,9 +26,12 @@ Each row contains:
 python scripts/export_jsonl.py --include-archives --write-sha256
 ```
 
-By default this writes:
-- `exports/blux-ca-cA-1.0-pro.jsonl`
-- `exports/blux-ca-cA-1.0-pro.jsonl.sha256`
+This writes the canonical path:
+- `exports/blux-ca-dataset.jsonl`
+- `exports/blux-ca-dataset.jsonl.sha256`
+
+Version mapping lock carried in metadata:
+- `blux-ca-dataset v1.0 -> cA-1.0-pro`
 
 ## Export assumptions
 - The active dataset freeze maps to `blux-ca cA-1.0-pro`.
