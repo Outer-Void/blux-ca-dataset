@@ -7,24 +7,26 @@ Verification compares this dataset's expected bundles against either:
 
 This repo detects drift. It does not prescribe behavior independent of the engine.
 
-## Canonical verification commands
-Captured dataset-format run directory:
+## Canonical verification command/path freeze
+Real local `blux-ca` checkout (canonical):
 ```bash
-python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro
-python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-mini
-python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro --profile cpu
-```
-
-Real local `blux-ca` checkout:
-```bash
-python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro
-python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-mini
-python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro --profile cpu
+python scripts/verify_fixtures.py --engine-root /absolute/path/to/blux-ca --policy-pack cA-pro
 ```
 
 The verifier internally generates engine-compatible temporary fixture goals and runs:
 `python -m blux_ca accept --fixtures <generated-bridge-dir> --out <temp-run-dir> [--profile <id>]`.
 Unsupported engine flags are intentionally omitted; the real engine currently exposes `--out`, not `--out-dir`, and policy pack selection remains part of the goal payload rather than a CLI flag.
+
+Optional matrix extensions:
+```bash
+python scripts/verify_fixtures.py --engine-root /absolute/path/to/blux-ca --policy-pack cA-mini
+python scripts/verify_fixtures.py --engine-root /absolute/path/to/blux-ca --policy-pack cA-pro --profile cpu
+```
+
+Captured dataset-format run directory fallback (only when local engine checkout is unavailable):
+```bash
+python scripts/verify_fixtures.py --actual-root runs --policy-pack cA-pro
+```
 
 ## Expected actual output layout
 The actual root must contain one directory per fixture with:

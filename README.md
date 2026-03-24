@@ -122,20 +122,22 @@ Expectation path components may specialize `policy_pack_id`, `profile_id`, and a
 ## Canonical validation, verification, and export flow
 ```bash
 python scripts/validate_dataset.py
-python scripts/verify_fixtures.py --actual-root <captured-dataset-format-runs> --policy-pack cA-pro
+python scripts/verify_fixtures.py --engine-root /absolute/path/to/blux-ca --policy-pack cA-pro
 python scripts/export_jsonl.py --include-archives --write-sha256
 ```
 
-For direct verification against a real local `blux-ca` checkout, point the verifier at the repo root:
+If a direct local engine checkout is unavailable, fallback to an already-captured dataset-format run root:
 ```bash
-python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro
-python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-mini
-python scripts/verify_fixtures.py --engine-root /workspace/blux-ca --policy-pack cA-pro --profile cpu
+python scripts/verify_fixtures.py --actual-root <captured-dataset-format-runs> --policy-pack cA-pro
 ```
 
 `verify_fixtures.py` generates engine-compatible temporary fixture goals and invokes the real supported CLI:
 `python -m blux_ca accept --fixtures <generated-bridge-dir> --out <temp-run-dir> [--profile <id>]`.
 It does **not** assume unsupported engine flags such as `--policy-pack` or `--out-dir`.
+
+Optional extension checks (same canonical flow, extra matrix dimensions):
+- policy-pack matrix: `--policy-pack cA-mini`
+- profile matrix: `--profile cpu`
 
 ## Export contract
 Each JSONL row is stable, ordered, and reproducible. It includes:
@@ -147,5 +149,12 @@ Each JSONL row is stable, ordered, and reproducible. It includes:
 - `metadata` with dataset freeze fields, policy/profile lineage, archive lineage, and export flags
 
 This makes the repository ready for deterministic HuggingFace dataset publication and later training-data derivation.
+
+## HuggingFace dataset card handoff summary
+- **What this dataset is:** deterministic regression/acceptance rows generated from fixture goals and frozen expected envelopes for `blux-ca`.
+- **Engine mapping:** this dataset is pinned to `blux-ca cA-1.0-pro` via `DATASET_VERSION` + `DATASET_ENGINE_MAPPING.json`; the dataset detects drift and never defines behavior.
+- **Row structure:** each JSONL row contains `input`, `artifact`, `verdict`, optional `report`, `source_paths`, and deterministic `metadata`.
+- **License note:** repository license is proprietary (`LICENSE`); publishing/upload must preserve the same licensing constraints.
+- **Provenance:** rows are generated from versioned fixtures in this repo through `scripts/export_jsonl.py`, with lineage fields carried in metadata.
 
 See `docs/POLICY.md`, `docs/PLATFORMS.md`, `docs/VERIFICATION.md`, and `docs/EXPORT.md` for operational details.
