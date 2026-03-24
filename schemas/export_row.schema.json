@@ -31,9 +31,11 @@
       "required": [
         "dataset_id",
         "dataset_repo",
+        "dataset_semver",
         "dataset_version",
         "engine_name",
         "engine_line",
+        "dataset_engine_mapping",
         "fixture_id",
         "model_version",
         "contract_version",
@@ -53,9 +55,11 @@
       "properties": {
         "dataset_id": {"type": "string", "minLength": 1},
         "dataset_repo": {"type": "string", "minLength": 1},
+        "dataset_semver": {"type": "string", "minLength": 1},
         "dataset_version": {"type": "string", "minLength": 1},
         "engine_name": {"type": "string", "minLength": 1},
         "engine_line": {"type": "string", "minLength": 1},
+        "dataset_engine_mapping": {"type": "string", "minLength": 1},
         "fixture_id": {"type": "string", "minLength": 1},
         "model_version": {"type": "string", "minLength": 1},
         "contract_version": {"type": "string", "minLength": 1},
