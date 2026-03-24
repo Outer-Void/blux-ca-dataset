@@ -214,6 +214,11 @@ def _effective_profile(profile_id: str | None) -> str | None:
 
 
 def run_engine_acceptance(engine_root: pathlib.Path, expected_root: pathlib.Path, actual_root: pathlib.Path, policy_pack: str, profile_id: str | None, python_bin: str) -> None:
+    if not engine_root.exists():
+        raise SystemExit(
+            f"Engine root not found: {engine_root}. "
+            "Set --engine-root (or BLUX_CA_ENGINE_ROOT) to a local blux-ca checkout."
+        )
     with tempfile.TemporaryDirectory(prefix="blux-ca-bridge-fixtures-") as bridge_tmp:
         bridge_root = pathlib.Path(bridge_tmp)
         _write_engine_bridge_fixtures(expected_root, bridge_root, policy_pack)
