@@ -213,6 +213,13 @@ def _effective_profile(profile_id: str | None) -> str | None:
     return value
 
 
+def _report_profile_is_expected(report: dict[str, Any], expected_profile: str | None) -> bool:
+    report_profile = report.get("profile_id")
+    if expected_profile:
+        return report_profile == expected_profile
+    return report_profile in (None, "default")
+
+
 def run_engine_acceptance(engine_root: pathlib.Path, expected_root: pathlib.Path, actual_root: pathlib.Path, policy_pack: str, profile_id: str | None, python_bin: str) -> None:
     if not engine_root.exists():
         raise SystemExit(
@@ -281,15 +288,17 @@ def compare_engine_verification(name: str, expected_root: pathlib.Path, actual_r
 
     expected_profile = _effective_profile(profile_id)
     if expected_profile:
-        if report.get("profile_id") != expected_profile:
+        if not _report_profile_is_expected(report, expected_profile):
             errors.append(f"Acceptance report profile mismatch: expected {expected_profile}, got {report.get('profile_id')}")
         if actual_artifact.get("run", {}).get("profile_id") != expected_profile:
             errors.append(f"Artifact run.profile_id mismatch for fixture '{name}'")
         if actual_verdict.get("run", {}).get("profile_id") != expected_profile:
             errors.append(f"Verdict run.profile_id mismatch for fixture '{name}'")
     else:
-        if "profile_id" in report:
-            errors.append("Acceptance report unexpectedly emitted profile metadata without --profile")
+        if not _report_profile_is_expected(report, None):
+            errors.append(
+                f"Acceptance report profile mismatch without --profile: expected omitted/default, got {report.get('profile_id')}"
+            )
 
     if actual_artifact.get("model_version") != "cA-1.0-pro":
         errors.append(f"Artifact model_version mismatch for fixture '{name}'")

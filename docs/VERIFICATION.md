@@ -34,6 +34,7 @@ The actual root must contain one directory per fixture with:
 - `verdict.json`
 - optional `report.json`
 - when verifying with `--engine-root`, the live engine writes a single top-level `report.json`; the verifier reads that report plus per-fixture `artifact.json` / `verdict.json` outputs
+- profile metadata handling is strict but engine-compatible: with explicit `--profile <id>`, report/profile fields must match `<id>`; without `--profile`, acceptance report `profile_id` may be omitted or `"default"`
 
 For archive comparisons, use:
 ```text

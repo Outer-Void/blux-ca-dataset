@@ -33,6 +33,7 @@ python scripts/export_jsonl.py --include-archives --write-sha256
 
 ## Running directly against the local engine
 `verify_fixtures.py` can verify directly against a real local `blux-ca` checkout by pointing `--engine-root` at the repo. The verifier generates temporary engine-compatible fixture goals and then runs the supported CLI entrypoint: `python -m blux_ca accept --fixtures <generated-bridge-dir> --out <temp-run-dir> [--profile <id>]`.
+When `--profile` is omitted, verification accepts an omitted acceptance-report `profile_id` or `"default"` to match live engine behavior.
 
 Canonical command:
 ```bash
