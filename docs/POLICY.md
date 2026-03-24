@@ -35,6 +35,7 @@ Do not add aspirational behavior, speculative policy outputs, or redundant near-
 ## Output contract discipline
 - `expected_artifact.json` and `expected_verdict.json` are the frozen dataset-side bridge envelopes; live verification must map them truthfully back to the real engine's `artifact.json` / `verdict.json` outputs.
 - fixture-local `report.json` files are dataset bridge metadata; the live engine itself emits a single acceptance `report.json`, and verification must compare that real report without inventing unsupported engine files or flags.
+- acceptance-report profile metadata must mirror live behavior: explicit `--profile` must match exactly; default runs may emit `profile_id` as omitted or `"default"`.
 - Verification may normalize volatile fields such as timestamps, run IDs, trace IDs, and durations, but it must not simplify or invent stable semantics.
 - `status` and `outcome` must remain aligned.
 - Archived compatibility outputs must keep their historical `version`/`engine.line` values while still referencing the active dataset version in `engine.dataset_version`.

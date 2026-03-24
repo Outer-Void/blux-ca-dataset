@@ -81,6 +81,7 @@ python scripts/verify_fixtures.py --actual-root <captured-dataset-format-runs> -
 `verify_fixtures.py` generates engine-compatible temporary fixture goals and invokes the real supported CLI:
 `python -m blux_ca accept --fixtures <generated-bridge-dir> --out <temp-run-dir> [--profile <id>]`.
 It does **not** assume unsupported engine flags such as `--policy-pack` or `--out-dir`.
+When `--profile` is omitted, acceptance-report `profile_id` is treated as valid when absent or `"default"` (matching live engine behavior).
 
 ## Canonical export lock
 The one canonical export path is:
