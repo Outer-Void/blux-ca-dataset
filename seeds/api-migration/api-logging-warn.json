@@ -1,0 +1,57 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "api-logging-warn",
+  "category": "api-migration",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "api",
+    "logging"
+  ],
+  "instruction": "Migrate the deprecated logger.warn calls in ${mod}.py to logger.warning (there are exactly two).",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "import logging\n\nlogger = logging.getLogger(__name__)\nlogger.warn(\"${a}\")\nlogger.warn(\"${b}\")\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${mod}.py",
+              "old": "logger.warn(",
+              "new": "logger.warning(",
+              "count": 2
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "sync",
+        "a": "slow peer",
+        "b": "retrying"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "importer",
+        "a": "skipped row",
+        "b": "bad encoding"
+      }
+    }
+  ]
+}

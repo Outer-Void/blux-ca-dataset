@@ -1,0 +1,71 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "mfr-rename-function",
+  "category": "multi-file-refactor",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "refactor"
+  ],
+  "instruction": "Rename ${old}() to ${new}() in ${lib}.py and update its caller in app.py, in one change.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${lib}.py": "def ${old}(value):\n    return value.strip()\n",
+        "app.py": "from ${lib} import ${old}\n\nprint(${old}(\" hi \"))\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${lib}.py",
+              "old": "def ${old}(",
+              "new": "def ${new}("
+            },
+            {
+              "op": "replace",
+              "path": "app.py",
+              "old": "${old}",
+              "new": "${new}",
+              "count": 2
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "lib": "text",
+        "old": "clean",
+        "new": "normalize_whitespace"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "lib": "parse",
+        "old": "get_val",
+        "new": "read_value"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "lib": "names",
+        "old": "fmt",
+        "new": "format_name"
+      }
+    }
+  ]
+}

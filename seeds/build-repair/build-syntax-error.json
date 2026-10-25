@@ -1,0 +1,48 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "build-syntax-error",
+  "category": "build-repair",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "build",
+    "python"
+  ],
+  "instruction": "The build stops at a syntax error in ${path}: a missing colon after the def line. Patch exactly that line.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "def ${func}(a, b)\n    return a + b\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "code.patch",
+        "request": {
+          "path": "${path}",
+          "diff": "--- a/${path}\n+++ b/${path}\n@@ -1 +1 @@\n-def ${func}(a, b)\n+def ${func}(a, b):\n"
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "calc.py",
+        "func": "add"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "geometry/vec.py",
+        "func": "dot"
+      }
+    }
+  ]
+}

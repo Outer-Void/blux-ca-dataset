@@ -1,0 +1,60 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "ci-python-matrix",
+  "category": "ci-repair",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "ci"
+  ],
+  "instruction": "CI still tests end-of-life Python versions. Replace the matrix [${old}] with [${new}] in .github/workflows/ci.yml.",
+  "input": {
+    "workspace": {
+      "files": {
+        ".github/workflows/ci.yml": "name: CI\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    strategy:\n      matrix:\n        python: [${old}]\n    steps:\n      - uses: actions/checkout@v4\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": ".github/workflows/ci.yml",
+              "old": "python: [${old}]",
+              "new": "python: [${new}]"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "old": "\"3.7\", \"3.8\"",
+        "new": "\"3.11\", \"3.12\""
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "old": "\"3.6\"",
+        "new": "\"3.12\", \"3.13\""
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "old": "\"3.8\", \"3.9\", \"3.10\"",
+        "new": "\"3.12\""
+      }
+    }
+  ]
+}

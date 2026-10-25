@@ -1,0 +1,4 @@
+# The pinned engines (records are only reproducible with them) and the toolkit's one dependency.
+blux-ca @ git+https://github.com/Outer-Void/blux-ca.git@6dcfcd70964d76db0534371f175710c59fb5adbe
+outervoid-dat @ git+https://github.com/Outer-Void/dat.git@ba5838636d8576b555fcf854793a709210814a1a
+jsonschema>=4.19

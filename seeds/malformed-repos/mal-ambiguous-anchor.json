@@ -1,0 +1,53 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "mal-ambiguous-anchor",
+  "category": "malformed-repos",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "errors"
+  ],
+  "instruction": "The instruction says to replace \"${needle}\" in ${path}, but it appears more than once. cA must refuse instead of picking one.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "${needle} = 1\nprint(${needle})\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${path}",
+              "old": "${needle}",
+              "new": "renamed"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "state.py",
+        "needle": "counter"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "flags.py",
+        "needle": "enabled"
+      }
+    }
+  ]
+}

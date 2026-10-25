@@ -1,0 +1,81 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "scaf-rerun-noop",
+  "category": "deterministic-scaffolding",
+  "split": "regression",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "scaffold",
+    "idempotent"
+  ],
+  "instruction": "Run the same ${mod} construction twice. The second run must be a no-op that writes nothing.",
+  "input": {
+    "workspace": {
+      "files": {}
+    },
+    "steps": [
+      {
+        "capability": "artifact.construct",
+        "request": {
+          "blueprint": {
+            "units": [
+              {
+                "task": "build",
+                "files": [
+                  {
+                    "path": "${mod}.py",
+                    "builtin": "python.module",
+                    "params": {
+                      "summary": "${summary}"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "capability": "artifact.construct",
+        "request": {
+          "blueprint": {
+            "units": [
+              {
+                "task": "build",
+                "files": [
+                  {
+                    "path": "${mod}.py",
+                    "builtin": "python.module",
+                    "params": {
+                      "summary": "${summary}"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "geo",
+        "summary": "Geodesy helpers."
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "units",
+        "summary": "Unit conversion."
+      }
+    }
+  ]
+}

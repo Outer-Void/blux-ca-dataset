@@ -1,0 +1,53 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "test-import-path",
+  "category": "test-repair",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "tests"
+  ],
+  "instruction": "Tests import from the old module path ${old}; the code now lives in ${new}. Update the import in tests/test_api.py.",
+  "input": {
+    "workspace": {
+      "files": {
+        "tests/test_api.py": "from ${old} import handler\n\n\ndef test_handler():\n    assert handler\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "tests/test_api.py",
+              "old": "from ${old} import",
+              "new": "from ${new} import"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "old": "app.views",
+        "new": "app.http.views"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "old": "service.api",
+        "new": "service.routes"
+      }
+    }
+  ]
+}

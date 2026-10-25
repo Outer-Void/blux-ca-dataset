@@ -1,0 +1,60 @@
+{
+  "schema": "blux.dataset-config",
+  "dataset_id": "blux-ca-dataset",
+  "title": "BLUX cA Dataset",
+  "version": "2.0.0",
+  "release_date": "2026-10-25",
+  "summary": "Construction and repair records for BLUX cA 2. Each record pairs a plain-language engineering task with a small synthetic repository snapshot and the exact steps given to the pinned cA engine (and, for validation-aware work, DAT), and stores what the engines actually produced: minimal ca.changesets with exact diffs, refusals with stable error codes, DAT reports, rollbacks, recoveries and the final file tree. cA never certifies its own work, and every result says so; only DAT's reports judge the result.",
+  "license": {"spdx": "LicenseRef-BLUX-Proprietary", "name": "BLUX Proprietary License", "file": "LICENSE"},
+  "authors": ["Outer Void"],
+  "adapter": "ca",
+  "engines": [
+    {"name": "ca", "package": "blux-ca", "version": "2.0.1", "commit": "6dcfcd70964d76db0534371f175710c59fb5adbe"},
+    {"name": "dat", "package": "outervoid-dat", "version": "4.0.0", "commit": "ba5838636d8576b555fcf854793a709210814a1a"}
+  ],
+  "id_prefix": "ca",
+  "categories": [
+    {"id": "single-file-patch", "title": "Single-file patch", "description": "Exact unified diffs applied to one file (code.patch)."},
+    {"id": "multi-file-refactor", "title": "Multi-file refactor", "description": "Renames, extractions and shared constants across files, all or nothing."},
+    {"id": "repo-migration", "title": "Repo migration", "description": "Layout and build-system moves (setup.py to pyproject, flat to src)."},
+    {"id": "api-migration", "title": "API migration", "description": "Replacing deprecated calls with their successors."},
+    {"id": "dependency-upgrade", "title": "Dependency upgrade", "description": "Version bumps in requirements, package.json and Gradle."},
+    {"id": "build-repair", "title": "Build repair", "description": "Missing package files, Makefile tabs, syntax errors."},
+    {"id": "test-repair", "title": "Test repair", "description": "Wrong assertions, sleeps and stale import paths in tests."},
+    {"id": "security-repair", "title": "Security repair", "description": "DAT security findings repaired by cA rules or explicit instructions, then re-checked by DAT."},
+    {"id": "config-generation", "title": "Config generation", "description": "Canonical TOML, YAML, INI and env files from data (config.generate)."},
+    {"id": "android-migration", "title": "Android migration", "description": "SDK levels, exported activities and AGP namespaces."},
+    {"id": "packaging", "title": "Packaging", "description": "Package skeletons, MANIFEST.in and console scripts."},
+    {"id": "ci-repair", "title": "CI repair", "description": "Workflow matrices, action versions and cache keys."},
+    {"id": "malformed-repos", "title": "Malformed repos", "description": "Missing files, file/directory clashes, ambiguous anchors and corrupt diffs that cA must refuse."},
+    {"id": "rollback-recovery", "title": "Rollback and recovery", "description": "Rollback from preserved artifacts, recovery after interruption, refused rollbacks."},
+    {"id": "deterministic-scaffolding", "title": "Deterministic scaffolding", "description": "Construction from built-in and strict templates; re-running is a no-op."},
+    {"id": "patch-minimization", "title": "Patch minimization", "description": "Whole-file rewrites reduced to minimal hunks, and edits that change nothing."},
+    {"id": "adversarial-instructions", "title": "Adversarial instructions", "description": "Path traversal, validator tampering, injected text and smuggled certification."},
+    {"id": "validation-aware-repair", "title": "Validation-aware repair", "description": "DAT reports a finding, cA repairs within its limit, DAT re-checks."}
+  ],
+  "canary": "4e13317e-3a46-42e3-95cf-c7b29f4eee76",
+  "quality_threshold": 0.6,
+  "near_duplicate_threshold": 0.8,
+  "card": {
+    "pretty_name": "BLUX cA Dataset",
+    "tags": ["code", "code-repair", "patches", "evaluation", "deterministic"],
+    "record_format": "For this dataset, `input` is `{workspace: {files, executable?}, steps: [...]}`: a synthetic repository snapshot and the steps run against it (cA capability calls, DAT audits, rollback, interruption and recovery; dstool/adapters/ca.py documents them). `expected` is `{steps: [{kind, output}], final_tree: [{path, mode, sha256}]}`: every step's real output (a `ca.result` with its changeset, a cA error, a `dat.report`, a rollback or recovery) and the resulting files. Every `ca.result` validates against cA's own schema and has `certified: false`.",
+    "intended_use": [
+      "Training and evaluating models to turn engineering instructions into minimal, exact, reviewable changesets rather than whole-file rewrites.",
+      "Teaching validation-aware repair: an independent validator (DAT) judges the work, repairs are bounded, refusals are correct answers.",
+      "Regression testing cA: the `regression` split pins exact engine outputs; the `adversarial` split pins refusals."
+    ],
+    "out_of_scope": [
+      "Treating cA's output as validated: cA never certifies its own work; only the DAT reports in a record judge it.",
+      "Training on test, holdout, adversarial or regression records.",
+      "Real-world repositories: snapshots are small and synthetic."
+    ],
+    "limitations": [
+      "Workspaces are small, text-only synthetic snapshots; binary files and symlinks are not represented.",
+      "Expected outputs are what cA 2.0.1 and DAT 4.0.0 produce, not human-reviewed ideal patches.",
+      "Instructions are English only.",
+      "Variants within a family share structure, so the effective diversity is the number of families, not records."
+    ]
+  }
+}

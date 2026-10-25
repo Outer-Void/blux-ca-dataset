@@ -1,0 +1,64 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "dep-node-major",
+  "category": "dependency-upgrade",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "dependencies",
+    "node"
+  ],
+  "instruction": "Upgrade ${pkg} to ^${major}.0.0 in package.json and raise the engines.node floor to ${node}.",
+  "input": {
+    "workspace": {
+      "files": {
+        "package.json": "{\n  \"name\": \"${app}\",\n  \"engines\": {\"node\": \">=16\"},\n  \"dependencies\": {\"${pkg}\": \"^4.0.0\"}\n}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "package.json",
+              "old": "\"${pkg}\": \"^4.0.0\"",
+              "new": "\"${pkg}\": \"^${major}.0.0\""
+            },
+            {
+              "op": "replace",
+              "path": "package.json",
+              "old": "\">=16\"",
+              "new": "\">=${node}\""
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "app": "dash",
+        "pkg": "express",
+        "major": 5,
+        "node": 18
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "app": "notes",
+        "pkg": "vite",
+        "major": 6,
+        "node": 20
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "sec-debugger-left",
+  "category": "security-repair",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "security",
+    "dat"
+  ],
+  "instruction": "A breakpoint() was left in ${mod}.py. Have DAT find it and cA remove it, then confirm with DAT.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "def ${func}(order):\n    breakpoint()\n    return order.total\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.repair",
+        "request": {},
+        "dat": {
+          "fail_on": "medium"
+        }
+      },
+      {
+        "command": "dat",
+        "fail_on": "medium"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "checkout",
+        "func": "charge"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "refunds",
+        "func": "refund"
+      }
+    }
+  ]
+}

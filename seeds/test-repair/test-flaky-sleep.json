@@ -1,0 +1,60 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "test-flaky-sleep",
+  "category": "test-repair",
+  "split": "holdout",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "tests",
+    "flaky"
+  ],
+  "instruction": "tests/test_${name}.py waits with time.sleep(${secs}) for a background job. Replace the sleep with a call to wait_for_${name}().",
+  "input": {
+    "workspace": {
+      "files": {
+        "tests/test_${name}.py": "import time\n\nfrom jobs import start, wait_for_${name}\n\n\ndef test_${name}():\n    start()\n    time.sleep(${secs})\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "tests/test_${name}.py",
+              "old": "    time.sleep(${secs})\n",
+              "new": "    wait_for_${name}()\n"
+            },
+            {
+              "op": "replace",
+              "path": "tests/test_${name}.py",
+              "old": "import time\n\n",
+              "new": ""
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "name": "export",
+        "secs": 3
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "name": "thumbnail",
+        "secs": 5
+      }
+    }
+  ]
+}

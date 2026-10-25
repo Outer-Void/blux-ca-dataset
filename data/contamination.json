@@ -1,0 +1,253 @@
+{
+  "duplicates_dropped": [],
+  "max_cross_split_similarity": 0.1429,
+  "method": "Jaccard of 4-token shingles over the normalized instruction and input; exact = identical tokens",
+  "problems": [],
+  "protected": {
+    "ca:adv-certify-field:01": {
+      "max_similarity_to_other_splits": 0.0469,
+      "nearest_training_record": null
+    },
+    "ca:adv-certify-field:02": {
+      "max_similarity_to_other_splits": 0.0781,
+      "nearest_training_record": null
+    },
+    "ca:adv-injected-content:01": {
+      "max_similarity_to_other_splits": 0.0625,
+      "nearest_training_record": null
+    },
+    "ca:adv-injected-content:02": {
+      "max_similarity_to_other_splits": 0.0635,
+      "nearest_training_record": null
+    },
+    "ca:adv-path-traversal:01": {
+      "max_similarity_to_other_splits": 0.0714,
+      "nearest_training_record": null
+    },
+    "ca:adv-path-traversal:02": {
+      "max_similarity_to_other_splits": 0.0678,
+      "nearest_training_record": null
+    },
+    "ca:adv-path-traversal:03": {
+      "max_similarity_to_other_splits": 0.069,
+      "nearest_training_record": null
+    },
+    "ca:adv-validator-tamper:01": {
+      "max_similarity_to_other_splits": 0.0606,
+      "nearest_training_record": null
+    },
+    "ca:adv-validator-tamper:02": {
+      "max_similarity_to_other_splits": 0.0656,
+      "nearest_training_record": null
+    },
+    "ca:and-exported-flag:01": {
+      "max_similarity_to_other_splits": 0.1429,
+      "nearest_training_record": null
+    },
+    "ca:and-exported-flag:02": {
+      "max_similarity_to_other_splits": 0.1429,
+      "nearest_training_record": null
+    },
+    "ca:and-namespace:01": {
+      "max_similarity_to_other_splits": 0.1429,
+      "nearest_training_record": null
+    },
+    "ca:and-namespace:02": {
+      "max_similarity_to_other_splits": 0.1429,
+      "nearest_training_record": null
+    },
+    "ca:api-logging-warn:01": {
+      "max_similarity_to_other_splits": 0.0405,
+      "nearest_training_record": null
+    },
+    "ca:api-logging-warn:02": {
+      "max_similarity_to_other_splits": 0.04,
+      "nearest_training_record": null
+    },
+    "ca:build-syntax-error:01": {
+      "max_similarity_to_other_splits": 0.044,
+      "nearest_training_record": "ca:sfp-typo-fix:01"
+    },
+    "ca:build-syntax-error:02": {
+      "max_similarity_to_other_splits": 0.0417,
+      "nearest_training_record": "ca:sfp-typo-fix:01"
+    },
+    "ca:cfg-env-file:01": {
+      "max_similarity_to_other_splits": 0.0571,
+      "nearest_training_record": "ca:cfg-yaml-ci:01"
+    },
+    "ca:cfg-env-file:02": {
+      "max_similarity_to_other_splits": 0.0571,
+      "nearest_training_record": "ca:cfg-yaml-ci:01"
+    },
+    "ca:cfg-ini-setup:01": {
+      "max_similarity_to_other_splits": 0.0597,
+      "nearest_training_record": "ca:cfg-yaml-ci:01"
+    },
+    "ca:cfg-ini-setup:02": {
+      "max_similarity_to_other_splits": 0.0597,
+      "nearest_training_record": "ca:cfg-yaml-ci:01"
+    },
+    "ca:ci-action-pin:01": {
+      "max_similarity_to_other_splits": 0.0874,
+      "nearest_training_record": "ca:ci-python-matrix:02"
+    },
+    "ca:ci-action-pin:02": {
+      "max_similarity_to_other_splits": 0.11,
+      "nearest_training_record": "ca:ci-python-matrix:02"
+    },
+    "ca:dep-gradle-plugin:01": {
+      "max_similarity_to_other_splits": 0.122,
+      "nearest_training_record": "ca:dep-pin-bump:01"
+    },
+    "ca:dep-gradle-plugin:02": {
+      "max_similarity_to_other_splits": 0.122,
+      "nearest_training_record": "ca:dep-pin-bump:01"
+    },
+    "ca:dep-node-major:01": {
+      "max_similarity_to_other_splits": 0.0816,
+      "nearest_training_record": "ca:test-wrong-assert:01"
+    },
+    "ca:dep-node-major:02": {
+      "max_similarity_to_other_splits": 0.0816,
+      "nearest_training_record": "ca:test-wrong-assert:01"
+    },
+    "ca:mal-corrupt-diff:01": {
+      "max_similarity_to_other_splits": 0.0566,
+      "nearest_training_record": null
+    },
+    "ca:mal-corrupt-diff:02": {
+      "max_similarity_to_other_splits": 0.0566,
+      "nearest_training_record": null
+    },
+    "ca:mal-file-dir-clash:01": {
+      "max_similarity_to_other_splits": 0.0645,
+      "nearest_training_record": null
+    },
+    "ca:mal-file-dir-clash:02": {
+      "max_similarity_to_other_splits": 0.0645,
+      "nearest_training_record": null
+    },
+    "ca:mfr-extract-module:01": {
+      "max_similarity_to_other_splits": 0.024,
+      "nearest_training_record": null
+    },
+    "ca:mfr-extract-module:02": {
+      "max_similarity_to_other_splits": 0.024,
+      "nearest_training_record": null
+    },
+    "ca:mfr-move-constant:01": {
+      "max_similarity_to_other_splits": 0.042,
+      "nearest_training_record": null
+    },
+    "ca:mfr-move-constant:02": {
+      "max_similarity_to_other_splits": 0.042,
+      "nearest_training_record": null
+    },
+    "ca:min-noop-write:01": {
+      "max_similarity_to_other_splits": 0.0781,
+      "nearest_training_record": null
+    },
+    "ca:min-noop-write:02": {
+      "max_similarity_to_other_splits": 0.0714,
+      "nearest_training_record": null
+    },
+    "ca:min-same-replace:01": {
+      "max_similarity_to_other_splits": 0.0548,
+      "nearest_training_record": "ca:build-makefile-tab:01"
+    },
+    "ca:min-same-replace:02": {
+      "max_similarity_to_other_splits": 0.0548,
+      "nearest_training_record": "ca:build-makefile-tab:01"
+    },
+    "ca:pkg-entry-point:01": {
+      "max_similarity_to_other_splits": 0.0811,
+      "nearest_training_record": "ca:mal-missing-file:01"
+    },
+    "ca:pkg-entry-point:02": {
+      "max_similarity_to_other_splits": 0.0789,
+      "nearest_training_record": "ca:mal-missing-file:01"
+    },
+    "ca:rb-conflict-refused:01": {
+      "max_similarity_to_other_splits": 0.0941,
+      "nearest_training_record": "ca:rb-undo-modify:01"
+    },
+    "ca:rb-conflict-refused:02": {
+      "max_similarity_to_other_splits": 0.0909,
+      "nearest_training_record": "ca:rb-undo-modify:01"
+    },
+    "ca:rb-interrupted-recover:01": {
+      "max_similarity_to_other_splits": 0.0108,
+      "nearest_training_record": null
+    },
+    "ca:rb-interrupted-recover:02": {
+      "max_similarity_to_other_splits": 0.0102,
+      "nearest_training_record": null
+    },
+    "ca:rmig-flat-to-src:01": {
+      "max_similarity_to_other_splits": 0.0194,
+      "nearest_training_record": null
+    },
+    "ca:rmig-flat-to-src:02": {
+      "max_similarity_to_other_splits": 0.0194,
+      "nearest_training_record": null
+    },
+    "ca:scaf-rerun-noop:01": {
+      "max_similarity_to_other_splits": 0.0822,
+      "nearest_training_record": "ca:scaf-docs-site:01"
+    },
+    "ca:scaf-rerun-noop:02": {
+      "max_similarity_to_other_splits": 0.0822,
+      "nearest_training_record": "ca:scaf-docs-site:01"
+    },
+    "ca:sec-tls-verify:01": {
+      "max_similarity_to_other_splits": 0.0654,
+      "nearest_training_record": "ca:sec-yaml-load:01"
+    },
+    "ca:sec-tls-verify:02": {
+      "max_similarity_to_other_splits": 0.0654,
+      "nearest_training_record": "ca:sec-yaml-load:01"
+    },
+    "ca:sfp-guard-clause:01": {
+      "max_similarity_to_other_splits": 0.0566,
+      "nearest_training_record": null
+    },
+    "ca:sfp-guard-clause:02": {
+      "max_similarity_to_other_splits": 0.0541,
+      "nearest_training_record": null
+    },
+    "ca:test-flaky-sleep:01": {
+      "max_similarity_to_other_splits": 0.055,
+      "nearest_training_record": null
+    },
+    "ca:test-flaky-sleep:02": {
+      "max_similarity_to_other_splits": 0.055,
+      "nearest_training_record": null
+    },
+    "ca:test-import-path:01": {
+      "max_similarity_to_other_splits": 0.0541,
+      "nearest_training_record": null
+    },
+    "ca:test-import-path:02": {
+      "max_similarity_to_other_splits": 0.055,
+      "nearest_training_record": null
+    },
+    "ca:var-debugger-mixed:01": {
+      "max_similarity_to_other_splits": 0.1264,
+      "nearest_training_record": "ca:var-bare-except:01"
+    },
+    "ca:var-debugger-mixed:02": {
+      "max_similarity_to_other_splits": 0.1264,
+      "nearest_training_record": "ca:var-bare-except:01"
+    },
+    "ca:var-unrepairable:01": {
+      "max_similarity_to_other_splits": 0.0411,
+      "nearest_training_record": "ca:sec-debugger-left:01"
+    },
+    "ca:var-unrepairable:02": {
+      "max_similarity_to_other_splits": 0.0411,
+      "nearest_training_record": "ca:sec-debugger-left:01"
+    }
+  },
+  "threshold": 0.8
+}

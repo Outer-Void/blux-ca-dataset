@@ -1,0 +1,70 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "and-compile-sdk",
+  "category": "android-migration",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "android",
+    "gradle"
+  ],
+  "instruction": "Raise compileSdk and targetSdk in app/build.gradle from ${old} to ${new} for the ${ns} app; minSdk stays.",
+  "input": {
+    "workspace": {
+      "files": {
+        "app/build.gradle": "android {\n    namespace '${ns}'\n    compileSdk ${old}\n\n    defaultConfig {\n        minSdk 24\n        targetSdk ${old}\n    }\n}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "app/build.gradle",
+              "old": "compileSdk ${old}",
+              "new": "compileSdk ${new}"
+            },
+            {
+              "op": "replace",
+              "path": "app/build.gradle",
+              "old": "targetSdk ${old}",
+              "new": "targetSdk ${new}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "ns": "org.example.notes",
+        "old": 33,
+        "new": 34
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "ns": "org.example.camera",
+        "old": 31,
+        "new": 35
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "ns": "org.example.maps",
+        "old": 34,
+        "new": 35
+      }
+    }
+  ]
+}

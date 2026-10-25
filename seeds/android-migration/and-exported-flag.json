@@ -1,0 +1,52 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "and-exported-flag",
+  "category": "android-migration",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "android",
+    "manifest"
+  ],
+  "instruction": "Android 12 requires android:exported on activities with intent filters. Add android:exported=\"true\" to ${activity} in AndroidManifest.xml.",
+  "input": {
+    "workspace": {
+      "files": {
+        "app/src/main/AndroidManifest.xml": "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\">\n  <application>\n    <activity android:name=\".${activity}\">\n      <intent-filter>\n        <action android:name=\"android.intent.action.MAIN\" />\n      </intent-filter>\n    </activity>\n  </application>\n</manifest>\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "app/src/main/AndroidManifest.xml",
+              "old": "android:name=\".${activity}\">",
+              "new": "android:name=\".${activity}\"\n      android:exported=\"true\">"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "activity": "MainActivity"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "activity": "LauncherActivity"
+      }
+    }
+  ]
+}

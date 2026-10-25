@@ -1,0 +1,60 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "build-missing-init",
+  "category": "build-repair",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "build",
+    "python"
+  ],
+  "instruction": "The ${pkg} package cannot be imported because ${pkg}/__init__.py is missing. Add it with a one-line docstring.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${pkg}/${mod}.py": "def hello():\n    return 'hi'\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "create",
+              "path": "${pkg}/__init__.py",
+              "content": "\"\"\"${pkg} package.\"\"\"\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "reports",
+        "mod": "render"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "mailer",
+        "mod": "smtp"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "pkg": "scheduler",
+        "mod": "cron"
+      }
+    }
+  ]
+}

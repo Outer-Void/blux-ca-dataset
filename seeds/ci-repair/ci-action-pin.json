@@ -1,0 +1,53 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "ci-action-pin",
+  "category": "ci-repair",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "ci"
+  ],
+  "instruction": "The ${wf} workflow uses ${action}@v2, which no longer runs on current runners. Update it to @v4.",
+  "input": {
+    "workspace": {
+      "files": {
+        ".github/workflows/${wf}.yml": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: ${action}@v2\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": ".github/workflows/${wf}.yml",
+              "old": "${action}@v2",
+              "new": "${action}@v4"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "wf": "release",
+        "action": "actions/upload-artifact"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "wf": "docs",
+        "action": "actions/checkout"
+      }
+    }
+  ]
+}

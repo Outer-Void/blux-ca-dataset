@@ -1,0 +1,50 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "mal-file-dir-clash",
+  "category": "malformed-repos",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "errors"
+  ],
+  "instruction": "The repository has a file named ${name}, so ${name}/extra.py cannot be created. cA must report the clash.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${name}": "not a directory\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "create",
+              "path": "${name}/extra.py",
+              "content": "y = 2\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "name": "lib"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "name": "plugins"
+      }
+    }
+  ]
+}

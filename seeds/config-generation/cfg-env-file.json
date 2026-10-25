@@ -1,0 +1,55 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "cfg-env-file",
+  "category": "config-generation",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "config",
+    "env"
+  ],
+  "instruction": "Write a .env.example for the ${svc} service listing PORT=${port}, LOG_LEVEL=${level} and a placeholder DATABASE_URL.",
+  "input": {
+    "workspace": {
+      "files": {
+        "README.md": "# ${svc}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "config.generate",
+        "request": {
+          "path": ".env.example",
+          "format": "env",
+          "data": {
+            "PORT": "${port}",
+            "LOG_LEVEL": "${level}",
+            "DATABASE_URL": "postgres://user:password@db.example.com/${svc}"
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "svc": "ledger",
+        "port": 8080,
+        "level": "info"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "svc": "relay",
+        "port": 9000,
+        "level": "debug"
+      }
+    }
+  ]
+}

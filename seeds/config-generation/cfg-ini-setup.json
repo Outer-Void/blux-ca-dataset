@@ -1,0 +1,58 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "cfg-ini-setup",
+  "category": "config-generation",
+  "split": "holdout",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "config",
+    "ini"
+  ],
+  "instruction": "Generate a setup.cfg for ${pkg} with a [metadata] section (name, version ${ver}) and [options] python_requires = ${py}.",
+  "input": {
+    "workspace": {
+      "files": {
+        "README.md": "# ${pkg}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "config.generate",
+        "request": {
+          "path": "setup.cfg",
+          "data": {
+            "metadata": {
+              "name": "${pkg}",
+              "version": "${ver}"
+            },
+            "options": {
+              "python_requires": "${py}"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "quill",
+        "ver": "0.1.0",
+        "py": ">=3.10"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "anvil",
+        "ver": "3.0.2",
+        "py": ">=3.12"
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "var-bare-except",
+  "category": "validation-aware-repair",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "dat",
+    "repair"
+  ],
+  "instruction": "DAT blocks on a bare except in ${mod}.py at fail_on=low. Repair from DAT's report, then have DAT confirm the gate passes.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "def ${func}(raw):\n    try:\n        return int(raw)\n    except:\n        return None\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.repair",
+        "request": {},
+        "dat": {
+          "fail_on": "low"
+        }
+      },
+      {
+        "command": "dat",
+        "fail_on": "low"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "parse",
+        "func": "to_int"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "ports",
+        "func": "port_number"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "mod": "ages",
+        "func": "age"
+      }
+    }
+  ]
+}

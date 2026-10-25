@@ -1,0 +1,54 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "min-same-replace",
+  "category": "patch-minimization",
+  "split": "holdout",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "minimal",
+    "noop"
+  ],
+  "instruction": "Replace \"${text}\" with itself in ${path}. The result must be a no-op, not a rewrite.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "${text}\nother line\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${path}",
+              "old": "${text}",
+              "new": "${text}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "notes.txt",
+        "text": "keep this"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "todo.txt",
+        "text": "ship it"
+      }
+    }
+  ]
+}

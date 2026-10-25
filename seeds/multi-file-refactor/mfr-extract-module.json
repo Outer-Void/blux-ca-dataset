@@ -1,0 +1,47 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "mfr-extract-module",
+  "category": "multi-file-refactor",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "refactor",
+    "patch"
+  ],
+  "instruction": "Move the ${helper} helper out of ${src}.py into a new helpers.py and import it back, as one multi-file patch.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${src}.py": "def ${helper}(x):\n    return x * 2\n\n\ndef run():\n    return ${helper}(21)\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "repo.patch",
+        "request": {
+          "diff": "--- /dev/null\n+++ b/helpers.py\n@@ -0,0 +1,2 @@\n+def ${helper}(x):\n+    return x * 2\n--- a/${src}.py\n+++ b/${src}.py\n@@ -1,5 +1,4 @@\n-def ${helper}(x):\n-    return x * 2\n+from helpers import ${helper}\n \n \n def run():\n"
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "src": "service",
+        "helper": "double"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "src": "jobs",
+        "helper": "twice"
+      }
+    }
+  ]
+}

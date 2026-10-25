@@ -1,0 +1,59 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "min-one-line",
+  "category": "patch-minimization",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "minimal"
+  ],
+  "instruction": "The instruction rewrites all of ${path}, but only line_7 changes (to ${v}). The changeset must be a single one-line hunk.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "line_0 = 0\nline_1 = 1\nline_2 = 2\nline_3 = 3\nline_4 = 4\nline_5 = 5\nline_6 = 6\nline_7 = 7\nline_8 = 8\nline_9 = 9\nline_10 = 10\nline_11 = 11\nline_12 = 12\nline_13 = 13\nline_14 = 14\nline_15 = 15\nline_16 = 16\nline_17 = 17\nline_18 = 18\nline_19 = 19\nline_20 = 20\nline_21 = 21\nline_22 = 22\nline_23 = 23\nline_24 = 24\nline_25 = 25\nline_26 = 26\nline_27 = 27\nline_28 = 28\nline_29 = 29\nline_30 = 30\nline_31 = 31\nline_32 = 32\nline_33 = 33\nline_34 = 34\nline_35 = 35\nline_36 = 36\nline_37 = 37\nline_38 = 38\nline_39 = 39\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "write",
+              "path": "${path}",
+              "content": "line_0 = 0\nline_1 = 1\nline_2 = 2\nline_3 = 3\nline_4 = 4\nline_5 = 5\nline_6 = 6\nline_7 = ${v}\nline_8 = 8\nline_9 = 9\nline_10 = 10\nline_11 = 11\nline_12 = 12\nline_13 = 13\nline_14 = 14\nline_15 = 15\nline_16 = 16\nline_17 = 17\nline_18 = 18\nline_19 = 19\nline_20 = 20\nline_21 = 21\nline_22 = 22\nline_23 = 23\nline_24 = 24\nline_25 = 25\nline_26 = 26\nline_27 = 27\nline_28 = 28\nline_29 = 29\nline_30 = 30\nline_31 = 31\nline_32 = 32\nline_33 = 33\nline_34 = 34\nline_35 = 35\nline_36 = 36\nline_37 = 37\nline_38 = 38\nline_39 = 39\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "table.py",
+        "v": "seven"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "grid.py",
+        "v": "SEVEN"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "path": "lookup.py",
+        "v": "None"
+      }
+    }
+  ]
+}

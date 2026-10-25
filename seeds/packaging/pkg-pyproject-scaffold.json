@@ -1,0 +1,84 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "pkg-pyproject-scaffold",
+  "category": "packaging",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "packaging"
+  ],
+  "instruction": "Construct the packaging skeleton for ${pkg}: ${pkg}/__init__.py from the python.package template and a pyproject.toml.",
+  "input": {
+    "workspace": {
+      "files": {
+        "LICENSE": "See the project owner for licence terms.\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.construct",
+        "request": {
+          "blueprint": {
+            "units": [
+              {
+                "task": "package",
+                "files": [
+                  {
+                    "path": "${pkg}/__init__.py",
+                    "builtin": "python.package",
+                    "params": {
+                      "summary": "${summary}",
+                      "version": "${ver}"
+                    }
+                  },
+                  {
+                    "path": "pyproject.toml",
+                    "config": {
+                      "data": {
+                        "project": {
+                          "name": "${pkg}",
+                          "version": "${ver}",
+                          "requires-python": ">=3.11"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "tidepool",
+        "summary": "Tide prediction helpers.",
+        "ver": "0.1.0"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "brickset",
+        "summary": "LEGO set inventory tools.",
+        "ver": "0.2.0"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "pkg": "sundial",
+        "summary": "Solar time utilities.",
+        "ver": "1.0.0"
+      }
+    }
+  ]
+}

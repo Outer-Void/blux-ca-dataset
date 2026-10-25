@@ -1,0 +1,60 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "sfp-config-constant",
+  "category": "single-file-patch",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "patch"
+  ],
+  "instruction": "Apply this diff to ${mod}.py so that ${name} becomes ${new} instead of ${old}; nothing else in the file may change.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "\"\"\"${mod} settings.\"\"\"\n${name} = ${old}\nRETRIES = 3\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "code.patch",
+        "request": {
+          "path": "${mod}.py",
+          "diff": "--- a/${mod}.py\n+++ b/${mod}.py\n@@ -2 +2 @@\n-${name} = ${old}\n+${name} = ${new}\n"
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "network",
+        "name": "TIMEOUT_SECONDS",
+        "old": 30,
+        "new": 10
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "cache",
+        "name": "MAX_ENTRIES",
+        "old": 1000,
+        "new": 5000
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "mod": "worker",
+        "name": "POLL_INTERVAL",
+        "old": 5,
+        "new": 2
+      }
+    }
+  ]
+}

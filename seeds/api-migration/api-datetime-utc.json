@@ -1,0 +1,59 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "api-datetime-utc",
+  "category": "api-migration",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "api"
+  ],
+  "instruction": "Replace the deprecated datetime.utcnow() in ${mod}.py with a timezone-aware datetime.now(timezone.utc).",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "from datetime import datetime\n\n\ndef ${func}():\n    return datetime.utcnow()\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${mod}.py",
+              "old": "from datetime import datetime\n",
+              "new": "from datetime import datetime, timezone\n"
+            },
+            {
+              "op": "replace",
+              "path": "${mod}.py",
+              "old": "datetime.utcnow()",
+              "new": "datetime.now(timezone.utc)"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "audit",
+        "func": "stamp"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "metrics",
+        "func": "now"
+      }
+    }
+  ]
+}

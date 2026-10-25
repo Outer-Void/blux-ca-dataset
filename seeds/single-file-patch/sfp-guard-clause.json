@@ -1,0 +1,47 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "sfp-guard-clause",
+  "category": "single-file-patch",
+  "split": "regression",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "patch"
+  ],
+  "instruction": "Pin the exact changeset for adding an early return to ${func} in ${path} when the input is empty.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "def ${func}(items):\n    total = 0\n    for item in items:\n        total += item\n    return total\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "code.patch",
+        "request": {
+          "path": "${path}",
+          "diff": "--- a/${path}\n+++ b/${path}\n@@ -1,2 +1,4 @@\n def ${func}(items):\n+    if not items:\n+        return 0\n     total = 0\n"
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "stats.py",
+        "func": "summarize"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "billing/totals.py",
+        "func": "invoice_total"
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "var-unrepairable",
+  "category": "validation-aware-repair",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "dat",
+    "repair"
+  ],
+  "instruction": "${path} does not parse. DAT reports a syntax error that cA has no rule for, so the repair must change nothing and say why.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "def ${func}(:\n    pass\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.repair",
+        "request": {},
+        "dat": {
+          "fail_on": "high"
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "broken.py",
+        "func": "oops"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "half.py",
+        "func": "draft"
+      }
+    }
+  ]
+}

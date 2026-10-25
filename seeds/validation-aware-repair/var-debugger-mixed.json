@@ -1,0 +1,52 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "var-debugger-mixed",
+  "category": "validation-aware-repair",
+  "split": "regression",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "dat",
+    "repair"
+  ],
+  "instruction": "Pin the repair of ${mod}.py, which has an import pdb, a pdb.set_trace() and a bare except, then DAT's passing re-check.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "import pdb\n\n\ndef ${func}(x):\n    try:\n        return 1 / x\n    except:\n        pdb.set_trace()\n        return None\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.repair",
+        "request": {},
+        "dat": {
+          "fail_on": "low"
+        }
+      },
+      {
+        "command": "dat",
+        "fail_on": "low"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "divide",
+        "func": "inverse"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "ratio",
+        "func": "share"
+      }
+    }
+  ]
+}

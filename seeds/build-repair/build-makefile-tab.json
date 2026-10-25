@@ -1,0 +1,54 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "build-makefile-tab",
+  "category": "build-repair",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "build",
+    "make"
+  ],
+  "instruction": "make fails with \"missing separator\": the ${target} recipe in the Makefile is indented with spaces. Use a tab.",
+  "input": {
+    "workspace": {
+      "files": {
+        "Makefile": "${target}:\n    ${cmd}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "Makefile",
+              "old": "    ${cmd}",
+              "new": "\t${cmd}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "target": "test",
+        "cmd": "pytest -q"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "target": "lint",
+        "cmd": "ruff check ."
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "mfr-move-constant",
+  "category": "multi-file-refactor",
+  "split": "holdout",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "refactor"
+  ],
+  "instruction": "Replace the magic number ${value} in ${a}.py and ${b}.py with a shared ${const} constant defined in constants.py.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${a}.py": "def limit():\n    return ${value}\n",
+        "${b}.py": "def cap(x):\n    return min(x, ${value})\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "create",
+              "path": "constants.py",
+              "content": "${const} = ${value}\n"
+            },
+            {
+              "op": "replace",
+              "path": "${a}.py",
+              "old": "    return ${value}",
+              "new": "    return ${const}"
+            },
+            {
+              "op": "prepend",
+              "path": "${a}.py",
+              "text": "from constants import ${const}\n\n\n"
+            },
+            {
+              "op": "replace",
+              "path": "${b}.py",
+              "old": "min(x, ${value})",
+              "new": "min(x, ${const})"
+            },
+            {
+              "op": "prepend",
+              "path": "${b}.py",
+              "text": "from constants import ${const}\n\n\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "a": "upload",
+        "b": "download",
+        "value": 4096,
+        "const": "CHUNK_SIZE"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "a": "queue",
+        "b": "consumer",
+        "value": 50,
+        "const": "BATCH_LIMIT"
+      }
+    }
+  ]
+}

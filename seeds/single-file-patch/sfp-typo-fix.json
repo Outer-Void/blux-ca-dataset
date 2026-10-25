@@ -1,0 +1,52 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "sfp-typo-fix",
+  "category": "single-file-patch",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "patch",
+    "docs"
+  ],
+  "instruction": "Fix the typo \"${bad}\" in ${path} with a one-line unified diff.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "# ${title}\n\nThis tool ${bad} files.\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "code.patch",
+        "request": {
+          "path": "${path}",
+          "diff": "--- a/${path}\n+++ b/${path}\n@@ -3 +3 @@\n-This tool ${bad} files.\n+This tool ${good} files.\n"
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "README.md",
+        "title": "Archiver",
+        "bad": "compreses",
+        "good": "compresses"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "docs/intro.md",
+        "title": "Syncer",
+        "bad": "synchronises",
+        "good": "synchronizes"
+      }
+    }
+  ]
+}

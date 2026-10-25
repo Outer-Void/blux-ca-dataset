@@ -1,0 +1,80 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "cfg-toml-tool",
+  "category": "config-generation",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "config",
+    "toml"
+  ],
+  "instruction": "Generate ruff settings for ${proj} in ruff.toml: line length ${width}, target ${target}, and the ${rules_text} rule sets.",
+  "input": {
+    "workspace": {
+      "files": {
+        "README.md": "# ${proj}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "config.generate",
+        "request": {
+          "path": "ruff.toml",
+          "data": {
+            "line-length": "${width}",
+            "target-version": "${target}",
+            "lint": {
+              "select": "${rules}"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "proj": "spool",
+        "width": 100,
+        "target": "py311",
+        "rules": [
+          "E",
+          "F"
+        ],
+        "rules_text": "E and F"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "proj": "kestrel",
+        "width": 120,
+        "target": "py312",
+        "rules": [
+          "E",
+          "F",
+          "I",
+          "B"
+        ],
+        "rules_text": "E, F, I and B"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "proj": "tallow",
+        "width": 88,
+        "target": "py310",
+        "rules": [
+          "F"
+        ],
+        "rules_text": "F"
+      }
+    }
+  ]
+}

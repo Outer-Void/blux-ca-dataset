@@ -1,0 +1,52 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "pkg-entry-point",
+  "category": "packaging",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "packaging"
+  ],
+  "instruction": "Expose ${pkg}.cli:main as the ${cmd} console script by inserting a [project.scripts] table into pyproject.toml.",
+  "input": {
+    "workspace": {
+      "files": {
+        "pyproject.toml": "[project]\nname = \"${pkg}\"\nversion = \"1.0.0\"\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "append",
+              "path": "pyproject.toml",
+              "text": "\n[project.scripts]\n${cmd} = \"${pkg}.cli:main\"\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "harvest",
+        "cmd": "harvest"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "ferry",
+        "cmd": "ferry-sync"
+      }
+    }
+  ]
+}

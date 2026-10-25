@@ -1,0 +1,61 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "sec-yaml-load",
+  "category": "security-repair",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "security",
+    "dat"
+  ],
+  "instruction": "DAT flags yaml.load in ${mod}.py as unsafe deserialization. Run DAT, let cA repair what DAT reported, and re-run DAT.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "import yaml\n\n\ndef ${func}(text):\n    return yaml.load(text)\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.repair",
+        "request": {},
+        "dat": {
+          "fail_on": "medium",
+          "profile": "security"
+        }
+      },
+      {
+        "command": "dat",
+        "fail_on": "medium",
+        "profile": "security"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "settings",
+        "func": "parse_settings"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "manifest",
+        "func": "read_manifest"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "mod": "fixtures",
+        "func": "load_fixture"
+      }
+    }
+  ]
+}

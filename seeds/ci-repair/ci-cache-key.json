@@ -1,0 +1,55 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "ci-cache-key",
+  "category": "ci-repair",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "ci"
+  ],
+  "instruction": "The ${tool} cache in CI never invalidates because its key ignores the lockfile. Key it on hashFiles('${lock}').",
+  "input": {
+    "workspace": {
+      "files": {
+        ".github/workflows/ci.yml": "steps:\n  - uses: actions/cache@v4\n    with:\n      path: ${path}\n      key: ${tool}-cache\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": ".github/workflows/ci.yml",
+              "old": "key: ${tool}-cache",
+              "new": "key: ${tool}-${{ hashFiles('${lock}') }}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "tool": "pip",
+        "lock": "requirements.txt",
+        "path": "~/.cache/pip"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "tool": "npm",
+        "lock": "package-lock.json",
+        "path": "~/.npm"
+      }
+    }
+  ]
+}

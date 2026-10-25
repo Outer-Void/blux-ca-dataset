@@ -1,0 +1,65 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "scaf-docs-site",
+  "category": "deterministic-scaffolding",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "scaffold",
+    "docs"
+  ],
+  "instruction": "Scaffold documentation for ${proj}: docs/index.md from markdown.readme and an .editorconfig.",
+  "input": {
+    "workspace": {
+      "files": {}
+    },
+    "steps": [
+      {
+        "capability": "artifact.construct",
+        "request": {
+          "blueprint": {
+            "units": [
+              {
+                "task": "docs",
+                "files": [
+                  {
+                    "path": "docs/index.md",
+                    "builtin": "markdown.readme",
+                    "params": {
+                      "title": "${proj} docs",
+                      "summary": "${summary}"
+                    }
+                  },
+                  {
+                    "path": ".editorconfig",
+                    "builtin": "editorconfig"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "proj": "Beacon",
+        "summary": "Start here."
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "proj": "Lattice",
+        "summary": "Guides and reference."
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "rmig-flat-to-src",
+  "category": "repo-migration",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "migration"
+  ],
+  "instruction": "Move ${pkg}/core.py into the src/ layout (src/${pkg}/core.py) as one patch that deletes the old file and creates the new one.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${pkg}/core.py": "VALUE = 1\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "repo.patch",
+        "request": {
+          "diff": "--- a/${pkg}/core.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-VALUE = 1\n--- /dev/null\n+++ b/src/${pkg}/core.py\n@@ -0,0 +1 @@\n+VALUE = 1\n"
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "widgets"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "gauges"
+      }
+    }
+  ]
+}

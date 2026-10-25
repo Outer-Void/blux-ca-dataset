@@ -1,0 +1,81 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "scaf-cli-project",
+  "category": "deterministic-scaffolding",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "scaffold"
+  ],
+  "instruction": "Scaffold a ${name} CLI: README from markdown.readme, ${name}/cli.py from a template with the command name, and a .gitignore.",
+  "input": {
+    "workspace": {
+      "files": {}
+    },
+    "steps": [
+      {
+        "capability": "artifact.construct",
+        "request": {
+          "blueprint": {
+            "units": [
+              {
+                "task": "scaffold",
+                "files": [
+                  {
+                    "path": "README.md",
+                    "builtin": "markdown.readme",
+                    "params": {
+                      "title": "${name}",
+                      "summary": "${summary}"
+                    }
+                  },
+                  {
+                    "path": "${name}/cli.py",
+                    "template": "\"\"\"${dollar}{command} command line.\"\"\"\n\nCOMMAND = \"${dollar}{command}\"\n",
+                    "params": {
+                      "command": "${name}"
+                    }
+                  },
+                  {
+                    "path": ".gitignore",
+                    "builtin": "gitignore.python"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "name": "orbit",
+        "summary": "Tracks satellites.",
+        "dollar": "$"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "name": "pantry",
+        "summary": "Kitchen inventory.",
+        "dollar": "$"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "name": "tempo",
+        "summary": "Metronome for the terminal.",
+        "dollar": "$"
+      }
+    }
+  ]
+}

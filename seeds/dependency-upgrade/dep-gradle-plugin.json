@@ -1,0 +1,56 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "dep-gradle-plugin",
+  "category": "dependency-upgrade",
+  "split": "holdout",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "dependencies",
+    "android"
+  ],
+  "instruction": "Update the Android Gradle ${kind} plugin from ${old} to ${new} in the root build.gradle.",
+  "input": {
+    "workspace": {
+      "files": {
+        "build.gradle": "plugins {\n    id 'com.android.${kind}' version '${old}' apply false\n}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "build.gradle",
+              "old": "version '${old}'",
+              "new": "version '${new}'"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "kind": "application",
+        "old": "7.4.2",
+        "new": "8.5.0"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "kind": "library",
+        "old": "8.1.0",
+        "new": "8.7.2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "mal-missing-file",
+  "category": "malformed-repos",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "errors"
+  ],
+  "instruction": "The instruction edits ${path}, but the repository has no such file. cA must refuse rather than create it.",
+  "input": {
+    "workspace": {
+      "files": {
+        "README.md": "# ${proj}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "append",
+              "path": "${path}",
+              "text": "x = 1\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "proj": "nimbus",
+        "path": "src/config.py"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "proj": "quarry",
+        "path": "lib/util.py"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "proj": "ember",
+        "path": "app/main.py"
+      }
+    }
+  ]
+}

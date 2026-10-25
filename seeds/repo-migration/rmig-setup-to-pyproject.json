@@ -1,0 +1,78 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "rmig-setup-to-pyproject",
+  "category": "repo-migration",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "migration",
+    "packaging"
+  ],
+  "instruction": "Migrate the ${pkg} project from setup.py to a pyproject.toml with the same name and version, then delete setup.py.",
+  "input": {
+    "workspace": {
+      "files": {
+        "setup.py": "from setuptools import setup\n\nsetup(name=\"${pkg}\", version=\"${ver}\")\n",
+        "${pkg}/__init__.py": ""
+      }
+    },
+    "steps": [
+      {
+        "capability": "config.generate",
+        "request": {
+          "path": "pyproject.toml",
+          "data": {
+            "build-system": {
+              "requires": [
+                "setuptools>=61"
+              ],
+              "build-backend": "setuptools.build_meta"
+            },
+            "project": {
+              "name": "${pkg}",
+              "version": "${ver}"
+            }
+          }
+        }
+      },
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "delete",
+              "path": "setup.py"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "tinyhttp",
+        "ver": "0.3.1"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "ledgerkit",
+        "ver": "1.2.0"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "pkg": "imgtools",
+        "ver": "2.0.0"
+      }
+    }
+  ]
+}

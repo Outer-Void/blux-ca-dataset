@@ -1,0 +1,63 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "dep-pin-bump",
+  "category": "dependency-upgrade",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "dependencies"
+  ],
+  "instruction": "Bump ${lib} from ${old} to ${new} in requirements.txt, leaving the other pins alone.",
+  "input": {
+    "workspace": {
+      "files": {
+        "requirements.txt": "click==8.1.7\n${lib}==${old}\nrich==13.7.1\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "requirements.txt",
+              "old": "${lib}==${old}",
+              "new": "${lib}==${new}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "lib": "jinja2",
+        "old": "3.1.3",
+        "new": "3.1.4"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "lib": "urllib3",
+        "old": "1.26.18",
+        "new": "2.2.2"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "lib": "pyyaml",
+        "old": "6.0.1",
+        "new": "6.0.2"
+      }
+    }
+  ]
+}

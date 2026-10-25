@@ -1,0 +1,53 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "min-noop-write",
+  "category": "patch-minimization",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "minimal",
+    "noop"
+  ],
+  "instruction": "Write ${path} with exactly its current content. cA must produce an empty changeset and touch nothing.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "${body}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "write",
+              "path": "${path}",
+              "content": "${body}\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "VERSION",
+        "body": "2.4.1"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "OWNERS",
+        "body": "platform-team"
+      }
+    }
+  ]
+}

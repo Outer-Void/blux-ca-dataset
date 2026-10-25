@@ -1,0 +1,53 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "pkg-manifest-in",
+  "category": "packaging",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "packaging"
+  ],
+  "instruction": "The ${pkg} sdist misses its data files. Create MANIFEST.in that includes ${glob} and the LICENSE.",
+  "input": {
+    "workspace": {
+      "files": {
+        "LICENSE": "Licence text.\n",
+        "${pkg}/__init__.py": ""
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "create",
+              "path": "MANIFEST.in",
+              "content": "include LICENSE\nrecursive-include ${pkg} ${glob}\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "fonts",
+        "glob": "*.ttf"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "schemas",
+        "glob": "*.json"
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "cfg-yaml-ci",
+  "category": "config-generation",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "config",
+    "yaml"
+  ],
+  "instruction": "Generate .github/dependabot.yml for the ${eco} ecosystem with a ${interval} schedule.",
+  "input": {
+    "workspace": {
+      "files": {
+        "README.md": "# project\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "config.generate",
+        "request": {
+          "path": ".github/dependabot.yml",
+          "data": {
+            "version": 2,
+            "updates": [
+              {
+                "package-ecosystem": "${eco}",
+                "directory": "/",
+                "schedule": {
+                  "interval": "${interval}"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "eco": "pip",
+        "interval": "weekly"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "eco": "npm",
+        "interval": "daily"
+      }
+    }
+  ]
+}

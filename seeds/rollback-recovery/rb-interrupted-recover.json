@@ -1,0 +1,63 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "rb-interrupted-recover",
+  "category": "rollback-recovery",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "recovery"
+  ],
+  "instruction": "A change to ${a} and ${b} is interrupted after the first file is written. Recover the workspace to its exact pre-change state.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${a}": "first = 1\n",
+        "${b}": "second = 2\n"
+      }
+    },
+    "steps": [
+      {
+        "command": "interrupt",
+        "capability": "artifact.modify",
+        "after_writes": 1,
+        "request": {
+          "edits": [
+            {
+              "op": "write",
+              "path": "${a}",
+              "content": "first = 10\n"
+            },
+            {
+              "op": "write",
+              "path": "${b}",
+              "content": "second = 20\n"
+            }
+          ]
+        }
+      },
+      {
+        "command": "recover"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "a": "alpha.py",
+        "b": "beta.py"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "a": "conf/one.ini",
+        "b": "conf/two.ini"
+      }
+    }
+  ]
+}

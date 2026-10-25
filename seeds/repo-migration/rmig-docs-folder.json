@@ -1,0 +1,64 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "rmig-docs-folder",
+  "category": "repo-migration",
+  "split": "validation",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "migration",
+    "docs"
+  ],
+  "instruction": "Move the loose ${doc}.md from the repository root into docs/ and point README.md at the new location.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${doc}.md": "# ${title}\n",
+        "README.md": "See ${doc}.md for details.\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "delete",
+              "path": "${doc}.md"
+            },
+            {
+              "op": "create",
+              "path": "docs/${doc}.md",
+              "content": "# ${title}\n"
+            },
+            {
+              "op": "replace",
+              "path": "README.md",
+              "old": "${doc}.md",
+              "new": "docs/${doc}.md"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "doc": "CONTRIBUTING",
+        "title": "Contributing"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "doc": "ARCHITECTURE",
+        "title": "Architecture"
+      }
+    }
+  ]
+}

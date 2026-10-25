@@ -1,0 +1,70 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "rb-undo-modify",
+  "category": "rollback-recovery",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "rollback"
+  ],
+  "instruction": "Change ${key} in ${path} to ${new}, then roll the change back from cA's rollback artifacts and confirm the file is restored.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "${key} = ${old}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${path}",
+              "old": "${key} = ${old}",
+              "new": "${key} = ${new}"
+            }
+          ]
+        }
+      },
+      {
+        "command": "rollback",
+        "step": 0
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "limits.py",
+        "key": "RATE",
+        "old": 10,
+        "new": 99
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "feature.py",
+        "key": "ENABLED",
+        "old": "False",
+        "new": "True"
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "path": "retry.py",
+        "key": "ATTEMPTS",
+        "old": 3,
+        "new": 8
+      }
+    }
+  ]
+}

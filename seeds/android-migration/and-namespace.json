@@ -1,0 +1,60 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "and-namespace",
+  "category": "android-migration",
+  "split": "holdout",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "android",
+    "gradle"
+  ],
+  "instruction": "AGP 8 moves the package from AndroidManifest.xml to namespace in build.gradle. Do both edits for ${pkg}.",
+  "input": {
+    "workspace": {
+      "files": {
+        "app/build.gradle": "android {\n    compileSdk 34\n}\n",
+        "app/src/main/AndroidManifest.xml": "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"${pkg}\">\n</manifest>\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "app/src/main/AndroidManifest.xml",
+              "old": " package=\"${pkg}\"",
+              "new": ""
+            },
+            {
+              "op": "insert",
+              "path": "app/build.gradle",
+              "anchor": "android {\n",
+              "position": "after",
+              "text": "    namespace '${pkg}'\n"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "pkg": "org.example.wallet"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "pkg": "org.example.radio"
+      }
+    }
+  ]
+}

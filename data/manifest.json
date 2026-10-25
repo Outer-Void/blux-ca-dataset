@@ -1,0 +1,227 @@
+{
+  "canary": "4e13317e-3a46-42e3-95cf-c7b29f4eee76",
+  "categories": {
+    "adversarial-instructions": {
+      "adversarial": 9,
+      "holdout": 0,
+      "regression": 0,
+      "test": 0,
+      "train": 0,
+      "validation": 0
+    },
+    "android-migration": {
+      "adversarial": 0,
+      "holdout": 2,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 0
+    },
+    "api-migration": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "build-repair": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "ci-repair": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "config-generation": {
+      "adversarial": 0,
+      "holdout": 2,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "dependency-upgrade": {
+      "adversarial": 0,
+      "holdout": 2,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 0
+    },
+    "deterministic-scaffolding": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 2,
+      "test": 0,
+      "train": 3,
+      "validation": 2
+    },
+    "malformed-repos": {
+      "adversarial": 0,
+      "holdout": 2,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "multi-file-refactor": {
+      "adversarial": 0,
+      "holdout": 2,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 0
+    },
+    "packaging": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "patch-minimization": {
+      "adversarial": 0,
+      "holdout": 2,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 0
+    },
+    "repo-migration": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "rollback-recovery": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 2,
+      "test": 2,
+      "train": 3,
+      "validation": 0
+    },
+    "security-repair": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 2
+    },
+    "single-file-patch": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 2,
+      "test": 0,
+      "train": 3,
+      "validation": 2
+    },
+    "test-repair": {
+      "adversarial": 0,
+      "holdout": 2,
+      "regression": 0,
+      "test": 2,
+      "train": 3,
+      "validation": 0
+    },
+    "validation-aware-repair": {
+      "adversarial": 0,
+      "holdout": 0,
+      "regression": 2,
+      "test": 2,
+      "train": 3,
+      "validation": 0
+    }
+  },
+  "dataset": "blux-ca-dataset",
+  "engines": [
+    {
+      "commit": "6dcfcd70964d76db0534371f175710c59fb5adbe",
+      "name": "ca",
+      "package": "blux-ca",
+      "version": "2.0.1"
+    },
+    {
+      "commit": "ba5838636d8576b555fcf854793a709210814a1a",
+      "name": "dat",
+      "package": "outervoid-dat",
+      "version": "4.0.0"
+    }
+  ],
+  "excluded": [],
+  "files": {
+    "data/adversarial.jsonl": {
+      "records": 9,
+      "sha256": "9b5953119d0b0e9961e50a1254cdb2fe7153867bef1cafe5e4f3143a19e94744"
+    },
+    "data/contamination.json": {
+      "records": 0,
+      "sha256": "c24ef6eac57520b41d41619a1ac26b320728d820234f476dff3a990281ce5edc"
+    },
+    "data/holdout.jsonl": {
+      "records": 14,
+      "sha256": "5b749fa91e318832f1ebb0cd7b34e93daec6cdf8a876fbea0e8d87594587c4be"
+    },
+    "data/regression.jsonl": {
+      "records": 8,
+      "sha256": "c9c593f7cc58d286b7c2c34948517cc1c0bde6dcc02bc70f4f64be1287d00950"
+    },
+    "data/test.jsonl": {
+      "records": 30,
+      "sha256": "5436afa791e52aeace94732b1a57ddb24dc125b76863f13bef634b388049c990"
+    },
+    "data/train.jsonl": {
+      "records": 51,
+      "sha256": "a5998d4982ebc97793d24c3aba29dae476bb417eda33561ecf9bb19154a81cf0"
+    },
+    "data/validation.jsonl": {
+      "records": 20,
+      "sha256": "f230f5ae1b03da0c9e0b121f509740e935c5f2437ceee89b741bfc65579ffec0"
+    }
+  },
+  "generator": {
+    "name": "dstool",
+    "version": "1.0.0"
+  },
+  "license": {
+    "file": "LICENSE",
+    "name": "BLUX Proprietary License",
+    "spdx": "LicenseRef-BLUX-Proprietary"
+  },
+  "protected_splits": [
+    "test",
+    "holdout",
+    "adversarial",
+    "regression"
+  ],
+  "record_count": 132,
+  "records_sha256": "b894a01a6e00688bb680374be28d754fe65921442185b3d39ea5b78b9dfb2a3a",
+  "release_date": "2026-10-25",
+  "schema": "blux.dataset-manifest",
+  "splits": {
+    "adversarial": 9,
+    "holdout": 14,
+    "regression": 8,
+    "test": 30,
+    "train": 51,
+    "validation": 20
+  },
+  "training_splits": [
+    "train",
+    "validation"
+  ],
+  "version": "2.0.0"
+}

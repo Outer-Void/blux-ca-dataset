@@ -1,0 +1,63 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "sec-tls-verify",
+  "category": "security-repair",
+  "split": "test",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "security",
+    "dat"
+  ],
+  "instruction": "DAT reports TLS verification disabled in ${mod}.py. cA has no automatic fix for that rule, so supply the edit as a repair instruction, then re-run DAT.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "import requests\n\n\ndef ${func}(url):\n    return requests.get(url, timeout=5, verify=False)\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.repair",
+        "request": {
+          "instructions": [
+            {
+              "op": "replace",
+              "path": "${mod}.py",
+              "old": "verify=False",
+              "new": "verify=True"
+            }
+          ]
+        },
+        "dat": {
+          "fail_on": "high",
+          "profile": "security"
+        }
+      },
+      {
+        "command": "dat",
+        "fail_on": "high",
+        "profile": "security"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "webhook",
+        "func": "deliver"
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "health",
+        "func": "ping"
+      }
+    }
+  ]
+}

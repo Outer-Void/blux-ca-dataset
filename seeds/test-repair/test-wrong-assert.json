@@ -1,0 +1,70 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "test-wrong-assert",
+  "category": "test-repair",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "tests"
+  ],
+  "instruction": "tests/test_${mod}.py asserts ${func}(2) == ${wrong}, but the function correctly returns ${right}. Fix the test, not the code.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "def ${func}(n):\n    return n * ${k}\n",
+        "tests/test_${mod}.py": "from ${mod} import ${func}\n\n\ndef test_${func}():\n    assert ${func}(2) == ${wrong}\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "tests/test_${mod}.py",
+              "old": "== ${wrong}",
+              "new": "== ${right}"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "scale",
+        "func": "triple",
+        "k": 3,
+        "wrong": 5,
+        "right": 6
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "area",
+        "func": "square_side",
+        "k": 4,
+        "wrong": 4,
+        "right": 8
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "mod": "price",
+        "func": "with_tax",
+        "k": 2,
+        "wrong": 3,
+        "right": 4
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "rb-conflict-refused",
+  "category": "rollback-recovery",
+  "split": "regression",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "rollback",
+    "errors"
+  ],
+  "instruction": "${path} was changed twice; rolling back the first change must be refused because the second one touched the same file.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${path}": "v = 1\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${path}",
+              "old": "v = 1",
+              "new": "v = 2"
+            }
+          ]
+        }
+      },
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${path}",
+              "old": "v = 2",
+              "new": "v = ${last}"
+            }
+          ]
+        }
+      },
+      {
+        "command": "rollback",
+        "step": 0
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "path": "version.py",
+        "last": 3
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "path": "pkg/level.py",
+        "last": 4
+      }
+    }
+  ]
+}

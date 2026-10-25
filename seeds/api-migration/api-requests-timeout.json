@@ -1,0 +1,63 @@
+{
+  "schema": "blux.dataset-seed",
+  "family": "api-requests-timeout",
+  "category": "api-migration",
+  "split": "train",
+  "origin": "synthetic-authored",
+  "review": {
+    "status": "approved",
+    "reviewer": "outer-void"
+  },
+  "tags": [
+    "api"
+  ],
+  "instruction": "Every requests call in ${mod}.py must pass timeout=${t}. Update the ${verb} call without touching anything else.",
+  "input": {
+    "workspace": {
+      "files": {
+        "${mod}.py": "import requests\n\n\ndef fetch(url):\n    return requests.${verb}(url)\n"
+      }
+    },
+    "steps": [
+      {
+        "capability": "artifact.modify",
+        "request": {
+          "edits": [
+            {
+              "op": "replace",
+              "path": "${mod}.py",
+              "old": "requests.${verb}(url)",
+              "new": "requests.${verb}(url, timeout=${t})"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "01",
+      "params": {
+        "mod": "client",
+        "verb": "get",
+        "t": 10
+      }
+    },
+    {
+      "id": "02",
+      "params": {
+        "mod": "uploader",
+        "verb": "post",
+        "t": 30
+      }
+    },
+    {
+      "id": "03",
+      "params": {
+        "mod": "probe",
+        "verb": "head",
+        "t": 5
+      }
+    }
+  ]
+}
